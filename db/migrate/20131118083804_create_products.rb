@@ -4,7 +4,7 @@ class CreateProducts < ActiveRecord::Migration
       t.string  :site_id
       t.string  :name
       t.string  :info
-      t.string  :location
+      t.string  :category
       t.timestamps
     end
   end
