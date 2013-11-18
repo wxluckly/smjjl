@@ -22,6 +22,7 @@ pickle-email-*.html
 
 # Ignore config
 config/initializers/secret_token.rb
+config/database.yml
 
 # Ignore bundler config.
 /.bundle
