@@ -9,6 +9,21 @@ class Product::Jd < Product
   # additional config .........................................................
   # class methods .............................................................
   # public instance methods ...................................................
+  # 获取商品详情
+  def get_content
+    page = Nokogiri::HTML(http_get(url))
+    update( 
+      name: page.css("#name h1").text,
+      price_key: (page.css("#product-intro script").first.text.scan(/SkuId":(\d+)/).last.first rescue nil) )
+    get_price
+  end
+
+  def get_price
+    page = Nokogiri::HTML(http_get("http://p.3.cn/prices/mgets?skuIds=J_#{self.price_key}"))
+    value = page.text.scan(/p"\:"([\d\.]+)/).first.first
+    prices.create(value: value) if value
+  end
+
   # protected instance methods ................................................
   # private instance methods ..................................................
 end

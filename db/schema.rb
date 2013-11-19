@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131119030127) do
+ActiveRecord::Schema.define(version: 20131119093848) do
 
   create_table "prices", force: true do |t|
     t.string   "product_id"
@@ -19,6 +19,8 @@ ActiveRecord::Schema.define(version: 20131119030127) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "prices", ["product_id"], name: "index_prices_on_product_id", using: :btree
 
   create_table "product_lists", force: true do |t|
     t.string   "type"
@@ -47,6 +49,7 @@ ActiveRecord::Schema.define(version: 20131119030127) do
     t.string   "url_key"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "price_key"
   end
 
   create_table "sites", force: true do |t|
