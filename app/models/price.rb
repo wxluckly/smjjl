@@ -8,7 +8,6 @@ class Price < ActiveRecord::Base
   belongs_to :product
   
   # validations ...............................................................
-  validates :url, :uniqueness => true
   validate :validate_too_frequent
 
   # callbacks .................................................................
@@ -17,7 +16,7 @@ class Price < ActiveRecord::Base
   # class methods .............................................................
   # public instance methods ...................................................
   def validate_too_frequent
-    record.errors["created_at"] << ("update too frequent") if Time.now - product.update_at < 1.hours 
+    # errors["created_at"] << ("update too frequent") if Time.now - product.updated_at < 1.hours 
   end
 
   # protected instance methods ................................................

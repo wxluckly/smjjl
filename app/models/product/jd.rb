@@ -14,14 +14,17 @@ class Product::Jd < Product
     page = Nokogiri::HTML(http_get(url))
     update( 
       name: page.css("#name h1").text,
-      price_key: (page.css("#product-intro script").first.text.scan(/SkuId":(\d+)/).last.first rescue nil) )
+      price_key: (page.css("#product-intro script").text.scan(/SkuId":(\d+)/).last.first rescue nil))
     get_price
   end
 
   def get_price
+    return if self.price_key.nil?
+    return if Time.now - updated_at < 1.hours
     page = Nokogiri::HTML(http_get("http://p.3.cn/prices/mgets?skuIds=J_#{self.price_key}"))
-    value = page.text.scan(/p"\:"([\d\.]+)/).first.first
+    value = (page.text.scan(/p"\:"([\d\.]+)/).first.first rescue nil)
     prices.create(value: value) if value
+    touch
   end
 
   # protected instance methods ................................................
