@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 20131119030127) do
   end
 
   create_table "product_lists", force: true do |t|
-    t.integer  "product_root_id"
+    t.string   "type"
     t.string   "url"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 20131119030127) do
   add_index "product_lists", ["url"], name: "index_product_lists_on_url", using: :btree
 
   create_table "product_roots", force: true do |t|
-    t.integer  "site_id"
+    t.string   "type"
     t.string   "url"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -39,10 +39,12 @@ ActiveRecord::Schema.define(version: 20131119030127) do
   add_index "product_roots", ["url"], name: "index_product_roots_on_url", using: :btree
 
   create_table "products", force: true do |t|
-    t.string   "site_id"
+    t.string   "type"
     t.string   "name"
     t.string   "info"
     t.string   "category"
+    t.string   "url"
+    t.string   "url_key"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
