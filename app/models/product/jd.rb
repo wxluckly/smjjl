@@ -11,11 +11,12 @@ class Product::Jd < Product
   # public instance methods ...................................................
   # 获取商品详情
   def get_content
-    page = Nokogiri::HTML(http_get(url))
+    page = Nokogiri::HTML(http_get(url), nil, 'gbk')
     update( 
       name: page.css("#name h1").text,
       price_key: (page.css("#product-intro script").text.scan(/SkuId":(\d+)/).last.first rescue nil))
     get_price
+    sleep 0.01
   end
 
   def get_price
