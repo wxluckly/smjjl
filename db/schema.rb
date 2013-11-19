@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131118143148) do
+ActiveRecord::Schema.define(version: 20131119030127) do
 
   create_table "prices", force: true do |t|
     t.string   "product_id"
@@ -22,17 +22,21 @@ ActiveRecord::Schema.define(version: 20131118143148) do
 
   create_table "product_lists", force: true do |t|
     t.integer  "product_root_id"
-    t.string   "page_reg"
+    t.string   "url"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "product_lists", ["url"], name: "index_product_lists_on_url", using: :btree
+
   create_table "product_roots", force: true do |t|
     t.integer  "site_id"
-    t.string   "list_reg"
+    t.string   "url"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "product_roots", ["url"], name: "index_product_roots_on_url", using: :btree
 
   create_table "products", force: true do |t|
     t.string   "site_id"
