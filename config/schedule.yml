@@ -1,0 +1,5 @@
+# import_usjobs:
+#   cron: "0 2 * * *"
+#   class: ImportUsjobs
+#   queue: jobs
+#   description: "每天2点导入us.jobs的中国地区职位"
