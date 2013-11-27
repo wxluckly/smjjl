@@ -1,5 +1,7 @@
-import_usjobs:
-  cron: "0 2 * * *"
-  class: UpdateJdPrice
-  queue: UpdateJdPrice
-  description: "每天2点导入us.jobs的中国地区职位"
+daemon_price:
+  every:
+    - "28800s"
+    - :first_in: "10s"
+  class: DaemonPrice
+  queue: daemons
+  description: "update all prices every 8 hours"

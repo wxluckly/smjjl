@@ -1,4 +1,4 @@
-def UpdateJdPrice
+class UpdateJdPrice
   @queue = :update_jd_price
 
   def self.perform(product_id)
