@@ -6,6 +6,12 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(:default, Rails.env)
 
+# 加载全局配置
+require File.expand_path('../settings', __FILE__)
+
+# 加载redis扩展使用replication特性
+require File.expand_path('../redis', __FILE__)
+
 module Smjjl
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.

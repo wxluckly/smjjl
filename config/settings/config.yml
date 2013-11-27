@@ -1,0 +1,11 @@
+defaults: &defaults
+  redis: redis://localhost:6379
+
+development:
+  <<: *defaults
+
+production:
+  <<: *defaults
+
+worker:
+  <<: *defaults
