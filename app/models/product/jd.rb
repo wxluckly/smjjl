@@ -27,7 +27,7 @@ class Product::Jd < Product
       update(low_price: value.to_i) if low_price.blank?
       record_bargain value
     end
-    touch
+    # touch
   end
 
   def record_bargain value
