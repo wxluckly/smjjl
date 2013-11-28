@@ -8,6 +8,7 @@ class Product < ActiveRecord::Base
 
   # relationships .............................................................
   has_many :prices
+  has_many :bargains
   
   # validations ...............................................................
   validates :url, :uniqueness => true

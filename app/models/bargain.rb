@@ -1,41 +1,18 @@
-class Product::Jd < Product
+class Bargain < ActiveRecord::Base
   # extends ...................................................................
   # includes ..................................................................
   # security (i.e. attr_accessible) ...........................................
+  attr_accessible :price, :discount
+
   # relationships .............................................................
+  belongs_to :product
+
   # validations ...............................................................
   # callbacks .................................................................
   # scopes ....................................................................
   # additional config .........................................................
   # class methods .............................................................
   # public instance methods ...................................................
-  # 获取商品详情
-  def get_content
-    page = Nokogiri::HTML(http_get(url), nil, 'gbk')
-    update( 
-      name: page.css("#name h1").text,
-      price_key: (page.css("#product-intro script").text.scan(/SkuId":(\d+)/).last.first rescue nil))
-    get_price
-    sleep 0.01
-  end
-
-  def get_price
-    return if self.price_key.nil?
-    return if Time.now - updated_at < 1.hours
-    page = Nokogiri::HTML(http_get("http://p.3.cn/prices/mgets?skuIds=J_#{self.price_key}"))
-    value = (page.text.scan(/p"\:"([\d\.]+)/).first.first rescue nil)
-    if value
-      prices.create(value: value)
-      record_bargain value
-    end
-    touch
-  end
-
-  def record_bargain value
-    history_min = prices.map(&:value).min.to_i
-    bargains.create(price: value, discount: sprintf("%.2f",( value.to_f / history_min) * 100)) if value.to_i < history_min
-  end
-
   # protected instance methods ................................................
   # private instance methods ..................................................
 end
