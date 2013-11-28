@@ -31,8 +31,9 @@ class Product::Jd < Product
   end
 
   def record_bargain value
-    return if value.to_i >= low_price
+    return if value.to_i == low_price
     prices.create(value: value)
+    return if value.to_i > low_price
     bargains.create(price: value, discount: sprintf("%.2f",( value.to_f / low_price) * 100))
     update(low_price: value.to_i)
   end
