@@ -25,14 +25,14 @@ class Product::Jd < Product
     page = Nokogiri::HTML(http_get("http://p.3.cn/prices/mgets?skuIds=J_#{self.price_key}"))
     if value = (page.text.scan(/p"\:"([\d\.]+)/).first.first rescue nil)
       update(low_price: value.to_i) if low_price.blank?
-      prices.create(value: value)
       record_bargain value
     end
     touch
   end
 
   def record_bargain value
-    return if value.to_i >= low_price  
+    return if value.to_i >= low_price
+    prices.create(value: value)
     bargains.create(price: value, discount: sprintf("%.2f",( value.to_f / low_price) * 100))
     update(low_price: value.to_i)
   end
