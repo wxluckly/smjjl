@@ -21,10 +21,10 @@ class Product::Jd < Product
 
   def get_price
     return if self.price_key.nil?
-    return if Time.now - updated_at < 1.hours
+    # return if Time.now - updated_at < 1.hours
     page = Nokogiri::HTML(http_get("http://p.3.cn/prices/mgets?skuIds=J_#{self.price_key}"))
-    value = (page.text.scan(/p"\:"([\d\.]+)/).first.first rescue nil)
-    if value
+    if value = (page.text.scan(/p"\:"([\d\.]+)/).first.first rescue nil)
+      update(low_price: value.to_i) if low_price.blank?
       prices.create(value: value)
       record_bargain value
     end
@@ -32,8 +32,9 @@ class Product::Jd < Product
   end
 
   def record_bargain value
-    history_min = prices.map(&:value).min.to_i
-    bargains.create(price: value, discount: sprintf("%.2f",( value.to_f / history_min) * 100)) if value.to_i < history_min
+    return if value.to_i >= low_price  
+    bargains.create(price: value, discount: sprintf("%.2f",( value.to_f / low_price) * 100))
+    update(low_price: value.to_i)
   end
 
   # protected instance methods ................................................
