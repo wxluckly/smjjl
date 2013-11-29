@@ -1,6 +1,6 @@
 daemon_price:
   every:
-    - "28800s"
+    - "43200s"
     - :first_in: "10s"
   class: DaemonPrice
   queue: daemons
