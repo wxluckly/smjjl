@@ -1,5 +1,5 @@
 <% @bargains.each do |bargain| %>
   <%= link_to bargain.product.name, bargain.product.url, target: "_blank" %></br>
-  <%= "#{bargain.created_at.strftime("%Y-%m-%d %H:%M:%S")} [#{bargain.price}] [降为原价的：#{bargain.discount}%]" %></br>
+  <%= "#{bargain.created_at.strftime("%Y-%m-%d %H:%M:%S")} [#{bargain.price}] [历史新低：-#{ sprintf("%.2f", (100 - (bargain.price.to_f / bargain.history_low * 100 rescue bargain.discount.to_f) ) ) }%]" %></br>
 <% end %>
 <%= will_paginate @bargains %>

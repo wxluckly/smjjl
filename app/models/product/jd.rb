@@ -33,7 +33,7 @@ class Product::Jd < Product
     return if value.to_i == low_price
     prices.create(value: value)
     return if value.to_i > low_price
-    bargains.create(price: value, discount: sprintf("%.2f",( value.to_f / low_price) * 100))
+    bargains.create(price: value, history_low: low_price)
     update(low_price: value.to_i)
   end
 
