@@ -1,0 +1,5 @@
+<% @bargains.each do |bargain| %>
+  <%= link_to bargain.product.name, bargain.product.url, target: "_blank" %></br>
+  <%= "#{bargain.created_at.to_date} : #{bargain.price} : #{bargain.discount}" %></br>
+<% end %>
+<%= will_paginate @bargains %>
