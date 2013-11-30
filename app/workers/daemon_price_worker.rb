@@ -1,5 +1,9 @@
 class DaemonPriceWorker
   include Sidekiq::Worker
+  include Sidetiq::Schedulable
+
+  recurrence { daily }
+
   @queue = :daemon
 
   def perform

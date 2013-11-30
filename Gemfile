@@ -26,6 +26,8 @@ gem 'therubyracer'
 
 # 基础组件
 gem 'eventmachine'
+gem 'sinatra', '>= 1.3.0', :require => nil
+gem 'sprockets'
 
 # 缓存系统
 gem 'redis-activesupport'
@@ -36,8 +38,7 @@ gem 'cells'
 gem 'resque'
 gem 'resque-scheduler', :require=>"resque_scheduler"
 gem 'sidekiq'
-gem 'sinatra', '>= 1.3.0', :require => nil
-gem 'sprockets'
+gem 'sidetiq'
 
 
 # API
