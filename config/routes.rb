@@ -1,5 +1,7 @@
+require 'sidekiq/web'
+
 Smjjl::Application.routes.draw do
   root 'index#index'
 
-  mount Resque::Server.new, :at => "/resque"
+  mount Sidekiq::Web => '/sidekiq'
 end

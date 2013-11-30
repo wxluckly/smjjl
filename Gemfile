@@ -26,6 +26,9 @@ gem 'therubyracer'
 
 # 基础组件
 gem 'eventmachine'
+gem 'redis-namespace', '~> 1.3.1'
+gem 'multi_json', '~> 1.3'
+gem 'tzinfo', '~> 0.3.37'
 
 # 缓存系统
 gem 'redis-activesupport'
@@ -35,6 +38,10 @@ gem 'cells'
 # 异步和定时任务
 gem 'resque'
 gem 'resque-scheduler', :require=>"resque_scheduler"
+gem 'sidekiq'
+gem 'sinatra', '>= 1.3.0', :require => nil
+gem 'sprockets'
+
 
 # API
 gem 'jbuilder'
