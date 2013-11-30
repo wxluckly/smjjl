@@ -11,6 +11,9 @@
 // about supported directives.
 //
 //= require jquery
+//= require jquery-ui
 //= require jquery_ujs
-//= require turbolinks
-//= require_tree .
+//= require lib/jquery.masonry.min
+//= require lib/cloud-zoom.1.0.2.min
+//= require lib/jquery.Jcrop.min
+//= require twitter/bootstrap
