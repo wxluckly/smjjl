@@ -26,9 +26,6 @@ gem 'therubyracer'
 
 # 基础组件
 gem 'eventmachine'
-gem 'redis-namespace', '~> 1.3.1'
-gem 'multi_json', '~> 1.3'
-gem 'tzinfo', '~> 0.3.37'
 
 # 缓存系统
 gem 'redis-activesupport'
