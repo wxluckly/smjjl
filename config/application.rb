@@ -12,6 +12,9 @@ require File.expand_path('../settings', __FILE__)
 # 加载redis扩展使用replication特性
 require File.expand_path('../redis', __FILE__)
 
+require 'resque/server'
+require 'yaml'
+
 module Smjjl
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
