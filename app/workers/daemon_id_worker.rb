@@ -11,7 +11,7 @@ class DaemonIdWorker
       r.get_lists
     end
     ProductList::Jd.find_each do |l|
-      UpdateJdIdWorker.perform_async(l.id)
+      UpdateIdWorker.perform_async(l.id)
     end
   end
 end
