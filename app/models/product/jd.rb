@@ -12,12 +12,8 @@ class Product::Jd < Product
   # 获取商品详情
   def get_content
     page = Nokogiri::HTML(http_get(url), nil, 'gbk')
-    update( 
-      name: page.css("#name h1").text
-      #, price_key: (page.css("#product-intro script").text.scan(/SkuId":(\d+)/).last.first rescue nil)
-    )
+    update( name: page.css("#name h1").text )
     get_price
-    sleep 0.01
   end
 
   def get_price
@@ -27,14 +23,6 @@ class Product::Jd < Product
       update(low_price: value.to_i) if low_price.blank?
       record_bargain value
     end
-  end
-
-  def record_bargain value
-    return if value.to_i == low_price
-    prices.create(value: value)
-    return if value.to_i > low_price
-    bargains.create(price: value, history_low: low_price)
-    update(low_price: value.to_i)
   end
 
   # protected instance methods ................................................

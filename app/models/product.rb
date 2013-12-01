@@ -15,10 +15,24 @@ class Product < ActiveRecord::Base
   validates :url_key, uniqueness: { scope: :type }, if: "url_key.present?"
 
   # callbacks .................................................................
+  before_save :clean_name
+
   # scopes ....................................................................
   # additional config .........................................................
   # class methods .............................................................
   # public instance methods ...................................................
+  def record_bargain value
+    return if value.to_i == low_price
+    prices.create(value: value)
+    return if value.to_i > low_price
+    bargains.create(price: value, history_low: low_price)
+    update(low_price: value.to_i)
+  end
+
   # protected instance methods ................................................
   # private instance methods ..................................................
+  private
+  def clean_name
+    self.name = self.name.gsub("\n", "").gsub("\r", "").strip
+  end
 end
