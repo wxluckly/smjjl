@@ -2,7 +2,7 @@ class DaemonPriceWorker
   include Sidekiq::Worker
   include Sidetiq::Schedulable
 
-  recurrence { daily }
+  recurrence { daily.hour_of_day(2, 10, 18) }
 
   @queue = :daemon
 
