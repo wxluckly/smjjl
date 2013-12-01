@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131129154412) do
+ActiveRecord::Schema.define(version: 20131201070629) do
 
   create_table "bargains", force: true do |t|
     t.integer  "product_id"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 20131129154412) do
     t.string   "url"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "url_key"
   end
 
   add_index "product_lists", ["url"], name: "index_product_lists_on_url", using: :btree

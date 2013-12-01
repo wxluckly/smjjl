@@ -10,11 +10,17 @@ class ProductRoot::Amazon < ProductRoot
   # class methods .............................................................
   # public instance methods ...................................................
   def get_lists
-    Nokogiri::HTML(http_get(url)).css("#sortlist .item a").map{ |a| a.attr("href") }.each do |url|
-      ProductList::Jd.create(url: url)
+    page = Nokogiri::HTML(http_get(url))
+    page.css("#shopAllLinks td")[1].css("li li a").map{ |a| a.attr("href") }.each do |url|
+      ProductList::Amazon.create(url: url, url_key: get_key(url))
     end
   end
 
   # protected instance methods ................................................
   # private instance methods ..................................................
+  # private
+  def get_key url
+    keys = url.scan(%r|node=(\d+)|).first || url.scan(%r|\%3A(\d+)|).last || []
+    keys.first
+  end
 end
