@@ -35,6 +35,6 @@ class Product < ActiveRecord::Base
   # private instance methods ..................................................
   private
   def clean_name
-    self.name = self.name.gsub("\n", "").gsub("\r", "").strip
+    self.name = self.name.gsub("\n", "").gsub("\r", "").strip if self.name.present?
   end
 end

@@ -7,11 +7,7 @@ class DaemonIdWorker
   @queue = :daemon
 
   def perform
-    ProductRoot::Jd.find_each do |r|
-      r.get_lists
-    end
-    ProductList::Jd.find_each do |l|
-      UpdateIdWorker.perform_async(l.id)
-    end
+    ProductRoot.find_each{ |r| r.get_lists } 
+    ProductList.find_each{ |l| GetPaginationWorker.perform_async(l.id) }
   end
 end
