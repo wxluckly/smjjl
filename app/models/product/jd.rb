@@ -17,10 +17,9 @@ class Product::Jd < Product
   end
 
   def get_price
-    return if self.price_key.nil?
-    page = Nokogiri::HTML(http_get("http://p.3.cn/prices/mgets?skuIds=J_#{self.price_key}"))
+    page = Nokogiri::HTML(http_get("http://p.3.cn/prices/mgets?skuIds=J_#{self.url_key}"))
     if value = (page.text.scan(/p"\:"([\d\.]+)/).first.first rescue nil)
-      update(low_price: value.to_i) if low_price.blank?
+      update(low_price: value) if low_price.blank?
       record_bargain value
     end
   end

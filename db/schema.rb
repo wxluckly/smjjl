@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131201070629) do
+ActiveRecord::Schema.define(version: 20131201131234) do
 
   create_table "bargains", force: true do |t|
     t.integer  "product_id"
@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20131201070629) do
     t.string   "discount"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "history_low"
+    t.string   "history_low"
   end
 
   create_table "prices", force: true do |t|
@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(version: 20131201070629) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "price_key"
-    t.integer  "low_price"
+    t.string   "low_price"
   end
 
   create_table "sites", force: true do |t|

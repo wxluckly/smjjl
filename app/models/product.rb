@@ -18,15 +18,17 @@ class Product < ActiveRecord::Base
   before_save :clean_name
 
   # scopes ....................................................................
+  scope :empty, where(name: nil)
+
   # additional config .........................................................
   # class methods .............................................................
   # public instance methods ...................................................
   def record_bargain value
-    return if value.to_i == low_price
+    return if value.to_f == low_price.to_f
     prices.create(value: value)
-    return if value.to_i > low_price
+    return if value.to_f > low_price.to_f
     bargains.create(price: value, history_low: low_price)
-    update(low_price: value.to_i)
+    update(low_price: value)
   end
 
   # protected instance methods ................................................
