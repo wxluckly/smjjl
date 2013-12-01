@@ -11,8 +11,12 @@ class ProductRoot::Amazon < ProductRoot
   # public instance methods ...................................................
   def get_lists
     page = Nokogiri::HTML(http_get(url))
-    page.css("#shopAllLinks td")[1].css("li li a").map{ |a| a.attr("href") }.each do |url|
-      ProductList::Amazon.create(url: url, url_key: get_key(url))
+    links = [] 
+    page.css("#shopAllLinks td")[1].css("li li a").each{|a| links << a }
+    page.css("#shopAllLinks td")[2].css("div").first.css("li li a").each{|a| links << a }
+    links.each do |link|
+      url = link.attr("href")
+      ProductList::Amazon.create(url: url, url_key: get_key(url)) if get_key(url)
     end
   end
 

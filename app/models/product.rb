@@ -11,7 +11,8 @@ class Product < ActiveRecord::Base
   has_many :bargains
   
   # validations ...............................................................
-  validates :url, :uniqueness => true
+  validates :url, uniqueness: { scope: :type }, if: "url.present?"
+  validates :url_key, uniqueness: { scope: :type }, if: "url_key.present?"
 
   # callbacks .................................................................
   # scopes ....................................................................
