@@ -1,4 +1,4 @@
-class DaemonContentWorker
+class DaemonIdWorker
   include Sidekiq::Worker
   include Sidetiq::Schedulable
 
