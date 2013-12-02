@@ -8,3 +8,5 @@ development:
   :concurrency: 5
 production:
   :concurrency: 10
+worker:
+  :concurrency: 10
