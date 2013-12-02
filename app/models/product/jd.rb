@@ -24,6 +24,10 @@ class Product::Jd < Product
     end
   end
 
+  def link
+    url
+  end
+
   # protected instance methods ................................................
   # private instance methods ..................................................
 end

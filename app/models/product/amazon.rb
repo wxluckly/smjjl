@@ -28,6 +28,10 @@ class Product::Amazon < Product
     end
   end
 
+  def link
+    url || "http://www.amazon.cn/%20/dp/#{url_key}/ref="
+  end
+
   # protected instance methods ................................................
   # private instance methods ..................................................
 end
