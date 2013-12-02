@@ -22,7 +22,7 @@ class Product::Amazon < Product
   end
 
   def record_price page
-    if value = page.css(".priceLarge").text.scan(%r|[\d\.]+|).first
+    if value = page.css(".priceLarge").text.sub(",", "").scan(%r|[\d\.]+|).first
       update(low_price: value) if low_price.blank?
       record_bargain value
     end
