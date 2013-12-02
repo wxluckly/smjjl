@@ -1,4 +1,4 @@
-class UpdateJdPriceWorker
+class UpdatePriceWorker
   include Sidekiq::Worker
   @queue = :update_price
 
