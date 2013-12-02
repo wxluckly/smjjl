@@ -4,7 +4,7 @@ class DaemonIdWorker
 
   recurrence { daily }
 
-  @queue = :daemon
+  sidekiq_options :queue => :daemon
 
   def perform
     ProductRoot.find_each{ |r| r.get_lists } 

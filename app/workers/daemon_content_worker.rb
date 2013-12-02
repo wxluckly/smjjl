@@ -4,7 +4,7 @@ class DaemonContentWorker
 
   recurrence { daily }
 
-  @queue = :daemon
+  sidekiq_options :queue => :daemon
 
   def perform
     Product.empty.find_each{|p| UpdateContentWorker.perform_async(p.id) }

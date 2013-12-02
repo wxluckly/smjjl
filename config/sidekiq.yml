@@ -2,7 +2,12 @@
 :pidfile: ./tmp/pids/sidekiq.pid
 :logfile: ./log/sidekiq.log
 :queues:
-  - [default, 2]
+  - [daemon, 10]
+  - [update_price, 9]
+  - [default, 5]
+  - [update_content, 4]
+  - [get_pagination, 2]
+  - [get_id, 1]
 
 development:
   :concurrency: 5

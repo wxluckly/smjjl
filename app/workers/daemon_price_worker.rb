@@ -7,7 +7,7 @@ class DaemonPriceWorker
     daily.hour_of_day(2, 10, 18)
   end
 
-  @queue = :daemon
+  sidekiq_options :queue => :daemon
 
   def perform
     Product.find_each do |p|
