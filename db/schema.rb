@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131201131234) do
+ActiveRecord::Schema.define(version: 20131202025650) do
 
   create_table "bargains", force: true do |t|
     t.integer  "product_id"
@@ -62,6 +62,10 @@ ActiveRecord::Schema.define(version: 20131201131234) do
     t.string   "price_key"
     t.string   "low_price"
   end
+
+  add_index "products", ["name"], name: "index_products_on_name", using: :btree
+  add_index "products", ["url"], name: "index_products_on_url", using: :btree
+  add_index "products", ["url_key"], name: "index_products_on_url_key", using: :btree
 
   create_table "sites", force: true do |t|
     t.string   "name"
