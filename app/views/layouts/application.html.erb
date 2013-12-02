@@ -1,18 +1,23 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
-  <head>
-    <title>什么降价了</title>
-    <%= stylesheet_link_tag   "application", media: "all"%>
-    <%= javascript_include_tag  "application" %>
-    <%= csrf_meta_tag %>
-    <%= yield :header %>
-  </head>
-  <body>
-    <%= render "header" %>
-    <%= display_flash %>
-    <div class="container">
-      <%= yield %>
-    </div>
-    <%= render "footer" %>
-  </body>
+<head>
+  <title>什么降价了</title>
+  <%= stylesheet_link_tag   "application", media: "all"%>
+  <%= csrf_meta_tag %>
+  <%= yield :header %>
+</head>
+<body>
+  <%= render "header" %>
+  <%= display_flash %>
+  <div class="container">
+    <%= yield %>
+  </div>
+  <%= render "footer" %>
+  <%= javascript_include_tag  "application" %>
+  <%= yield :script %>
+  <script type="text/javascript">
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fec4362c7859715dad0b981e995f71a61' type='text/javascript'%3E%3C/script%3E"));
+  </script>
+</body>
 </html>
