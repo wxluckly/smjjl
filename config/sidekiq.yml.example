@@ -14,4 +14,4 @@ development:
 production:
   :concurrency: 10
 worker:
-  :concurrency: 20
+  :concurrency: 30
