@@ -12,7 +12,7 @@ module Patcher
     def http_get(url)
       3.times do
         begin
-          response = Timeout::timeout(60) do
+          response = Timeout::timeout(20) do
             open(url)
           end
           return response

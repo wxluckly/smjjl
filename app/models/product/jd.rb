@@ -16,10 +16,10 @@ class Product::Jd < Product
     get_price
   end
 
+  # 从详情页获取价格
   def get_price
     page = Nokogiri::HTML(http_get("http://p.3.cn/prices/mgets?skuIds=J_#{self.url_key}"))
     if value = (page.text.scan(/p"\:"([\d\.]+)/).first.first rescue nil)
-      update(low_price: value) if low_price.blank?
       record_bargain value
     end
   end
@@ -27,7 +27,6 @@ class Product::Jd < Product
   def link
     url
   end
-
   # protected instance methods ................................................
   # private instance methods ..................................................
 end

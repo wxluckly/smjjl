@@ -10,8 +10,11 @@ class DaemonPriceWorker
   sidekiq_options :queue => :daemon
 
   def perform
-    Product.find_each do |p|
+    # 京东采取详情页抓取价格的方式：
+    Product::Jd.find_each do |p|
       UpdatePriceWorker.perform_async(p.id)
     end
+    # 亚马逊采取列表页抓取价格的方式：
+    ProductList::Amazon.find_each{ |l| GetPaginationWorker.perform_async(l.id, "price") }
   end
 end
