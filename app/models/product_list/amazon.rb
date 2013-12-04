@@ -13,6 +13,8 @@ class ProductList::Amazon < ProductList
   def get_pagination(type = "id")
     total_page = (Nokogiri::HTML(http_get("http://www.amazon.cn/s/ref=?rh=n%3A#{url_key}&page=1&sort=-launch-date")).css("#resultCount").text.gsub(",", "").scan(%r|共(\d+)|).first.first.to_i / 24 + 1) rescue 1
     1.upto total_page do |page_num|
+      # 亚马逊系统不支持分页大于400的情况
+      break if page_num > 400
       GetIdWorker.perform_async(id, page_num) if type == "id"
       UpdateListPriceWorker.perform_async(id, page_num) if type == "price"
     end

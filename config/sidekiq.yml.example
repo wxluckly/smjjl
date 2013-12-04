@@ -4,6 +4,7 @@
 :queues:
   - [daemon, 10]
   - [update_price, 9]
+  - [update_list_price, 9]
   - [default, 5]
   - [update_content, 4]
   - [get_pagination, 2]
