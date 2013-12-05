@@ -23,7 +23,7 @@ class Product::Amazon < Product
   end
 
   def link
-    url || "http://www.amazon.cn/#{name}/dp/#{url_key}/ref="
+    url || "http://www.amazon.cn/#{URI::encode(name)}/dp/#{url_key}/ref="
   end
 
   # protected instance methods ................................................
