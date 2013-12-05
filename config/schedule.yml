@@ -1,7 +1,0 @@
-daemon_price:
-  every:
-    - "43200s"
-    - :first_in: "10s"
-  class: DaemonPrice
-  queue: daemons
-  description: "update all prices every 8 hours"

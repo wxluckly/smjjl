@@ -35,10 +35,11 @@ gem 'redis-objects'
 gem 'cells'
 
 # 异步和定时任务
-gem 'resque'
-gem 'resque-scheduler', :require=>"resque_scheduler"
+# gem 'resque'
+# gem 'resque-scheduler', :require=>"resque_scheduler"
 gem 'sidekiq'
-gem 'sidetiq'
+# gem 'sidetiq'
+gem 'whenever'
 
 
 # API
