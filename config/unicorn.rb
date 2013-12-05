@@ -102,5 +102,5 @@ after_fork do |server, worker|
   # correctly implements pread()/pwrite() system calls)
 
   # reconnect all the connections
-  Resque.redis.client.reconnect
+#  Resque.redis.client.reconnect
 end
