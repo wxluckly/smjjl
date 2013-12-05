@@ -1,12 +1,13 @@
 set :output, "log/cron_log.log"
+set :job_template, "bash -l -c ':job'"
 
 # 抓取id
-every :day, :at => '1:00am', :roles => [:app] do
+every :day, :at => '1:00am' do
   rake "daemon:get_id"
 end
 
 # 更新内容
-every :day, :at => '4:00am', :roles => [:app] do
+every :day, :at => '4:00am' do
   rake "daemon:update_content"
 end
 
