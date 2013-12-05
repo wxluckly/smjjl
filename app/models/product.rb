@@ -28,10 +28,10 @@ class Product < ActiveRecord::Base
     return if value.to_f == low_price.to_f
     prices.create(value: value)
     return if value.to_f > low_price.to_f
-    update(low_price: value)
     if (low_price.to_f - value.to_f) / low_price.to_f > 0.05
       bargains.create(price: value, history_low: low_price)
     end
+    update(low_price: value)
   end
 
   # protected instance methods ................................................
