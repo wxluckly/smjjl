@@ -1,4 +1,4 @@
-class Product::Amazon < Product
+class Site::Newegg < Site
   # extends ...................................................................
   # includes ..................................................................
   # security (i.e. attr_accessible) ...........................................
@@ -9,29 +9,6 @@ class Product::Amazon < Product
   # additional config .........................................................
   # class methods .............................................................
   # public instance methods ...................................................
-  # 获取商品详情
-  def get_content
-    page = Nokogiri::HTML(http_get(link))
-    update( name: page.css("#btAsinTitle span").text )
-    record_price page
-  end
-
-  # 从详情页获取价格
-  def get_price
-    page = Nokogiri::HTML(http_get(link))
-    record_price page
-  end
-
-  def link
-    url || "http://www.amazon.cn/#{(name || " ").gsub(" ", "-").gsub("/", "-")}/dp/#{url_key}/ref="
-  end
-
   # protected instance methods ................................................
   # private instance methods ..................................................
-  private
-  def record_price page
-    if value = page.css(".priceLarge").text.sub(",", "").scan(%r|[\d\.]+|).first
-      record_bargain value
-    end
-  end
 end

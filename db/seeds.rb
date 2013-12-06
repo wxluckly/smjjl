@@ -13,3 +13,6 @@ ProductRoot::Jd.create(url: "http://list.jd.com/670-671-672-0-0-0-0-0-0-0-1-1-1-
 
 Site::Amazon.create(name: "亚马逊")
 ProductRoot::Amazon.create(url: "http://www.amazon.cn/gp/site-directory")
+
+Site::Newegg.create(name: "新蛋")
+ProductRoot::Newegg.create(url: "http://www.newegg.cn/CategoryList.htm")

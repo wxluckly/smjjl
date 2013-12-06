@@ -1,4 +1,4 @@
-class Product::Amazon < Product
+class ProductRoot::Newegg < ProductRoot
   # extends ...................................................................
   # includes ..................................................................
   # security (i.e. attr_accessible) ...........................................
@@ -9,29 +9,29 @@ class Product::Amazon < Product
   # additional config .........................................................
   # class methods .............................................................
   # public instance methods ...................................................
-  # 获取商品详情
-  def get_content
-    page = Nokogiri::HTML(http_get(link))
-    update( name: page.css("#btAsinTitle span").text )
-    record_price page
-  end
+  def get_lists
+    page = Nokogiri::HTML(http_get(url),nil,'GBK')
+    page.css("dl").each_with_index do |dl, index|
+      next unless [2, 3, 4, 5, 6, 7, 10, 12].index index
+      dl.css("")
 
-  # 从详情页获取价格
-  def get_price
-    page = Nokogiri::HTML(http_get(link))
-    record_price page
-  end
+    end
 
-  def link
-    url || "http://www.amazon.cn/#{(name || " ").gsub(" ", "-").gsub("/", "-")}/dp/#{url_key}/ref="
+
+    links = [] 
+    page.css("#shopAllLinks td")[1].css("li li a").each{|a| links << a }
+    page.css("#shopAllLinks td")[2].css("div").first.css("li li a").each{|a| links << a }
+    links.each do |link|
+      url = link.attr("href")
+      ProductList::Amazon.create(url: url, url_key: get_key(url)) if get_key(url)
+    end
   end
 
   # protected instance methods ................................................
   # private instance methods ..................................................
-  private
-  def record_price page
-    if value = page.css(".priceLarge").text.sub(",", "").scan(%r|[\d\.]+|).first
-      record_bargain value
-    end
+  # private
+  def get_key url
+    keys = url.scan(%r|node=(\d+)|).first || url.scan(%r|\%3A(\d+)|).last || []
+    keys.first
   end
 end
