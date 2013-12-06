@@ -109,7 +109,7 @@ group :production do
   gem 'bluepill'
 end
 
-group :development do
+group :development, :worker do
   gem 'capistrano'
   gem 'capistrano-bundler'
   gem 'capistrano-rails'
