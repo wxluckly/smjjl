@@ -13,25 +13,13 @@ class ProductRoot::Newegg < ProductRoot
     page = Nokogiri::HTML(http_get(url),nil,'GBK')
     page.css("dl").each_with_index do |dl, index|
       next unless [2, 3, 4, 5, 6, 7, 10, 12].index index
-      dl.css("")
-
-    end
-
-
-    links = [] 
-    page.css("#shopAllLinks td")[1].css("li li a").each{|a| links << a }
-    page.css("#shopAllLinks td")[2].css("div").first.css("li li a").each{|a| links << a }
-    links.each do |link|
-      url = link.attr("href")
-      ProductList::Amazon.create(url: url, url_key: get_key(url)) if get_key(url)
+      dl.css("em a").each do |a|
+        ProductList::Newegg.create(url: a.attr("href"))
+      end
     end
   end
 
   # protected instance methods ................................................
   # private instance methods ..................................................
   # private
-  def get_key url
-    keys = url.scan(%r|node=(\d+)|).first || url.scan(%r|\%3A(\d+)|).last || []
-    keys.first
-  end
 end

@@ -1,21 +1,31 @@
-class ProductList < ActiveRecord::Base
+class ProductList::Newegg < ProductList
   # extends ...................................................................
   # includes ..................................................................
-  include Patcher
-
   # security (i.e. attr_accessible) ...........................................
-  attr_accessible :url, :url_key
-
   # relationships .............................................................
   # validations ...............................................................
-  validates :url, uniqueness: { scope: :type }, presence: true
-  validates :url_key, uniqueness: { scope: :type }, if: "url_key.present?"
-
   # callbacks .................................................................
   # scopes ....................................................................
   # additional config .........................................................
   # class methods .............................................................
   # public instance methods ...................................................
+  # 获取分页的初始页
+  def get_pagination(type = "id")
+    total_page = Nokogiri::HTML(http_get("#{url}?sort=50&pageSize=96"), nil, "GBK").css(".innerb ins").text.scan(%r|/(\d+)|).first.first.to_i rescue 1
+    1.upto total_page do |page_num|
+      GetIdWorker.perform_async(id, page_num) if type == "id"
+      UpdateListPriceWorker.perform_async(id, page_num) if type == "price"
+    end
+  end
+
+  # 在列表中获取product id
+  def get_product_ids(page_num)
+    page_url = url.gsub(".htm", "-#{page_num}.htm?sort=50&pageSize=96")
+    Nokogiri::HTML(http_get(page_url), nil, "GBK").css(".catepro p.title a").each do |a|
+      Product::Newegg.create(url: a.attr("href"))
+    end
+  end
+
   # protected instance methods ................................................
   # private instance methods ..................................................
 end
