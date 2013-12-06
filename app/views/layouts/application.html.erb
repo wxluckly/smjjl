@@ -15,9 +15,11 @@
   <%= render "footer" %>
   <%= javascript_include_tag  "application" %>
   <%= yield :script %>
+  <% if Rails.env.production? %>
   <script type="text/javascript">
     var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
     document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fec4362c7859715dad0b981e995f71a61' type='text/javascript'%3E%3C/script%3E"));
   </script>
+  <% end %>
 </body>
 </html>
