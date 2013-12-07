@@ -11,7 +11,7 @@ class Product::Newegg < Product
   # public instance methods ...................................................
   # 获取商品详情
   def get_content
-    page = Nokogiri::HTML(http_get(link, nil, "GBK"))
+    page = Nokogiri::HTML(http_get(link), nil, "GBK")
     update( name: page.css(".proHeader h1").text )
   end
 
