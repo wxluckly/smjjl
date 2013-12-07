@@ -17,7 +17,7 @@ gem 'jquery-rails', '2.2.1'
 gem 'jquery-ui-rails'
 gem 'turbolinks'
 gem 'font-awesome-sass'
-gem 'anjlab-bootstrap-rails', '3.0.0.0', :require => 'bootstrap-rails' # 根据前端需求，锁定到bootstrap 3.0官方发布版本
+gem 'anjlab-bootstrap-rails', '~> 3.0.3.0', :require => 'bootstrap-rails'
 gem 'will_paginate-bootstrap'
 gem "animate-rails"
 

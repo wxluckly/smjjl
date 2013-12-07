@@ -2,18 +2,24 @@
   <thead>
     <tr>
       <th>产品名称</th>
-      <th>更新时间</th>
-      <th>当前价格</th>
       <th>历史新低</th>
+      <th>当前价格</th>
+      <th>更新时间</th>
     </tr>
   </thead>
   <tbody>
     <% @bargains.each do |bargain| %>
-    <tr>
+    <% discount = 100 - (bargain.price.to_f / bargain.history_low.to_f * 100 rescue bargain.discount.to_f)
+      class_name = case
+      when discount > 50 then "danger"
+      when discount > 25 then "warning"
+      end
+    %>
+    <tr class="<%= class_name %>">
       <td><%= link_to bargain.product.name.to_s[0, 55], bargain.product.link, target: "_blank" %></td>
-      <td><%= bargain.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
+      <td><%= "-#{sprintf("%.2f", discount)}%" %></td>
       <td><%= bargain.price %></td>
-      <td><%= "-#{sprintf("%.2f", (100 - (bargain.price.to_f / bargain.history_low.to_f * 100 rescue bargain.discount.to_f) ) )}%" %></td>
+      <td><%= bargain.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
     </tr>
     <% end %>
   </thead>
