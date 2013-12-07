@@ -14,11 +14,11 @@ namespace :daemon do
   desc "更新产品价格"
   task :update_price => :environment do
     # 京东采取详情页抓取价格的方式：
-    Product::Jd.find_each do |p|
-      UpdatePriceWorker.perform_async(p.id)
-    end
+    Product::Jd.find_each{ |p| UpdatePriceWorker.perform_async(p.id) }
     # 亚马逊采取列表页抓取价格的方式：
     ProductList::Amazon.find_each{ |l| GetPaginationWorker.perform_async(l.id, "price") }
+    # 新蛋采取详情页抓取价格的方式：
+    Product::Newegg.find_each{ |p| UpdatePriceWorker.perform_async(p.id) }
   end
 
 end
