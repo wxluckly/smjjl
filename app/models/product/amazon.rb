@@ -16,7 +16,7 @@ class Product::Amazon < Product
     record_price page
   end
 
-  # 从详情页获取价格
+  # ==待删除，从详情页获取价格
   def get_price
     page = Nokogiri::HTML(http_get(link))
     record_price page

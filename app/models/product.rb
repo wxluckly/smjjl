@@ -24,6 +24,7 @@ class Product < ActiveRecord::Base
   # class methods .............................................................
   # public instance methods ...................................................
   def record_bargain value
+    return if value.blank?
     update(low_price: value) if low_price.blank?
     return if value.to_f == low_price.to_f
     prices.create(value: value)
