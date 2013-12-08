@@ -17,10 +17,10 @@ class Product::Amazon < Product
   end
 
   # ==待删除，从详情页获取价格
-  def get_price
-    page = Nokogiri::HTML(http_get(link))
-    record_price page
-  end
+  # def get_price
+  #   page = Nokogiri::HTML(http_get(link))
+  #   record_price page
+  # end
 
   def link
     url || "http://www.amazon.cn/#{(name || " ").gsub(" ", "-").gsub("/", "-")}/dp/#{url_key}/ref="
