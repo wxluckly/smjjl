@@ -19,7 +19,7 @@
       <td><%= link_to bargain.product.name.to_s[0, 55], bargain.product.link, target: "_blank" %></td>
       <td><%= "-#{sprintf("%.2f", discount)}%" %></td>
       <td><%= bargain.price %></td>
-      <td><%= bargain.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
+      <td><%= friendly_time bargain.created_at %></td>
     </tr>
     <% end %>
   </thead>

@@ -7,4 +7,12 @@ module ApplicationHelper
     erb = ['<div class=flash>',flash_div,'</div>'].flatten.join('')
     return raw erb
   end
+
+  def friendly_time time
+    pass_seconds = Time.now.to_i - time.to_i
+    return "刚刚" if pass_seconds < 30 * 60
+    return "半小时前" if pass_seconds < 1.hours
+    return "#{(pass_seconds) / 1.hours}小时前" if pass_seconds < 10.hours
+    time.strftime("%Y年%m月%d日 %H:%M:%S")
+  end
 end
