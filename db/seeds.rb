@@ -16,3 +16,6 @@ ProductRoot::Amazon.create(url: "http://www.amazon.cn/gp/site-directory")
 
 Site::Newegg.create(name: "新蛋")
 ProductRoot::Newegg.create(url: "http://www.newegg.cn/CategoryList.htm")
+
+Site::Dangdang.create(name: "当当")
+ProductRoot::Dangdang.create(url: "http://category.dangdang.com")
