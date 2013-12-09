@@ -1,4 +1,4 @@
-class ProductRoot::Dangdang < ProductRoot
+class ProductList::Dangdang < ProductList
   # extends ...................................................................
   # includes ..................................................................
   # security (i.e. attr_accessible) ...........................................
@@ -9,14 +9,21 @@ class ProductRoot::Dangdang < ProductRoot
   # additional config .........................................................
   # class methods .............................................................
   # public instance methods ...................................................
-  def get_lists
-    page = Nokogiri::HTML(http_get(url),nil,'GBK')
-    page.css(".col_4 h4 a")[0,28].each do |a|
-      ProductList::Dangdang.create(url: a.attr("href"), url_key: a.attr("href").scan(%r|cid\d+|).first)
-    end
+  # 获取分页的初始页
+  def get_pagination(type = "id")
+
+  end
+
+  # 在列表中获取product id
+  def get_product_ids(page_num)
+
+  end
+
+  # 从列表中更新价格
+  def get_list_prices(page_num)
+
   end
 
   # protected instance methods ................................................
   # private instance methods ..................................................
-  # private
 end
