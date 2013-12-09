@@ -23,8 +23,8 @@ class ProductList::Amazon < ProductList
   # 在列表中获取product id
   def get_product_ids(page_num)
     page_url = "http://www.amazon.cn/s?rh=n%3A#{url_key}&page=#{page_num}"
-    Nokogiri::HTML(http_get(page_url)).css("#rightResultsATF div.productTitle a").each do |a|
-      Product::Amazon.create(url_key: a.text) if a.text
+    Nokogiri::HTML(http_get(page_url)).css("#rightResultsATF div.result").each do |div|
+      Product::Amazon.create(url_key: div.attr("name")) if div.attr("name")
     end
   end
 
