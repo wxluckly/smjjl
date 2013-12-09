@@ -12,10 +12,7 @@ module Patcher
     def http_get(url)
       3.times do
         begin
-          response = Timeout::timeout(20) do
-            open(url)
-          end
-          return response
+          return open(url)
         rescue Timeout::Error
           next
         rescue Net::HTTPNotFound
@@ -40,9 +37,8 @@ module Patcher
         'image/bmp' => 'bmp'}[content_type] || "jpeg"
       "avatar." + houzui
     end
-
   end
-
 
 end
 
+include Patcher
