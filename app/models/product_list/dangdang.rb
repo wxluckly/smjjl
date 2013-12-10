@@ -10,11 +10,11 @@ class ProductList::Dangdang < ProductList
   # class methods .............................................................
   # public instance methods ...................................................
   # 获取分页的初始页
-  def get_pagination(type = "id")
+  def get_pagination(category = "id")
     total_page = Nokogiri::HTML(http_get("http://category.dangdang.com/#{url_key}.html"), nil, "GBK").css(".page_input span").first.text.scan(%r|\d+|).first.to_i rescue 1
     1.upto total_page do |page_num|
-      GetIdWorker.perform_async(id, page_num) if type == "id"
-      UpdateListPriceWorker.perform_async(id, page_num) if type == "price"
+      GetIdWorker.perform_async(id, page_num) if category == "id"
+      UpdateListPriceWorker.perform_async(id, page_num) if category == "price"
     end
   end
 
