@@ -17,8 +17,10 @@ namespace :daemon do
     Product::Jd.find_each{ |p| UpdatePriceWorker.perform_async(p.id) }
     # 亚马逊采取列表页抓取价格的方式：
     ProductList::Amazon.find_each{ |l| GetPaginationWorker.perform_async(l.id, "price") }
-    # 新蛋采取详情页抓取价格的方式：
+    # 新蛋采取列表页抓取价格的方式：
     ProductList::Newegg.find_each{ |l| GetPaginationWorker.perform_async(l.id, "price") }
+    # 当当采取列表页抓取价格的方式：
+    ProductList::Dangdang.find_each{ |l| GetPaginationWorker.perform_async(l.id, "price") }
   end
 
 end
