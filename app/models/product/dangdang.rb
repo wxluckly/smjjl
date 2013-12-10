@@ -11,11 +11,12 @@ class Product::Dangdang < Product
   # public instance methods ...................................................
   # 获取商品详情
   def get_content
-
+    page = Nokogiri::HTML(http_get(link), nil, 'gbk')
+    update( name: page.css(".head h1").text )
   end
 
   def link
-    url
+    "http://product.dangdang.com/#{url_key}.html"
   end
   # protected instance methods ................................................
   # private instance methods ..................................................
