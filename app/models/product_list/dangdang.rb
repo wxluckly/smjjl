@@ -30,7 +30,7 @@ class ProductList::Dangdang < ProductList
   def get_list_prices(page_num)
     page_url = "http://category.dangdang.com/pg#{page_num}-#{url_key}.html"
     Nokogiri::HTML(http_get(page_url), nil, "GBK").css(".shoplist li").each do |li|
-      next unless product = Product::Newegg.where(url_key: li.css("p.name a").first.attr("href").scan(%r|\d+|).first).first
+      next unless product = Product::Dangdang.where(url_key: li.css("p.name a").first.attr("href").scan(%r|\d+|).first).first
       product.record_bargain li.css('.price_n').text.scan(/[\d\.]+/).join
     end
   end
