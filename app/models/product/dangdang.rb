@@ -14,6 +14,9 @@ class Product::Dangdang < Product
     page = Nokogiri::HTML(http_get(link), nil, 'gbk')
     self.name = page.css(".head h1").text
     self.category = page.css(".breadcrumb a").map{ |a| a.text }.join(",")
+    self.info = page.css("#detail_all").to_s
+    self.count = page.css("#comm_num_down i").text
+    self.score = page.css("#comm_num_up i").last.text.scan(%r|[\d\.]+|).first rescue nil
     self.save
   end
 
