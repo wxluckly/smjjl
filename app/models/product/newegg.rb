@@ -13,7 +13,7 @@ class Product::Newegg < Product
   def get_content
     page = Nokogiri::HTML(http_get(link), nil, "GBK")
     self.name = page.css(".proHeader h1").text
-    self.category = page.css("#crumb .inner").text.split(" > ")[1, 4].join(",")
+    self.category = page.css("#crumb .inner").text.split(" > ")[1, 3].join(",")
     self.save
   end
 
