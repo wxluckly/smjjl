@@ -15,6 +15,8 @@ class Product::Amazon < Product
     self.name = page.css("#btAsinTitle span").text
     self.category = (page.css("div.bucket").last.css("ul li").map{ |li| li.text.gsub(" > ", ",") }.join("|") rescue nil) if page.css("div.bucket").text.index("查找其它相似商品")
     self.info = page.css("#productDescription .content").to_s
+    self.count = page.css("#handleBuy .crAvgStars a").last.text rescue 0
+    self.score = page.css(".acrRating").text.scan(%r|[\d\.]+|).first
     self.save
     record_price page
   end
@@ -26,7 +28,7 @@ class Product::Amazon < Product
   # end
 
   def link
-    url || "http://www.amazon.cn/#{(name.blank? ? "-" : name ).gsub(" ", "-").gsub("/", "-")}/dp/#{url_key}/ref="
+    URI::encode(url || "http://www.amazon.cn/#{(name.blank? ? "-" : name ).gsub(" ", "-").gsub("/", "-")}/dp/#{url_key}/ref=")
   end
 
   # protected instance methods ................................................
