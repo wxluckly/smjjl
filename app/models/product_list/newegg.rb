@@ -30,6 +30,7 @@ class ProductList::Newegg < ProductList
   def get_list_prices(page_num)
     page_url = url.gsub(".htm", "-#{page_num}.htm?sort=50&pageSize=96")
     Nokogiri::HTML(http_get(page_url), nil, "GBK").css(".catepro li.cls").each do |li|
+      next unless li.css("p.title a")
       next unless product = Product::Newegg.where(url: li.css("p.title a").attr("href").to_s.strip).first
       product.record_bargain li.css('.price').text.scan(/[\d\.]+/).join
     end
