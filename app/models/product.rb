@@ -9,7 +9,8 @@ class Product < ActiveRecord::Base
   # relationships .............................................................
   has_many :prices
   has_many :bargains
-  
+  has_and_belongs_to_many :categories
+
   # validations ...............................................................
   validates :url, uniqueness: { scope: :type }, if: "url.present?"
   validates :url_key, uniqueness: { scope: :type }, if: "url_key.present?"
