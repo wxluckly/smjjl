@@ -19,7 +19,8 @@ class Product < ActiveRecord::Base
   before_save :clean_name
 
   # scopes ....................................................................
-  scope :empty, -> { where("name is null or name = ''") }
+  # scope :empty, -> { where("name is null or name = ''") }
+  scope :empty, -> { where("category is null or category = ''") }
 
   # additional config .........................................................
   # class methods .............................................................

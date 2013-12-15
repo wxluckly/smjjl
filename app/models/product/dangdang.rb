@@ -12,7 +12,9 @@ class Product::Dangdang < Product
   # 获取商品详情
   def get_content
     page = Nokogiri::HTML(http_get(link), nil, 'gbk')
-    update( name: page.css(".head h1").text )
+    self.name = page.css(".head h1").text
+    self.category = page.css(".breadcrumb a").map{ |a| a.text }.join(",")
+    self.save
   end
 
   def link
