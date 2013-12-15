@@ -14,6 +14,7 @@ class Product::Amazon < Product
     page = Nokogiri::HTML(http_get(link))
     self.name = page.css("#btAsinTitle span").text
     self.category = (page.css("div.bucket").last.css("ul li").map{ |li| li.text.gsub(" > ", ",") }.join("|") rescue nil) if page.css("div.bucket").text.index("查找其它相似商品")
+    self.info = page.css("#productDescription .content").to_s
     self.save
     record_price page
   end
