@@ -28,18 +28,20 @@ class ProductList::Amazon < ProductList
     end
   end
 
-  # 从列表中更新价格
+  # 从列表中更新价格(包括价格、名称、销量和分数)
   def get_list_prices(page_num)
     page_url = "http://www.amazon.cn/s?rh=n%3A#{url_key}&page=#{page_num}"
-    Nokogiri::HTML(http_get(page_url)).css("#rightResultsATF div.result").each do |div|
-      next unless div.attr("name")
-      begin
-        price = div.css('div.newPrice span').text.scan(/[\d\.]+/).join
-        product = Product::Amazon.where(url_key: div.attr("name").strip).first
-        product.record_bargain price
-      rescue
-        next
-      end
+    page = Nokogiri::HTML(http_get(page_url))
+    category = page.css("#breadCrumb a").map{|a|a.text}.join(",")
+    page.css("#rightResultsATF .prod").each do |div|
+      product = Product::Amazon.where(url_key: div.attr("name").strip).first
+      next if product.blank?
+      product.name = div.css(".newaps span").text
+      product.count = div.css(".rvwCnt a").text.scan(%r|\d+|).first
+      product.score = div.css(".rvwCnt a").attr("alt").text.scan(%r|[\d\.]+|).first rescue nil
+      product.category = category
+      product.save
+      product.record_bargain div.css(".newp span").text.scan(%r|[\d\.]+|).first
     end
   end
 
