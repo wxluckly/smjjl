@@ -26,12 +26,15 @@ class ProductList::Newegg < ProductList
     end
   end
 
-  # 从列表中更新价格
+  # 从列表中更新价格及其他信息
   def get_list_prices(page_num)
     page_url = url.gsub(".htm", "-#{page_num}.htm?sort=50&pageSize=96")
     Nokogiri::HTML(http_get(page_url), nil, "GBK").css(".catepro li.cls").each do |li|
       next if li.css("p.title a").blank?
       next unless product = Product::Newegg.where(url: li.css("p.title a").attr("href").to_s.strip).first
+      product.count = li.css('.rank').text.scan(%r|\d+|).first rescue nil
+      product.score = li.css('.rank a').attr("title").text.scan(%r|[\d\.]+|).first rescue nil
+      product.save
       product.record_bargain li.css('.price').text.scan(/[\d\.]+/).join
     end
   end

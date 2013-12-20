@@ -19,7 +19,7 @@ class Product::Jd < Product
     get_price
   end
 
-  # 从详情页获取价格
+  # 从接口获取价格
   def get_price
     page = Nokogiri::HTML(http_get("http://p.3.cn/prices/mgets?skuIds=J_#{self.url_key}"))
     if value = (page.text.scan(/p"\:"([\d\.]+)/).first.first rescue nil)

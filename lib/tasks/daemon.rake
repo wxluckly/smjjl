@@ -13,13 +13,15 @@ namespace :daemon do
 
   desc "更新产品价格"
   task :update_price => :environment do
-    # 京东采取详情页抓取价格的方式：
+    # 京东从接口更新价格：
     Product::Jd.find_each{ |p| UpdatePriceWorker.perform_async(p.id) }
-    # 亚马逊采取列表页抓取价格的方式：
+    # 京东从列表页抓取信息：
+    ProductList::Jd.find_each{ |l| GetPaginationWorker.perform_async(l.id, "price") }
+    # 亚马逊从列表页抓取价格及信息：
     ProductList::Amazon.find_each{ |l| GetPaginationWorker.perform_async(l.id, "price") }
-    # 新蛋采取列表页抓取价格的方式：
+    # 新蛋从列表页抓取价格及信息：
     ProductList::Newegg.find_each{ |l| GetPaginationWorker.perform_async(l.id, "price") }
-    # 当当采取列表页抓取价格的方式：
+    # 当当从列表页抓取价格及信息：
     ProductList::Dangdang.find_each{ |l| GetPaginationWorker.perform_async(l.id, "price") }
   end
 

@@ -14,6 +14,7 @@ class Product::Newegg < Product
     page = Nokogiri::HTML(http_get(link), nil, "GBK")
     self.name = page.css(".proHeader h1").text
     self.category = page.css("#crumb .inner").text.split(" > ")[1, 3].join(",")
+    self.info = page.css("#tabCot_product_1 table").to_s
     self.save
   end
 
