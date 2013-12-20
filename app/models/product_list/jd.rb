@@ -9,10 +9,11 @@ class ProductList::Jd < ProductList
   # additional config .........................................................
   # class methods .............................................................
   # public instance methods ...................................................
-  def get_pagination(category)
+  def get_pagination(category = "id")
     total_page = Nokogiri::HTML(http_get(url)).css(".pagin a")[-2].text.to_i rescue 1
     1.upto total_page do |page_num|
-      GetIdWorker.perform_async(id, page_num)
+      GetIdWorker.perform_async(id, page_num) if category == "id"
+      UpdateListPriceWorker.perform_async(id, page_num) if category == "price"
     end
   end
 
