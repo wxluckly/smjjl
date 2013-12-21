@@ -6,6 +6,8 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(:default, Rails.env)
 
+require 'yajl'
+
 # 加载全局配置
 require File.expand_path('../settings', __FILE__)
 
