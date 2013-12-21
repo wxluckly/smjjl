@@ -16,7 +16,6 @@ class Product::Jd < Product
     self.category = page.css(".breadcrumb a").map{ |a| a.text }[0, 3].join(",")
     self.info = page.css("#product-detail-1").to_s
     self.save
-    get_price
   end
 
   # 从接口获取价格
