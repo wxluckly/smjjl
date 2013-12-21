@@ -26,15 +26,16 @@ class Product < ActiveRecord::Base
   # class methods .............................................................
   # public instance methods ...................................................
   def record_bargain value
-    return if value.blank?
-    update(low_price: value) if low_price.blank?
-    return if value.to_f == low_price.to_f
+    value_f = value.to_f
+    return if value_f <= 0
+    update(low_price: value_f) if low_price.blank?
+    return if value_f == low_price.to_f
     prices.create(value: value)
-    return if value.to_f > low_price.to_f
-    if (low_price.to_f - value.to_f) / low_price.to_f > 0.05
-      bargains.create(price: value, history_low: low_price)
+    return if value_f > low_price.to_f
+    if (low_price.to_f - value_f) / low_price.to_f > 0.05
+      bargains.create(price: value_f, history_low: low_price)
     end
-    update(low_price: value)
+    update(low_price: value_f)
   end
 
   # protected instance methods ................................................
