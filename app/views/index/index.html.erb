@@ -5,6 +5,7 @@
       <th>历史新低</th>
       <th>当前价格</th>
       <th>更新时间</th>
+      <th>去购买</th>
     </tr>
   </thead>
   <tbody>
@@ -16,10 +17,11 @@
       end
     %>
     <tr class="<%= class_name %>">
-      <td><%= link_to bargain.product.name.to_s[0, 55], bargain.product.link, target: "_blank" %></td>
+      <td><%= link_to bargain.product.name.to_s[0, 55], product_path(bargain.product), target: "_blank" %></td>
       <td><%= "-#{sprintf("%.2f", discount)}%" %></td>
       <td><%= bargain.price %></td>
       <td><%= friendly_time bargain.created_at %></td>
+      <td><%= link_to "去购买", bargain.product.link, target: "_blank" %></td>
     </tr>
     <% end %>
   </thead>

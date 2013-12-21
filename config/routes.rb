@@ -1,7 +1,7 @@
 require 'sidekiq/web'
-
 Smjjl::Application.routes.draw do
-  root 'index#index'
-
   mount Sidekiq::Web => '/sidekiq'
+  root 'index#index'
+  
+  resources :products
 end

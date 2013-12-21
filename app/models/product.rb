@@ -38,6 +38,10 @@ class Product < ActiveRecord::Base
     update(low_price: value_f)
   end
 
+  def to_param
+    "#{id}-#{name.gsub(%r|[\/\s\\\(\)（）]|, "-")}"[0, 40]
+  end
+
   # protected instance methods ................................................
   # private instance methods ..................................................
   private

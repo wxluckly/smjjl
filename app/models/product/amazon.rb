@@ -18,7 +18,7 @@ class Product::Amazon < Product
   end
 
   def link
-    URI::encode(url || "http://www.amazon.cn/#{(name.blank? ? "-" : name ).gsub(" ", "-").gsub("/", "-")}/dp/#{url_key}/ref=")
+    URI::encode(url || "http://www.amazon.cn/#{(name.blank? ? "-" : name ).gsub(%r|[\/\s\\\(\)（）]|, "-")}/dp/#{url_key}/ref=")
   end
 
   # protected instance methods ................................................
