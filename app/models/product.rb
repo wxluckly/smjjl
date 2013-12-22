@@ -10,6 +10,8 @@ class Product < ActiveRecord::Base
   has_many :prices
   has_many :bargains
   has_and_belongs_to_many :categories
+  has_one :product_info
+  belongs_to :product_info
 
   # validations ...............................................................
   validates :url, uniqueness: { scope: :type }, if: "url.present?"
@@ -50,5 +52,14 @@ class Product < ActiveRecord::Base
       self.name = self.name.gsub("\n", "").gsub("\r", "").strip
       self.name = self.name[0, 255]
     end
+  end
+
+  def record_info info
+    pi = ProductInfo.find_or_initialize_by(product_id: self.id)
+    pi.product = self
+    pi.info = info
+    pi.save
+    self.product_info = pi
+    self.save
   end
 end

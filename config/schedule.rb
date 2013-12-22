@@ -19,7 +19,7 @@ end
 
 # 每小时清空log
 every '10 * * * *', :roles => [:master] do
-  command "> log/production.log"
+  command "cd /www/smjjl && >> log/production.log"
 end
 
 # 每小时零10分重启worker服务
