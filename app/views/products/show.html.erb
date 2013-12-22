@@ -1,2 +1,2 @@
 <%= @product.name %>
-<%= show_info @product.info %>
+<%= show_info @product.product_info.try(:info) %>
