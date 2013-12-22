@@ -17,6 +17,7 @@ namespace :back_fill do
       pi.info = p.info
       pi.save
       p.product_info = pi
+      p.info = nil
       p "save #{p.id}"
       p.save
     end
