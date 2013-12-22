@@ -15,4 +15,8 @@ module ApplicationHelper
     return "#{(pass_seconds) / 1.hours}小时前" if pass_seconds < 10.hours
     time.strftime("%Y年%m月%d日 %H:%M:%S")
   end
+
+  def show_info info
+    info.gsub("data-lazyload", "src").html_safe rescue ""
+  end
 end
