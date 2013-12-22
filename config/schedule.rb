@@ -17,7 +17,12 @@ every '0 8,14,20 * * *', :roles => [:master] do
   rake "daemon:update_price"
 end
 
-# 每小时重启worker服务
+# 每小时清空log
+every '10 * * * *', :roles => [:master] do
+  command "> log/production.log"
+end
+
+# 每小时零10分重启worker服务
 every '10 * * * *', :roles => [:worker] do
   rake "sidekiq:restart"
 end
