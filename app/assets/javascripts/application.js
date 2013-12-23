@@ -17,3 +17,6 @@
 //= require lib/cloud-zoom.1.0.2.min
 //= require lib/jquery.Jcrop.min
 //= require twitter/bootstrap
+//= require highcharts/highcharts                                                           
+//= require highcharts/highcharts-more                                                         
+//= require highcharts/highstock
