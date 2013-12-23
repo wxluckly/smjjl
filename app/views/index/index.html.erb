@@ -17,7 +17,7 @@
       end
     %>
     <tr class="<%= class_name %>">
-      <td><%= link_to (bargain.product.name.to_s[0, 55] rescue "名字不见了。。。"), product_path(bargain.product), target: "_blank" %></td>
+      <td><%= link_to bargain.product.name.to_s[0, 55], product_path(bargain.product), target: "_blank" %></td>
       <td><%= "-#{sprintf("%.2f", discount)}%" %></td>
       <td><%= bargain.price %></td>
       <td><%= friendly_time bargain.created_at %></td>

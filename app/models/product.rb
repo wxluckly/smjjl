@@ -41,7 +41,7 @@ class Product < ActiveRecord::Base
   end
 
   def to_param
-    "#{id}-#{name.gsub(%r|[\/\s\\\(\)（）]|, "-")}"[0, 40]
+    "#{id}-#{name.to_s.gsub(%r|[\/\s\\\(\)（）]|, "-")}"[0, 40]
   end
 
   # protected instance methods ................................................
