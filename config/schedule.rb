@@ -18,8 +18,8 @@ every '0 8,14,20 * * *', :roles => [:master] do
 end
 
 # 每小时清空log
-every '10 * * * *', :roles => [:master] do
-  command "cd /www/smjjl && >> log/production.log"
+every '0 * * * *', :roles => [:master] do
+  command "cd /www/smjjl && > log/production.log"
 end
 
 # 每小时零10分重启worker服务
