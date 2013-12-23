@@ -11,3 +11,10 @@
     <td colspan="3"><%= show_info @product.product_info.try(:info) %></td>
   </tr>
 </table>
+<% content_for :script do %>
+<script type="text/javascript">
+  <% if @product.class ==  Product::Dangdang %>
+  $("#detail_all").html($("#detail_all textarea").val());
+  <% end %>
+</script>
+<% end %>
