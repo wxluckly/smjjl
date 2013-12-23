@@ -38,7 +38,7 @@ class ProductList::Amazon < ProductList
       product.count = div.css(".rvwCnt a").text.scan(%r|\d+|).first
       product.score = div.css(".rvwCnt a").attr("alt").text.scan(%r|[\d\.]+|).first rescue nil
       product.save
-      product.record_bargain div.css(".newp span").text.gsub("\s", "").scan(%r|[\d\.]+|).first
+      product.record_price div.css(".newp span").text.gsub("\s", "").scan(%r|[\d\.]+|).first
     end
   end
 

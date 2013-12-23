@@ -35,7 +35,7 @@ class ProductList::Newegg < ProductList
       product.count = li.css('.rank').text.scan(%r|\d+|).first rescue nil
       product.score = li.css('.rank a').attr("title").text.scan(%r|[\d\.]+|).first rescue nil
       product.save
-      product.record_bargain li.css('.price').text.scan(/[\d\.]+/).join
+      product.record_price li.css('.price').text.scan(/[\d\.]+/).join
     end
   end
 
