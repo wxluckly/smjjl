@@ -5,7 +5,7 @@
   <tr>
     <td>销量：<%= @product.count %></td>
     <td>好评率：<%= @product.score %>%</td>
-    <td><%= link_to "去购买", @product.link, target: "_blank" %></td>
+    <td><%= link_to "去购买", @product.purchase_link, target: "_blank" %></td>
   </tr>
   <tr>
     <td colspan="3"><%#= high_chart("my_id4", @chart) %></td>

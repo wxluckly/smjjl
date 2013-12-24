@@ -23,6 +23,11 @@ class Product::Dangdang < Product
   def link
     "http://product.dangdang.com/#{url_key}.html"
   end
+
+  def purchase_link
+    "http://p.yiqifa.com/c?s=e854bab4&w=693301&c=17307&i=39336&l=0&e=&t=#{link}"
+  end
+
   # protected instance methods ................................................
   # private instance methods ..................................................
 end

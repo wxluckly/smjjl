@@ -21,6 +21,10 @@ class Product::Amazon < Product
     URI::encode(url || "http://www.amazon.cn/#{(name.blank? ? "-" : name ).gsub(%r|[\/\s\\\(\)（）]|, "-")}/dp/#{url_key}/ref=")
   end
 
+  def purchase_link
+    link
+  end
+
   # protected instance methods ................................................
   # private instance methods ..................................................
 end

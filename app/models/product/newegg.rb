@@ -21,6 +21,11 @@ class Product::Newegg < Product
   def link
     url
   end
+
+  def purchase_link
+    "http://p.yiqifa.com/c?s=d8b0ade3&w=693301&c=280&i=240&l=0&e=&t=#{link}"
+  end
+
   # protected instance methods ................................................
   # private instance methods ..................................................
 end
