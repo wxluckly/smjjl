@@ -8,7 +8,7 @@
     <td><%= link_to "去购买", @product.link, target: "_blank" %></td>
   </tr>
   <tr>
-    <td colspan="3"><%= high_chart("my_id4", @chart) %></td>
+    <td colspan="3"><%#= high_chart("my_id4", @chart) %></td>
   </tr>
   <tr>
     <td colspan="3"><%= show_info @product.product_info.try(:info) %></td>
