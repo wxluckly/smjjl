@@ -31,11 +31,16 @@ class Product < ActiveRecord::Base
   def record_price value
     value_f = value.to_f
     return if value_f <= 0
-    prices.create(value: value)
-    # 没有历史最低价，就写入第一次的价格
-    update(low_price: value_f) if low_price.blank?
+    # 回填初始的价格
+    self.low_price = value_f if low_price.blank?
+    # 如果和上次价格记录不同，则记录新价格
+    if last_price.blank? || value_f != last_price.to_f
+      prices.create(value: value)
+      self.last_price = value_f
+    end
     # 记录新的历史最低
-    update(low_price: value_f) if value_f < low_price.to_f
+    self.low_price = value_f if value_f < low_price.to_f
+    self.save
   end
 
   def to_param
