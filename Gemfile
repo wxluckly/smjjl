@@ -90,6 +90,7 @@ gem 'ancestry'
 gem 'acts_as_follower'
 gem 'acts_as_list'
 gem 'typhoeus'
+gem 'lazy_high_charts'
 
 # 搜索查询
 gem 'ransack'
