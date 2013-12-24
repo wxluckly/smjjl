@@ -17,6 +17,6 @@ module ApplicationHelper
   end
 
   def show_info info
-    info.gsub("data-lazyload", "src").html_safe rescue "暂无内容"
+    info.gsub("data-lazyload", "src").gsub("center", "").html_safe rescue "暂无内容"
   end
 end
