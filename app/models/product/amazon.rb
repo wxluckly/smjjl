@@ -25,6 +25,10 @@ class Product::Amazon < Product
     link
   end
 
+  def good_percent
+    "#{score.to_f * 20}%"
+  end
+
   # protected instance methods ................................................
   # private instance methods ..................................................
 end
