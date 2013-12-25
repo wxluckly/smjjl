@@ -16,9 +16,9 @@
       when discount > 25 then "warning"
       end
     %>
-    <tr class="<%= class_name %>">
+    <tr>
       <td><%= link_to bargain.product.name.to_s[0, 55], product_path(bargain.product), target: "_blank" %></td>
-      <td><%= "-#{sprintf("%.2f", discount)}%" %></td>
+      <td class="<%= class_name %>"><%= "-#{sprintf("%.2f", discount)}%" %></td>
       <td><%= bargain.price %></td>
       <td><%= friendly_time bargain.created_at %></td>
       <td><%= link_to "去购买", bargain.product.purchase_link, target: "_blank", rel: "nofollow" %></td>
