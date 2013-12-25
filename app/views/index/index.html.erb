@@ -27,3 +27,6 @@
   </thead>
 </table>
 <%= will_paginate @bargains, :renderer => BootstrapPagination::Rails %>
+<% content_for :title do %>首页<% end %>
+<% content_for :meta_keywords do %>降价商品,什么降价了<% end %>
+<% content_for :meta_desc do %>就在刚才，京东商城、亚马逊中国、当当还有新蛋商城的多款电商商品降价了，快来看看捡个大便宜吧！<% end %>
