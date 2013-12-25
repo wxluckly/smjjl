@@ -26,6 +26,10 @@ class Product::Newegg < Product
     "http://p.yiqifa.com/c?s=d8b0ade3&w=693301&c=280&i=240&l=0&e=&t=#{link}"
   end
 
+  def good_percent
+    "#{score.to_f * 20}%"
+  end
+
   # protected instance methods ................................................
   # private instance methods ..................................................
 end

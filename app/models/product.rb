@@ -47,6 +47,10 @@ class Product < ActiveRecord::Base
     "#{id}-#{name.to_s.gsub(%r|[\/\s\\\(\)（）]|, "-")}"[0, 40]
   end
 
+  def good_percent
+    "#{score}%"
+  end
+
   # protected instance methods ................................................
   # private instance methods ..................................................
   private
