@@ -31,7 +31,7 @@ class Product::Jd < Product
   end
 
   def purchase_link
-    link
+    "http://p.yiqifa.com/c?s=5f7cc07d&w=693301&c=254&i=160&l=0&e=&t=#{link}"
   end
 
   # protected instance methods ................................................
