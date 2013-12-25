@@ -4,4 +4,5 @@ Smjjl::Application.routes.draw do
   root 'index#index'
   
   resources :products
+  resources :sitemap, only: :index
 end

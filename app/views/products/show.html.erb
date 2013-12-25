@@ -23,4 +23,4 @@
 <% end %>
 <% content_for :title do %><%= @product.name[0, 50] %><% end %>
 <% content_for :meta_keywords do %>降价商品,什么降价了,<%= @product.name[0, 30] %><% end %>
-<% content_for :meta_desc do %><%= (strip_tags @product.product_info.try(:info))[0, 240] %><% end %>
+<% content_for :meta_desc do %><%= (strip_tags @product.product_info.try(:info)).to_s[0, 240] %><% end %>
