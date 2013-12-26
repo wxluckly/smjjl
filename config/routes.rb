@@ -5,4 +5,7 @@ Smjjl::Application.routes.draw do
   
   resources :products
   resources :sitemap, only: :index
+  namespace :ajax do
+    get "get_prices"
+  end
 end

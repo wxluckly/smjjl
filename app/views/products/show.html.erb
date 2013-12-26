@@ -9,7 +9,7 @@
       <td><%= link_to "去购买", @product.purchase_link, target: "_blank", rel: "nofollow" %></td>
     </tr>
     <tr>
-      <td colspan="3"><%#= high_chart("my_id4", @chart) %></td>
+      <td colspan="3"><div id="my_id4"></div></td>
     </tr>
   </table>
   <div class="panel-footer"><%= show_info @product.product_info.try(:info) %></div>
@@ -19,6 +19,7 @@
   <% if @product.class ==  Product::Dangdang %>
   $("#detail_all").html($("#detail_all textarea").val());
   <% end %>
+  $("#my_id4").load("/ajax/get_prices?id=<%= @product.id.to_i %>");
 </script>
 <% end %>
 <% content_for :title do %><%= @product.name[0, 50] %><% end %>
