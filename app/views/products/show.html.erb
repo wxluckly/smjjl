@@ -1,19 +1,19 @@
-<table class="table table-bordered">
-  <tr>
-    <td colspan="3"><h1><%= @product.name %></h1></td>
-  </tr>
-  <tr>
-    <td>销量：<%= @product.count %></td>
-    <td>好评率：<%= @product.good_percent %></td>
-    <td><%= link_to "去购买", @product.purchase_link, target: "_blank", rel: "nofollow" %></td>
-  </tr>
-  <tr>
-    <td colspan="3"><%#= high_chart("my_id4", @chart) %></td>
-  </tr>
-  <tr>
-    <td colspan="3"><%= show_info @product.product_info.try(:info) %></td>
-  </tr>
-</table>
+<div class="panel panel-default">
+  <table class="table table-bordered">
+    <tr>
+      <td colspan="3"><h1><%= @product.name %></h1></td>
+    </tr>
+    <tr>
+      <td>销量：<%= @product.count %></td>
+      <td>好评率：<%= @product.good_percent %></td>
+      <td><%= link_to "去购买", @product.purchase_link, target: "_blank", rel: "nofollow" %></td>
+    </tr>
+    <tr>
+      <td colspan="3"><%#= high_chart("my_id4", @chart) %></td>
+    </tr>
+  </table>
+  <div class="panel-footer"><%= show_info @product.product_info.try(:info) %></div>
+</div>
 <% content_for :script do %>
 <script type="text/javascript">
   <% if @product.class ==  Product::Dangdang %>

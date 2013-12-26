@@ -1,31 +1,33 @@
-<table class="table">
-  <thead>
-    <tr>
-      <th>产品名称</th>
-      <th>历史新低</th>
-      <th>当前价格</th>
-      <th>更新时间</th>
-      <th>去购买</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @bargains.each do |bargain| %>
-    <% discount = 100 - (bargain.price.to_f / bargain.history_low.to_f * 100 rescue bargain.discount.to_f)
+<div class="panel panel-default">
+  <table class="table">
+    <thead>
+      <tr class="active">
+        <th>产品名称</th>
+        <th>历史新低</th>
+        <th>当前价格</th>
+        <th>更新时间</th>
+        <th>去购买</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @bargains.each do |bargain| %>
+      <% discount = 100 - (bargain.price.to_f / bargain.history_low.to_f * 100 rescue bargain.discount.to_f)
       class_name = case
       when discount > 50 then "danger"
       when discount > 25 then "warning"
       end
-    %>
-    <tr>
-      <td><%= link_to bargain.product.name.to_s[0, 55], product_path(bargain.product), target: "_blank" %></td>
-      <td class="<%= class_name %>"><%= "-#{sprintf("%.2f", discount)}%" %></td>
-      <td><%= bargain.price %></td>
-      <td><%= friendly_time bargain.created_at %></td>
-      <td><%= link_to "去购买", bargain.product.purchase_link, target: "_blank", rel: "nofollow" %></td>
-    </tr>
-    <% end %>
-  </thead>
-</table>
+      %>
+      <tr>
+        <td><%= link_to bargain.product.name.to_s[0, 55], product_path(bargain.product), target: "_blank" %></td>
+        <td class="<%= class_name %>"><%= "-#{sprintf("%.2f", discount)}%" %></td>
+        <td><%= bargain.price %></td>
+        <td><%= friendly_time bargain.created_at %></td>
+        <td><%= link_to "去购买", bargain.product.purchase_link, target: "_blank", rel: "nofollow" %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 <%= will_paginate @bargains, :renderer => BootstrapPagination::Rails %>
 <% content_for :title do %>首页<% end %>
 <% content_for :meta_keywords do %>降价商品,什么降价了<% end %>
