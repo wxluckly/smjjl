@@ -19,7 +19,7 @@
   <% if @product.class ==  Product::Dangdang %>
   $("#detail_all").html($("#detail_all textarea").val());
   <% end %>
-  $("#my_id4").load("/ajax/get_prices?id=<%= @product.id.to_i %>");
+  // $("#my_id4").load("/ajax/get_prices?id=<%= @product.id.to_i %>");
 </script>
 <% end %>
 <% content_for :title do %><%= @product.name[0, 50] %><% end %>
