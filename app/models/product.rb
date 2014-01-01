@@ -16,6 +16,7 @@ class Product < ActiveRecord::Base
   # validations ...............................................................
   validates :url, uniqueness: { scope: :type }, if: "url.present?"
   validates :url_key, uniqueness: { scope: :type }, if: "url_key.present?"
+  validate :verify_price_history
 
   # callbacks .................................................................
   before_save :clean_name
@@ -26,6 +27,8 @@ class Product < ActiveRecord::Base
   scope :empty, -> { where("product_info_id is null") }
 
   # additional config .........................................................
+  serialize :price_history
+
   # class methods .............................................................
   # public instance methods ...................................................
   def record_price value
@@ -37,6 +40,7 @@ class Product < ActiveRecord::Base
     if last_price.blank? || value_f != last_price.to_f
       prices.create(value: value)
       self.last_price = value_f
+      self.price_history = (price_history || {}).merge({Date.today.strftime('%m-%d') => value_f.to_s})
     end
     # 记录新的历史最低
     self.low_price = value_f if value_f < low_price.to_f
@@ -75,5 +79,9 @@ class Product < ActiveRecord::Base
     pi.save
     self.product_info = pi
     self.save
+  end
+
+  def verify_price_history
+    errors.add(:price_history, "只能存入hash,并且值为数组") if price_history.present? and !price_history.is_a?(Hash)
   end
 end
