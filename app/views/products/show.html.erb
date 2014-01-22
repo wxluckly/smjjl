@@ -1,19 +1,19 @@
-<div class="panel panel-default">
-  <table class="table table-bordered">
-    <tr>
-      <td colspan="3"><h1><%= @product.name %></h1></td>
-    </tr>
-    <tr>
-      <td>销量：<%= @product.count %></td>
-      <td>好评率：<%= @product.good_percent %></td>
-      <td><%= link_to "去购买", @product.purchase_link, target: "_blank", rel: "nofollow" %></td>
-    </tr>
-    <tr>
-      <td colspan="3"><div id="price_chart" style="height: 200px;"></div></td>
-    </tr>
-  </table>
-  <div class="panel-footer"><%= show_info @product.product_info.try(:info) %></div>
-</div>
+<table class="table table-bordered">
+  <tr>
+    <td colspan="3"><h1><%= @product.name %></h1></td>
+  </tr>
+  <tr class="grey">
+    <td>销量：<%= @product.count %></td>
+    <td>好评率：<%= @product.good_percent %></td>
+    <td><%= link_to "去购买", @product.purchase_link, target: "_blank", rel: "nofollow", class: "btn btn-success" %></td>
+  </tr>
+  <tr>
+    <td colspan="3"><div id="price_chart" style="height: 200px;"></div></td>
+  </tr>
+  <tr class="grey">
+    <td colspan="3"><%= show_info @product.product_info.try(:info) %></td>
+  </tr>
+</table>
 <% content_for :script do %>
 <script type="text/javascript">
   <% if @product.class ==  Product::Dangdang %>
