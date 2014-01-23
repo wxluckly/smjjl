@@ -18,7 +18,7 @@
     end
     %>
     <tr class="<%= class_name %>">
-      <td><%= image_tag(bargain.product.image_url, height: '40', width: '40', class: "img-polaroid") %></td>
+      <td><%= image_tag(bargain.product.image_url, height: '50', width: '50') %></td>
       <td><%= link_to bargain.product.name.to_s[0, 45], product_path(bargain.product), target: "_blank" %></td>
       <td><%= "-#{sprintf("%.2f", discount)}%" %></td>
       <td><%= "￥#{bargain.price}" %></td>
