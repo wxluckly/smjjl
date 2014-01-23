@@ -14,6 +14,7 @@ class Product::Jd < Product
     page = Nokogiri::HTML(http_get(url), nil, 'gbk')
     self.name = page.css("#name h1").text
     self.category = page.css(".breadcrumb a").map{ |a| a.text }[0, 3].join(",")
+    self.image_url = page.css("#spec-n1 img").attr("src").text rescue nil
     self.save
     record_info page.css("#product-detail-1").to_s
   end

@@ -13,7 +13,7 @@ class Product::Amazon < Product
   def get_content
     page = Nokogiri::HTML(http_get(link))
     self.category = (page.css("div.bucket").last.css("ul li").map{ |li| li.text.gsub(" > ", ",") }.join("|") rescue nil) if page.css("div.bucket").text.index("查找其它相似商品")
-    self.image_url = ""
+    self.image_url = page.css("#original-main-image").attr("src").text rescue nil
     self.save
     record_info page.css("#productDescription .content").to_s
   end
