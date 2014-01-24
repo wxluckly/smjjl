@@ -1,10 +1,18 @@
 <table class="table table-bordered">
   <tr>
-    <td colspan="3"><h1><%= @product.name %></h1></td>
+    <td colspan="2"><h1><%= @product.name %></h1></td>
   </tr>
   <tr class="grey">
+    <td rowspan="4" width="300"><%= image_tag @product.image_url, height: '300', width: '300' %></td>
     <td>销量：<%= @product.count %></td>
+  </tr>
+  <tr class="grey">
     <td>好评率：<%= @product.good_percent %></td>
+  </tr>
+  <tr class="grey">
+    <td>价格：<%= "￥#{@product.last_price}" %></td>
+  </tr>
+  <tr class="grey">
     <td><%= link_to "去购买", @product.purchase_link, target: "_blank", rel: "nofollow", class: "btn btn-success" %></td>
   </tr>
   <tr>
