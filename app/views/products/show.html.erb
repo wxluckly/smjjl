@@ -3,7 +3,10 @@
     <td colspan="2"><h1><%= @product.name %></h1></td>
   </tr>
   <tr class="grey">
-    <td rowspan="4" width="300"><%= image_tag @product.image_url, height: '300', width: '300' %></td>
+    <td rowspan="5" width="300"><%= image_tag @product.image_url, height: '300', width: '300' %></td>
+    <td><%= @product.category %></td>
+  </tr>
+  <tr class="grey">
     <td>销量：<%= @product.count %></td>
   </tr>
   <tr class="grey">
