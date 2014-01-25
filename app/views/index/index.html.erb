@@ -2,9 +2,8 @@
   <thead>
     <tr>
       <th>图</th>
-      <th>产品名称</th>
-      <th>劲减</th>
       <th>价格</th>
+      <th>产品名称</th>
       <th>时间</th>
       <th>去购买</th>
     </tr>
@@ -18,10 +17,9 @@
     end
     %>
     <tr class="<%= class_name %>">
-      <td><%= image_tag(bargain.product.image_url, height: '50', width: '50') %></td>
-      <td><%= link_to bargain.product.name.to_s[0, 45], product_path(bargain.product), target: "_blank" %></td>
-      <td><%= "-#{sprintf("%.2f", discount)}%" %></td>
-      <td><%= "￥#{bargain.price}" %></td>
+      <td><%= link_to image_tag(bargain.product.image_url, height: '50', width: '50'), product_path(bargain.product), target: "_blank" %></td>
+      <td><%= sanitize "￥#{bargain.price} <br /> (-#{sprintf("%.2f", discount)}%)" %></td>
+      <td><%= link_to bargain.product.name.to_s, product_path(bargain.product), target: "_blank" %></td>
       <td><%= friendly_time bargain.created_at %></td>
       <td><%= link_to "去购买", bargain.product.purchase_link, target: "_blank", rel: "nofollow", class: "btn btn-success" %></td>
     </tr>
