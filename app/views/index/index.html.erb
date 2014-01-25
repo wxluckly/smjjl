@@ -21,7 +21,7 @@
       <td style="text-align: center">
         <font color="red"><%= sanitize "￥#{bargain.price}" %></font>
         <br />
-        <font size='1'><%= "(-#{sprintf("%.2f", discount)}%)" %></font>
+        <font size='1'><%= "(-#{sprintf("%.1f", discount)}%)" %></font>
       </td>
       <td><%= link_to bargain.product.name.to_s, product_path(bargain.product), target: "_blank" %></td>
       <td><%= friendly_time bargain.created_at %></td>
