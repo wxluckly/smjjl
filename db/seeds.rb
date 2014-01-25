@@ -19,3 +19,6 @@ ProductRoot::Newegg.create(url: "http://www.newegg.cn/CategoryList.htm")
 
 Site::Dangdang.create(name: "当当")
 ProductRoot::Dangdang.create(url: "http://category.dangdang.com")
+
+Site::Gome.create(name: "国美在线")
+ProductRoot::Gome.create(url: "http://www.gome.com.cn/allcategory/")
