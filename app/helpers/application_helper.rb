@@ -13,7 +13,7 @@ module ApplicationHelper
     return "刚刚" if pass_seconds < 30 * 60
     return "半小时前" if pass_seconds < 1.hours
     return "#{(pass_seconds) / 1.hours}小时前" if pass_seconds < 10.hours
-    time.strftime("%Y年%m月%d日 %H:%M:%S")
+    time.strftime("%Y-%m-%d %H:%M")
   end
 
   def show_info info
