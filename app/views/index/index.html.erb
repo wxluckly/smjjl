@@ -5,7 +5,7 @@
       <th style="text-align: center">价格</th>
       <th>产品名称</th>
       <th>时间</th>
-      <th width='68' style="text-align: center">去购买</th>
+      <th width='68px' style="text-align: center">去购买</th>
     </tr>
   </thead>
   <tbody>
@@ -17,7 +17,7 @@
     end
     %>
     <tr class="<%= class_name %>">
-      <td style="text-align: center"><%= link_to image_tag(bargain.product.image_url, height: '50', width: '50'), product_path(bargain.product), target: "_blank" %></td>
+      <td height="50px" width='50px' style="text-align: center"><%= link_to image_tag(bargain.product.image_url, height: '50px', width: '50px'), product_path(bargain.product), target: "_blank" %></td>
       <td style="text-align: center">
         <font color="red"><%= sanitize "￥#{bargain.price}" %></font>
         <br />
