@@ -11,15 +11,19 @@ class Product::Gome < Product
   # public instance methods ...................................................
   # 获取商品详情
   def get_content
-
+    page = Nokogiri::HTML(http_get(link))
+    self.category = page.css(".local a").map(&:text)[1, 2].join(',')
+    self.image_url = page.css(".j-bpic-b").attr("gome-src").text
+    self.save
+    record_info Nokogiri::HTML(http_get(page.css("script")[-4].text.scan(/htmHref:\"(.+?)\"/).first.first)).css("table").to_s
   end
 
   def link
-    url
+    "http://www.gome.com.cn/product/#{url_key}.html"
   end
 
   def purchase_link
-    "http://p.yiqifa.com/c?s=5f7cc07d&w=693301&c=254&i=160&l=0&e=&t=#{link}"
+    link
   end
 
   # protected instance methods ................................................

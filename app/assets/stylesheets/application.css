@@ -18,9 +18,15 @@
 body { padding-top: 60px; }
 
 .table > tbody > tr > td, .table > div {
-  vertical-align:middle;
+  vertical-align: middle;
 }
 
 .table > tbody > tr.grey {
   background-color: #f9f9f9;
+}
+
+/* 产品详情内容块：中的table去除掉边距（为了国美） */
+#product_info table th, #product_info table td {
+  padding: 0px;
+  border-top: 0px;
 }
