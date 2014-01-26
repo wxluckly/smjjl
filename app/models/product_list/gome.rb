@@ -19,7 +19,7 @@ class ProductList::Gome < ProductList
 
   def get_product_ids(page_num)
     page_url = "http://www.gome.com.cn/p/json?module=async_search&paramJson=%7B%22pageNumber%22%3A%22#{page_num}%22%2C%22envReq%22%3A%7B%22catId%22%3A%22#{url_key}%22%2C%22pageSize%22%3A36%7D%7D"
-    Yajl::Parser.new.parse(Nokogiri::HTML(http_get(page_url)).text)["products"].each do |elem|
+    $yajl.parse(Nokogiri::HTML(http_get(page_url)).text)["products"].each do |elem|
       url_key = "#{elem["pId"].strip}-#{elem["skuId"].strip}"
       Product::Gome.create(url_key: url_key) if url_key
     end
@@ -28,7 +28,7 @@ class ProductList::Gome < ProductList
   # 从列表中更新价格及其他信息
   def get_list_prices(page_num)
     page_url = "http://www.gome.com.cn/p/json?module=async_search&paramJson=%7B%22pageNumber%22%3A%22#{page_num}%22%2C%22envReq%22%3A%7B%22catId%22%3A%22#{url_key}%22%2C%22pageSize%22%3A36%7D%7D"
-    Yajl::Parser.new.parse(Nokogiri::HTML(http_get(page_url)).text)["products"].each do |elem|
+    $yajl.parse(Nokogiri::HTML(http_get(page_url)).text)["products"].each do |elem|
       url_key = "#{elem["pId"].strip}-#{elem["skuId"].strip}"
       product = Product::Gome.where(url_key: url_key).first
       next if product.blank?

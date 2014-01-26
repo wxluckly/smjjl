@@ -22,7 +22,7 @@ class Product::Jd < Product
   # 从接口获取价格
   def get_price
     page = Nokogiri::HTML(http_get("http://p.3.cn/prices/mgets?skuIds=J_#{self.url_key}"))
-    if value = (Yajl::Parser.new.parse(page.text).first["p"] rescue nil)
+    if value = ($yajl.parse(page.text).first["p"] rescue nil)
       record_price value
     end
   end
