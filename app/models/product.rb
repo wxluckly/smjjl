@@ -74,6 +74,7 @@ class Product < ActiveRecord::Base
   end
 
   def record_info info
+    return if info.blank?
     pi = ProductInfo.find_or_initialize_by(product_id: self.id)
     pi.product = self
     pi.info = info
