@@ -9,7 +9,10 @@
       <a class="brand" href="../">什么降价了</a>
       <div class="nav-collapse collapse">
         <ul class="nav">
-          <li <% if params[:controller] == "index" and ["index", "show"].include?(params[:action]) %>class="active"<% end %>><%= link_to "首页", root_path %></li>
+          <li <% if current_page?(root_path) %>class="active"<% end %> ><%= link_to "首页", root_path %></li>
+          <% Category.find_each do |category| %>
+          <li <% if current_page?("/bargains_categories/#{category.id}") %>class="active"<% end %> ><%= link_to category.name, "/bargains_categories/#{category.id}" %></li>
+          <% end %>
         </ul>
       </div>
     </div>

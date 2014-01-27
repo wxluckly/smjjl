@@ -9,7 +9,6 @@ class Product < ActiveRecord::Base
   # relationships .............................................................
   has_many :prices
   has_many :bargains
-  has_and_belongs_to_many :categories
   has_one :product_info
   belongs_to :product_info
 
@@ -68,8 +67,10 @@ class Product < ActiveRecord::Base
 
   # 记录超值产品，只有降价幅度达到5%以上的时候，才进行记录
   def record_bargain
-    if (low_price_was.to_f - low_price) / low_price_was.to_f > 0.05
-      bargains.create(price: low_price, history_low: low_price_was)
+    return if (low_price_was.to_f - low_price) / low_price_was.to_f < 0.05
+    bargain = bargains.create(price: low_price, history_low: low_price_was)
+    Category.classify(category).each do |category_id|
+      BargainsCategory.create(bargain_id: bargain.id, category_id: category_id)
     end
   end
 
