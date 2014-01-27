@@ -19,8 +19,9 @@ class Product::Jd < Product
     record_info page.css("#product-detail-1").to_s
   end
 
-  # 从接口获取价格
+  # 从接口获取价格(目前只有京东有这个方法，待废弃)
   def get_price
+    p "已经不推荐使用此方法"
     page = Nokogiri::HTML(http_get("http://p.3.cn/prices/mgets?skuIds=J_#{self.url_key}"))
     if value = (Yajl::Parser.new.parse(page.text).first["p"] rescue nil)
       record_price value
