@@ -1,5 +1,9 @@
 class ApplicationController < ActionController::Base
-  # Prevent CSRF attacks by raising an exception.
-  # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
+
+  helper_method :remove_line_break
+
+  def remove_line_break str
+    str.to_s.gsub(/[\r\n\t]/, " ").gsub(/\s+/, " ")
+  end
 end
