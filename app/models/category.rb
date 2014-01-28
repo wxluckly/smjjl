@@ -15,7 +15,7 @@ class Category < ActiveRecord::Base
     category_array_str.split("|").each do |category_str|
       category_str.split(",").reverse.each do |word|
         self.all.each do |category|
-          result << category.id if category.words.split(",").index(word)
+          result << category.id if category.words.to_s.split(",").index(word)
         end
       end
     end
