@@ -12,7 +12,7 @@
     <% @bargains_categories.each do |bargains_category| %>
     <% discount = 100 - (bargains_category.bargain.price.to_f / bargains_category.bargain.history_low.to_f * 100 rescue bargains_category.bargain.discount.to_f)
     class_name = case
-    when discount > 50 then "danger"
+    when discount > 50 then "error"
     when discount > 25 then "warning"
     end
     %>
