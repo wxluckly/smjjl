@@ -19,7 +19,7 @@ class Category < ActiveRecord::Base
         end
       end
     end
-    return result
+    return result.uniq
   end
 
   # public instance methods ...................................................
