@@ -24,7 +24,7 @@
         <font size='1'><%= "(-#{sprintf("%.1f", discount)}%)" %></font>
       </td>
       <td><%= link_to bargain.product.name.to_s, product_path(bargain.product), target: "_blank" %></td>
-      <td><%= friendly_time bargain.created_at %></td>
+      <td width='78px'><%= friendly_time bargain.created_at %></td>
       <td style="text-align: center"><%= link_to "去购买", bargain.product.purchase_link, target: "_blank", rel: "nofollow", class: "btn btn-success" %></td>
     </tr>
     <% end %>
