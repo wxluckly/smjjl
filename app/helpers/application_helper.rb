@@ -10,10 +10,10 @@ module ApplicationHelper
 
   def friendly_time time
     pass_seconds = Time.now.to_i - time.to_i
-    return "刚刚" if pass_seconds < 30 * 60
-    return "半小时前" if pass_seconds < 1.hours
-    return "#{(pass_seconds) / 1.hours}小时前" if pass_seconds < 10.hours
-    time.strftime("%Y-%m-%d %H:%M")
+    return "刚刚" if pass_seconds < 60
+    return "#{pass_seconds / 60}分钟前" if pass_seconds < 60 * 60
+    return "#{(pass_seconds) / 1.hours}小时前" if pass_seconds < 24.hours
+    time.strftime("%Y-%m-%d")
   end
 
   def show_info info
