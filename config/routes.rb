@@ -6,6 +6,7 @@ Smjjl::Application.routes.draw do
   get "/bargains_categories/:category_id", to: 'bargains_categories#index'
   resources :products
   resources :sitemap, only: :index
+  resources :ordered_bargains, only: :index
   namespace :ajax do
     get "get_prices"
   end
