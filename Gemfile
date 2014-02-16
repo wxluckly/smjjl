@@ -11,6 +11,7 @@ gem 'yajl-ruby'
 gem 'sinatra', '>= 1.3.0', :require => nil
 gem 'uglifier'
 gem 'sass-rails'
+gem 'therubyracer'
 
 # 资源模板引擎
 gem 'jquery-rails', '2.2.1'
