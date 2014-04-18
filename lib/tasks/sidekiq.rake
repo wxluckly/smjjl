@@ -3,10 +3,11 @@ namespace :sidekiq do
   desc "stop sidekiq"
   task :stop do
     old_pid = File.expand_path('../../../tmp/pids/sidekiq.pid', __FILE__)
-    Process.kill("USR1", File.read(old_pid).to_i)
+    pid = File.read(old_pid).to_i
+    Process.kill("USR1", pid)
     p "sidekiq worker stoping"
     sleep 10
-    Process.kill("TERM", File.read(old_pid).to_i)
+    Process.kill("TERM", pid)
     p "sidekiq worker stoped"
   end
 
@@ -20,6 +21,13 @@ namespace :sidekiq do
   task :restart do
     Rake::Task["sidekiq:stop"].invoke
     Rake::Task["sidekiq:start"].invoke
+  end
+
+  desc "clean sidekiq zombie"
+  task :clean do
+    
+
+
   end
 
 end
