@@ -8,8 +8,9 @@ namespace :sidekiq do
     p "sidekiq worker stoping"
     sleep 10
     Process.kill("TERM", pid)
-    p "sidekiq worker stoped"
+    sleep 1
     exec "ps aux | grep sidekiq| grep stopping| awk '{print $2}'| xargs kill -9"
+    p "sidekiq worker stoped"
   end
 
   desc "start sidekiq"
