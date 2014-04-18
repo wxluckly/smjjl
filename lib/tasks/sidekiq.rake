@@ -9,6 +9,7 @@ namespace :sidekiq do
     sleep 10
     Process.kill("TERM", pid)
     p "sidekiq worker stoped"
+    exec "ps aux | grep sidekiq| grep stopping| awk '{print $2}'| xargs kill -9"
   end
 
   desc "start sidekiq"
@@ -21,13 +22,6 @@ namespace :sidekiq do
   task :restart do
     Rake::Task["sidekiq:stop"].invoke
     Rake::Task["sidekiq:start"].invoke
-  end
-
-  desc "clean sidekiq zombie"
-  task :clean do
-    
-
-
   end
 
 end
