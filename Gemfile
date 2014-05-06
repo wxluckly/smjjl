@@ -34,6 +34,7 @@ gem 'will_paginate'
 gem 'default_value_for', "~> 3.0.0"
 gem 'friendly_id', '~> 5.0.2'
 gem 'settingslogic'
+gem 'similar_text'
 
 group :development, :worker do
   gem 'pry'
