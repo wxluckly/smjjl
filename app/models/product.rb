@@ -4,7 +4,7 @@ class Product < ActiveRecord::Base
   include Patcher
 
   # security (i.e. attr_accessible) ...........................................
-  attr_accessible :url, :url_key, :price_key, :name, :low_price
+  attr_accessible :url, :url_key, :price_key, :name, :low_price, :category, :image_url, :is_discontinued, :type
 
   # relationships .............................................................
   has_many :prices
@@ -14,7 +14,7 @@ class Product < ActiveRecord::Base
 
   # validations ...............................................................
   validates :url, uniqueness: { scope: :type }, if: "url.present?"
-  validates :url_key, uniqueness: { scope: :type }, if: "url_key.present?"
+  validates :url_key, uniqueness: { scope: :type }, if: "url_key.present? and is_discontinued == false"
   validate :verify_price_history
 
   # callbacks .................................................................
