@@ -34,6 +34,7 @@ class ProductList::Amazon < ProductList
     Nokogiri::HTML(http_get(page_url)).css("#rightResultsATF .prod").each do |div|
       next unless product = Product::Amazon.where(url_key: div.attr("name").strip).first
       name = div.css(".newaps span").text.strip rescue nil
+      # 如果名称发生巨大变化，则证明原商品已被替换，进行下架处理
       if name and product.name.similar(name) > 85
         product.name = name
         product.count = div.css(".rvwCnt a").text.scan(%r|\d+|).first

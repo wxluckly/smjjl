@@ -33,6 +33,7 @@ class ProductList::Newegg < ProductList
       next if li.css("p.title a").blank?
       next unless product = Product::Newegg.where(url: li.css("p.title a").attr("href").to_s.strip).first
       name = li.css(".title a").text.strip rescue nil
+      # 如果名称发生巨大变化，则证明原商品已被替换，进行下架处理
       if name and product.name.similar(name) > 85
         product.name = name
         product.count = li.css('.rank').text.scan(%r|\d+|).first rescue nil

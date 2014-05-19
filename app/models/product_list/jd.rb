@@ -35,6 +35,7 @@ class ProductList::Jd < ProductList
       product = Product::Jd.where(url_key: li.css(".p-name a").attr("href").text.scan(/\d+/)).first rescue nil
       next if product.blank?
       name = li.css(".p-name").text.strip rescue nil
+      # 如果名称发生巨大变化，则证明原商品已被替换，进行下架处理
       if name and product.name.similar(name) > 85
         product.name = name
         product.count = li.css(".evaluate").text.scan(%r|\d+|).first rescue nil
