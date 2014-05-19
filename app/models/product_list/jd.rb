@@ -34,11 +34,16 @@ class ProductList::Jd < ProductList
     page.css("#plist li").each do |li|
       product = Product::Jd.where(url_key: li.css(".p-name a").attr("href").text.scan(/\d+/)).first rescue nil
       next if product.blank?
-      product.name = li.css(".p-name").text
-      product.count = li.css(".evaluate").text.scan(%r|\d+|).first rescue nil
-      product.score = li.css(".reputation").text.scan(%r|\d+|).first rescue nil
-      product.save
-      product.record_price value_hash["J_#{product.url_key}"]
+      name = li.css(".p-name").text.strip rescue nil
+      if name and product.name.similar(name) > 85
+        product.name = name
+        product.count = li.css(".evaluate").text.scan(%r|\d+|).first rescue nil
+        product.score = li.css(".reputation").text.scan(%r|\d+|).first rescue nil
+        product.save
+        product.record_price value_hash["J_#{product.url_key}"]
+      else
+        product.update_columns(url_key: nil, url: nil, is_discontinued: true)
+      end
     end
   end
 

@@ -14,7 +14,7 @@ class Product < ActiveRecord::Base
 
   # validations ...............................................................
   validates :url, uniqueness: { scope: :type }, if: "url.present?"
-  validates :url_key, uniqueness: { scope: :type }, if: "url_key.present? and is_discontinued == false"
+  validates :url_key, uniqueness: { scope: :type }, if: "url_key.present?"
   validate :verify_price_history
 
   # callbacks .................................................................

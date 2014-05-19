@@ -30,12 +30,17 @@ class ProductList::Gome < ProductList
     page_url = "http://www.gome.com.cn/p/json?module=async_search&paramJson=%7B%22pageNumber%22%3A%22#{page_num}%22%2C%22envReq%22%3A%7B%22catId%22%3A%22#{url_key}%22%2C%22pageSize%22%3A36%7D%7D&_=#{Time.now.to_i}"
     Yajl::Parser.new.parse(Nokogiri::HTML(http_get(page_url)).text)["products"].each do |elem|
       url_key = "#{elem["pId"].strip}-#{elem["skuId"].strip}"
-      product = Product::Gome.where(url_key: url_key).first
-      next if product.blank?
-      product.name = elem["skus"]["name"]
-      product.count = elem["evaluateCount"]
-      product.save
-      product.record_price elem["skus"]["price"]
+      next unless product = Product::Gome.where(url_key: url_key).first
+      name = elem["skus"]["name"].strip rescue nil
+      # 如果名称发生巨大变化，则证明原商品已被替换，进行下架处理
+      if name and product.name.similar(name) > 85
+        product.name = name
+        product.count = elem["evaluateCount"]
+        product.save
+        product.record_price elem["skus"]["price"]
+      else
+        product.update_columns(url_key: nil, url: nil, is_discontinued: true)
+      end
     end
   end
 

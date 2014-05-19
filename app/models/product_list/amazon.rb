@@ -32,13 +32,17 @@ class ProductList::Amazon < ProductList
   def get_list_prices(page_num)
     page_url = "http://www.amazon.cn/s?rh=n%3A#{url_key}&page=#{page_num}"
     Nokogiri::HTML(http_get(page_url)).css("#rightResultsATF .prod").each do |div|
-      product = Product::Amazon.where(url_key: div.attr("name").strip).first
-      next if product.blank?
-      product.name = div.css(".newaps span").text
-      product.count = div.css(".rvwCnt a").text.scan(%r|\d+|).first
-      product.score = div.css(".rvwCnt a").attr("alt").text.scan(%r|[\d\.]+|).first rescue nil
-      product.save
-      product.record_price div.css(".newp span").text.gsub("\s", "").scan(%r|[\d\.]+|).first
+      next unless product = Product::Amazon.where(url_key: div.attr("name").strip).first
+      name = div.css(".newaps span").text.strip rescue nil
+      if name and product.name.similar(name) > 85
+        product.name = name
+        product.count = div.css(".rvwCnt a").text.scan(%r|\d+|).first
+        product.score = div.css(".rvwCnt a").attr("alt").text.scan(%r|[\d\.]+|).first rescue nil
+        product.save
+        product.record_price div.css(".newp span").text.gsub("\s", "").scan(%r|[\d\.]+|).first
+      else
+        product.update_columns(url_key: nil, url: nil, is_discontinued: true)
+      end
     end
   end
 

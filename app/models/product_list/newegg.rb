@@ -32,10 +32,16 @@ class ProductList::Newegg < ProductList
     Nokogiri::HTML(http_get(page_url), nil, "GBK").css(".catepro li.cls").each do |li|
       next if li.css("p.title a").blank?
       next unless product = Product::Newegg.where(url: li.css("p.title a").attr("href").to_s.strip).first
-      product.count = li.css('.rank').text.scan(%r|\d+|).first rescue nil
-      product.score = li.css('.rank a').attr("title").text.scan(%r|[\d\.]+|).first rescue nil
-      product.save
-      product.record_price li.css('.price').text.scan(/[\d\.]+/).join
+      name = li.css(".title a").text.strip rescue nil
+      if name and product.name.similar(name) > 85
+        product.name = name
+        product.count = li.css('.rank').text.scan(%r|\d+|).first rescue nil
+        product.score = li.css('.rank a').attr("title").text.scan(%r|[\d\.]+|).first rescue nil
+        product.save
+        product.record_price li.css('.price').text.scan(/[\d\.]+/).join
+      else
+        product.update_columns(url_key: nil, url: nil, is_discontinued: true)
+      end
     end
   end
 
