@@ -11,6 +11,7 @@ class Category < ActiveRecord::Base
   # additional config .........................................................
   # class methods .............................................................
   def self.classify(category_array_str)
+    return [] if category_array_str.blank?
     result = []
     category_array_str.split("|").each do |category_str|
       category_str.split(",").reverse.each do |word|
