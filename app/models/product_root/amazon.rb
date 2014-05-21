@@ -18,6 +18,8 @@ class ProductRoot::Amazon < ProductRoot
       url = link.attr("href")
       ProductList::Amazon.create(url: url, url_key: get_key(url)) if get_key(url)
     end
+  rescue
+    $crawler_log.info("#{self.class}|#{__method__}|#{self.id} >> #{$!}")
   end
 
   # protected instance methods ................................................
