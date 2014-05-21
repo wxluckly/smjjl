@@ -33,7 +33,7 @@ class ProductList::Dangdang < ProductList
       next unless product = Product::Dangdang.where(url_key: li.css("p.name a").first.attr("href").scan(%r|\d+|).first).first
       name = li.css("p.name a").text.strip rescue nil
       # 如果名称发生巨大变化，则证明原商品已被替换，进行下架处理
-      if name and product.name.similar(name) > 85
+      if product.name.blank? || (name && product.name.similar(name) > 85)
         product.name = name
         product.save
         product.record_price li.css('.price_n').text.split("-").first.scan(/[\d\.]+/).join

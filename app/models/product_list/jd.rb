@@ -36,7 +36,7 @@ class ProductList::Jd < ProductList
       next if product.blank?
       name = li.css(".p-name").text.strip rescue nil
       # 如果名称发生巨大变化，则证明原商品已被替换，进行下架处理
-      if name and product.name.similar(name) > 85
+      if product.name.blank? || (name && product.name.similar(name) > 85)
         product.name = name
         product.count = li.css(".evaluate").text.scan(%r|\d+|).first rescue nil
         product.score = li.css(".reputation").text.scan(%r|\d+|).first rescue nil
