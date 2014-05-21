@@ -12,8 +12,12 @@ class ProductRoot::Amazon < ProductRoot
   def get_lists
     page = Nokogiri::HTML(http_get(url))
     links = [] 
-    page.css("#shopAllLinks td")[1].css("li li a").each{|a| links << a }
-    page.css("#shopAllLinks td")[2].css("div").first.css("li li a").each{|a| links << a }
+    page.css("#cat4 ul .a-spacing-small a").each{|a| links << a }
+    page.css("#cat5 ul .a-spacing-small a").each{|a| links << a }
+    page.css("#cat6 ul .a-spacing-small a").each{|a| links << a }
+    page.css("#cat9 ul .a-spacing-small a").each{|a| links << a }
+    page.css("#cat10 ul .a-spacing-small a").each{|a| links << a }
+    page.css("#cat14 ul .a-spacing-small a").each{|a| links << a }
     links.each do |link|
       url = link.attr("href")
       ProductList::Amazon.create(url: url, url_key: get_key(url)) if get_key(url)
