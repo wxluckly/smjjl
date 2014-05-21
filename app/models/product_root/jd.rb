@@ -10,7 +10,7 @@ class ProductRoot::Jd < ProductRoot
   # class methods .............................................................
   # public instance methods ...................................................
   def get_lists
-    Nokogiri::HTML(http_get(url)).css("#sortlist .item a").map{ |a| a.attr("href") }.each do |url|
+    Nokogiri::HTML(http_get(url), nil, "gbk").css("#sortlist .item a").map{ |a| a.attr("href") }.each do |url|
       ProductList::Jd.create(url: url)
     end
   end
