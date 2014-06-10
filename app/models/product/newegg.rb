@@ -32,7 +32,7 @@ class Product::Newegg < Product
   end
 
   def info
-    Nokogiri::HTML(http_get(link), nil, "GBK").css("#tabCot_product_1 table").to_s
+    Nokogiri::HTML(http_get(link), nil, "GBK").css(".goods_detail_info").to_s
   end
 
   # protected instance methods ................................................
