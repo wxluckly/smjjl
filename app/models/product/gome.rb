@@ -38,6 +38,8 @@ class Product::Gome < Product
     info = detail_page.css("table").to_s
     info = detail_page.css("img").to_s if info.blank?
     info
+  rescue
+    ""
   end
 
   # protected instance methods ................................................
