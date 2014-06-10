@@ -34,12 +34,7 @@ class Product::Gome < Product
 
   def info
     page = Nokogiri::HTML(http_get(link))
-    detail_page = (Nokogiri::HTML(http_get(page.css("script")[-4].text.scan(/htmHref:\"(.+?)\"/).first.first))rescue nil)
-    info = detail_page.css("table").to_s
-    info = detail_page.css("img").to_s if info.blank?
-    info
-  rescue
-    ""
+    page.css("#detailHtml").to_html
   end
 
   # protected instance methods ................................................
