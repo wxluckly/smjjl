@@ -32,6 +32,14 @@ class Product::Gome < Product
     "http://p.yiqifa.com/c?s=9551994a&w=693301&c=5579&i=14922&l=0&e=&t=#{link}"
   end
 
+  def info
+    page = Nokogiri::HTML(http_get(link))
+    detail_page = (Nokogiri::HTML(http_get(page.css("script")[-4].text.scan(/htmHref:\"(.+?)\"/).first.first))rescue nil)
+    info = detail_page.css("table").to_s
+    info = detail_page.css("img").to_s if info.blank?
+    info
+  end
+
   # protected instance methods ................................................
   # private instance methods ..................................................
 end

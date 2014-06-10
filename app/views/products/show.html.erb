@@ -22,7 +22,9 @@
     <td colspan="3"><div id="price_chart" style="height: 200px;"></div></td>
   </tr>
   <tr class="grey">
-    <td colspan="3" id="product_info"><%= show_info @product.product_info.try(:info) %></td>
+    <td colspan="3" id="product_info">
+      <%= show_info @product.info %>
+    </td>
   </tr>
 </table>
 <% content_for :script do %>

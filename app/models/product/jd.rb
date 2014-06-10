@@ -36,6 +36,12 @@ class Product::Jd < Product
     "http://p.yiqifa.com/c?s=5f7cc07d&w=693301&c=254&i=160&l=0&e=&t=#{link}"
   end
 
+  def info
+    html = open(url).read
+    html.encode!("utf-8")
+    Nokogiri::HTML.parse(html).css("#product-detail-1").to_html.gsub("data-lazyload", "src")
+  end
+
   # protected instance methods ................................................
   # private instance methods ..................................................
 end

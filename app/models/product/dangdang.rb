@@ -29,6 +29,10 @@ class Product::Dangdang < Product
     "http://p.yiqifa.com/c?s=e854bab4&w=693301&c=17307&i=39336&l=0&e=&t=#{link}"
   end
 
+  def info
+    Nokogiri::HTML(http_get(link), nil, 'gbk').css("#detail_all").to_s
+  end
+
   # protected instance methods ................................................
   # private instance methods ..................................................
 end

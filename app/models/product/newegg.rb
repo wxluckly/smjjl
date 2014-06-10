@@ -31,6 +31,10 @@ class Product::Newegg < Product
     "#{score.to_f * 20}%"
   end
 
+  def info
+    Nokogiri::HTML(http_get(link), nil, "GBK").css("#tabCot_product_1 table").to_s
+  end
+
   # protected instance methods ................................................
   # private instance methods ..................................................
 end

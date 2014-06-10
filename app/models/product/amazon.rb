@@ -30,6 +30,10 @@ class Product::Amazon < Product
     "#{score.to_f * 20}%"
   end
 
+  def info
+    Nokogiri::HTML(http_get(link)).css("#productDescription .content").to_s
+  end
+
   # protected instance methods ................................................
   # private instance methods ..................................................
 end
