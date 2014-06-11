@@ -12,7 +12,7 @@ module Patcher
     def http_get(url)
       3.times do
         begin
-          return Typhoeus.get(url, nosignal: true).body
+          return Typhoeus.get(url, nosignal: true, followlocation: true).body
         rescue Timeout::Error
           next
         rescue Net::HTTPNotFound
