@@ -36,7 +36,7 @@ class Product < ActiveRecord::Base
     # 回填初始的价格
     self.low_price = value_f if low_price.blank?
     # 记录价格历史
-    self.price_history = (price_history || {}).merge({Date.today.strftime('%m-%d') => value_f.to_s})
+    self.price_history = Hash[(price_history || {}).merge({Date.today.strftime('%m-%d') => value_f.to_s}).to_a.reverse[0, 30].reverse]
     # 如果和上次价格记录不同，则记录新价格
     if last_price.blank? || value_f != last_price.to_f
       prices.create(value: value)
