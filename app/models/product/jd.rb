@@ -16,7 +16,6 @@ class Product::Jd < Product
     self.category = page.css(".breadcrumb a").map{ |a| a.text }[0, 3].join(",")
     self.image_url = page.css("#spec-n1 img").attr("src").text rescue nil
     self.save
-    record_info page.css("#product-detail-1").to_s
   end
 
   # 从接口获取价格(目前只有京东有这个方法，待废弃)

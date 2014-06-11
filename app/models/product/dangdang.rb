@@ -18,7 +18,6 @@ class Product::Dangdang < Product
     self.score = page.css("#comm_num_up i").last.text.scan(%r|[\d\.]+|).first rescue nil
     self.image_url = page.css("#largePic").attr("wsrc").text rescue nil
     self.save
-    record_info page.css("#detail_all").to_s
   end
 
   def link

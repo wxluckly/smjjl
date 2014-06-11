@@ -15,7 +15,6 @@ class Product::Amazon < Product
     (self.category = page.css("div.bucket").last.css("ul li").map{ |li| li.text.gsub(" > ", ",") }.join("|")[0, 255] if page.css("div.bucket").text.index("查找其它相似商品")) rescue nil
     (self.image_url = page.css("#original-main-image").attr("src").text) rescue nil
     self.save
-    record_info page.css("#productDescription .content").to_s
   end
 
   def link

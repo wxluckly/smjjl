@@ -16,12 +16,6 @@ class Product::Gome < Product
     self.image_url = (page.css(".j-bpic-b").attr("gome-src").text rescue nil)
     self.score = (Nokogiri::HTML(http_get("http://www.gome.com.cn/ec/homeus/n/product/browse/getProductDetail.jsp?productId=#{url_key.split("-").first}&skuId=#{url_key.split("-").last}")).text.scan(/goodCommentPercent\":\"(\d+)/).first.first rescue nil)
     self.save
-    detail_page = (Nokogiri::HTML(http_get(page.css("script")[-4].text.scan(/htmHref:\"(.+?)\"/).first.first))rescue nil)
-    if detail_page
-      info = detail_page.css("table").to_s
-      info = detail_page.css("img").to_s if info.blank?
-      record_info info
-    end
   end
 
   def link

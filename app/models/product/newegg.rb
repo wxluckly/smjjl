@@ -16,7 +16,6 @@ class Product::Newegg < Product
     (self.category = page.css("#crumb .inner").text.split(" > ")[1, 3].join(",")) rescue nil
     (self.image_url = page.css("#productImgList .picZoom img").attr("src").text) rescue nil
     self.save
-    record_info page.css("#tabCot_product_1 table").to_s
   end
 
   def link
