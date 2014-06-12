@@ -1,0 +1,11 @@
+<%= raw @product.info %>
+
+<script type="text/javascript">
+<% if @product.class ==  Product::Dangdang %>
+$("#detail_all").html($("#detail_all textarea").val());
+<% else @product.class ==  Product::Gome %>
+$("#product_info img").each(function(i){
+  $(this).attr("src", $(this).attr("gome-src"));
+});
+<% end %>
+</script>

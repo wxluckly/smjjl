@@ -11,4 +11,8 @@ class AjaxController < ApplicationController
       f.series(:type=> 'spline',:name=> '价格', :data=> prices_hash.values.map{ |v| v.to_f })
     end
   end
+
+  def get_info
+    @product = Product.find(params[:id].to_i)
+  end
 end

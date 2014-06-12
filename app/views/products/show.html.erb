@@ -22,21 +22,16 @@
     <td colspan="3"><div id="price_chart" style="height: 200px;"></div></td>
   </tr>
   <tr class="grey">
-    <td colspan="3" id="product_info">
-      <%= show_info @product.info %>
-    </td>
+    <td colspan="3" id="product_info"></td>
   </tr>
 </table>
 <% content_for :script do %>
 <script type="text/javascript">
-  <% if @product.class ==  Product::Dangdang %>
-  $("#detail_all").html($("#detail_all textarea").val());
-  <% else @product.class ==  Product::Gome %>
-  $("#product_info img").each(function(i){
-    $(this).attr("src", $(this).attr("gome-src"));
-  });
-  <% end %>
-  $("#price_chart").load("/ajax/get_prices?id=<%= @product.id.to_i %>");
+
+  $( "#price_chart" ).load( "/ajax/get_prices?id=<%= @product.id.to_i %>" );
+
+  $( "#product_info" ).load( "/ajax/get_info?id=<%= @product.id.to_i %>" );
+
 </script>
 <% end %>
 <% content_for :title do %><%= @product.name[0, 50] %><% end %>

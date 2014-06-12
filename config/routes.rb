@@ -9,5 +9,6 @@ Smjjl::Application.routes.draw do
   resources :ordered_bargains, only: :index
   namespace :ajax do
     get "get_prices"
+    get "get_info"
   end
 end
