@@ -36,7 +36,7 @@ class Product < ActiveRecord::Base
     # 回填初始的价格
     self.low_price = value_f if low_price.blank?
     # 记录价格历史
-    self.price_history = Hash[(price_history || {}).merge({Date.today.strftime('%m-%d') => value_f.to_s}).to_a.reverse[0, 90].reverse]
+    self.price_history = slice_hash (price_history || {}).merge({Date.today.strftime('%m-%d') => value_f.to_s})
     # 如果和上次价格记录不同，则记录新价格
     if last_price.blank? || value_f != last_price.to_f
       prices.create(value: value)
@@ -87,5 +87,9 @@ class Product < ActiveRecord::Base
 
   def verify_price_history
     errors.add(:price_history, "只能存入hash,并且值为数组") if price_history.present? and !price_history.is_a?(Hash)
+  end
+
+  def slice_hash hash
+    Hash[hash.to_a.reverse[0, 60].reverse]
   end
 end
