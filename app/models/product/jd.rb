@@ -36,9 +36,7 @@ class Product::Jd < Product
   end
 
   def info
-    html = open(url).read
-    html.encode!("utf-8")
-    Nokogiri::HTML.parse(html).css("#product-detail-1").to_html.gsub("data-lazyload", "src")
+    Nokogiri::HTML.parse(http_open(url)).css("#product-detail-1").to_html.gsub("data-lazyload", "src")
   end
 
   # protected instance methods ................................................

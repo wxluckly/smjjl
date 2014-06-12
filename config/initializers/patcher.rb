@@ -9,6 +9,7 @@ module Patcher
 
   module InstanceMethods
 
+    # 模拟人访问（默认使用此种）
     def http_get(url)
       3.times do
         begin
@@ -27,6 +28,27 @@ module Patcher
       Rails.logger.error "#{Time.now.to_s(:db)} #{url} failure!"
       return nil
     end
+
+    # 前置解码访问
+    def http_open(url)
+      3.times do
+        begin
+          return open(url).read.encode("utf-8")
+        rescue Timeout::Error
+          next
+        rescue Net::HTTPNotFound
+          next
+        rescue Net::HTTPServiceUnavailable
+          next
+        rescue Exception => e
+          Rails.logger.info e.message
+          return nil
+        end
+      end
+      Rails.logger.error "#{Time.now.to_s(:db)} #{url} failure!"
+      return nil
+    end
+
   end
 
   module ClassMethods
@@ -35,10 +57,10 @@ module Patcher
       houzui = {'image/gif' => 'gif', 'image/png' => 'png', 'image/x-png' => 'png',
         'image/jpg' => 'jpg', 'image/jpeg' => 'jpeg', 'image/pjpeg' => 'jpeg',
         'image/bmp' => 'bmp'}[content_type] || "jpeg"
-      "avatar." + houzui
+        "avatar." + houzui
+      end
     end
+
   end
 
-end
-
-include Patcher
+  include Patcher
