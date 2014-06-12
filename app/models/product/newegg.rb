@@ -31,7 +31,9 @@ class Product::Newegg < Product
   end
 
   def info
-    Nokogiri::HTML(http_get(link), nil, "GBK").css(".goods_detail_info").to_s
+    html = open(url).read
+    html.encode!("utf-8")
+    Nokogiri::HTML.parse(html).css(".goods_detail_info").to_s
   end
 
   # protected instance methods ................................................
