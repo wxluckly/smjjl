@@ -15,6 +15,7 @@ class Product::Gome < Product
     self.category = (page.css(".local a").map(&:text)[1, 2].join(',') rescue nil)
     self.image_url = (page.css(".j-bpic-b").attr("gome-src").text rescue nil)
     self.score = (Nokogiri::HTML(http_get("http://www.gome.com.cn/ec/homeus/n/product/browse/getProductDetail.jsp?productId=#{url_key.split("-").first}&skuId=#{url_key.split("-").last}")).text.scan(/goodCommentPercent\":\"(\d+)/).first.first rescue nil)
+    self.has_content = true
     self.save
   end
 

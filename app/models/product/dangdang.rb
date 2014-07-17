@@ -16,6 +16,7 @@ class Product::Dangdang < Product
     self.count = page.css("#comm_num_down i").text
     self.score = page.css("#comm_num_up i").last.text.scan(%r|[\d\.]+|).first rescue nil
     self.image_url = page.css("#largePic").attr("wsrc").text rescue nil
+    self.has_content = true
     self.save
   end
 

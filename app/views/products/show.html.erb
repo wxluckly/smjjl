@@ -10,7 +10,7 @@
     <td>销量：<%= @product.count %></td>
   </tr>
   <tr class="grey">
-    <td>好评率：<%= @product.good_percent %></td>
+    <td><%= link_to "好评率：#{@product.good_percent}", @product.comment_link, target: "_blank" %></td>
   </tr>
   <tr class="grey">
     <td>价格：<font color="red"><%= "￥#{@product.last_price}" %></font></td>

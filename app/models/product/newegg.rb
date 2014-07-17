@@ -14,6 +14,7 @@ class Product::Newegg < Product
     page = Nokogiri::HTML(http_get(link), nil, "GBK")
     (self.category = page.css("#crumb .inner").text.split(" > ")[1, 3].join(",")) rescue nil
     (self.image_url = page.css("#productImgList .picZoom img").attr("src").text) rescue nil
+    self.has_content = true
     self.save
   end
 

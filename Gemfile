@@ -1,7 +1,7 @@
 # source 'https://rubygems.org'
 source 'http://ruby.taobao.org'
 
-ruby '2.0.0'
+ruby '2.1.2'
 
 # 基础包
 gem 'rails', "~> 4.0.0"
