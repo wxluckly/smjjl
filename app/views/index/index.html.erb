@@ -1,5 +1,6 @@
 <div class="content">
-  <div class="content_main">
+  <div class="content_main" id="container">
+
     <% @bargains.each do |bargain| %>
     <% discount = 100 - (bargain.price.to_f / bargain.history_low.to_f * 100 rescue bargain.discount.to_f)
     class_name = case
@@ -7,7 +8,7 @@
     when discount > 25 then "zhangfu"
     end
     %>
-    <div class="unified">
+    <div class="unified item">
       <dl>
         <dt><%= link_to image_tag(bargain.product.image_url, class: "img-polaroid fixed"), product_path(bargain.product), target: "_blank" %></dt>
         <dd><%= link_to bargain.product.name.to_s, product_path(bargain.product), target: "_blank" %></dd> 
@@ -36,7 +37,21 @@
     <% end %>
   </div>
 </div>
-<div class="clear"></div>
+<% content_for :script do %>
+<script type="text/javascript">
+  $(function(){
+    var $container = $('#container');
+    $container.imagesLoaded(function(){
+      $container.masonry({
+        itemSelector : '.item',
+        columnWidth : 200
+      });
+
+    });
+  });
+</script>
+<% end %>
+
 
 <%= will_paginate @bargains, :renderer => BootstrapPagination::Rails, class: "pagination pagination-large pagination-centered fenye" %>
 
