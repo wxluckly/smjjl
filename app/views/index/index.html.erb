@@ -1,36 +1,45 @@
-<table class="table table-bordered">
-  <thead>
-    <tr>
-      <th style="text-align: center">图片</th>
-      <th style="text-align: center">价格</th>
-      <th>产品名称</th>
-      <th>时间</th>
-      <th width='68px' style="text-align: center">去购买</th>
-    </tr>
-  </thead>
-  <tbody>
+<div class="content">
+  <div class="content_main">
     <% @bargains.each do |bargain| %>
     <% discount = 100 - (bargain.price.to_f / bargain.history_low.to_f * 100 rescue bargain.discount.to_f)
     class_name = case
-    when discount > 50 then "error"
-    when discount > 25 then "warning"
+    when discount > 50 then "zhangf"
+    when discount > 25 then "zhangfu"
     end
     %>
-    <tr class="<%= class_name %>">
-      <td height="50px" width='50px' style="text-align: center"><%= link_to image_tag(bargain.product.image_url, height: '50px', width: '50px'), product_path(bargain.product), target: "_blank" %></td>
-      <td style="text-align: center">
-        <font color="red"><%= sanitize "￥#{bargain.price}" %></font>
-        <br />
-        <font size='1'><%= "(-#{sprintf("%.1f", discount)}%)" %></font>
-      </td>
-      <td><%= link_to bargain.product.name.to_s, product_path(bargain.product), target: "_blank" %></td>
-      <td width='78px'><%= friendly_time bargain.created_at %></td>
-      <td style="text-align: center"><%= link_to "去购买", bargain.product.purchase_link, target: "_blank", rel: "nofollow", class: "btn btn-success" %></td>
-    </tr>
+    <div class="unified">
+      <dl>
+        <dt><%= link_to image_tag(bargain.product.image_url, class: "img-polaroid fixed"), product_path(bargain.product), target: "_blank" %></dt>
+        <dd><%= link_to bargain.product.name.to_s, product_path(bargain.product), target: "_blank" %></dd> 
+        <% if class_name %>
+        <div class="<%= class_name %>">
+          <span>降幅幅超过<%= "#{sprintf("%.1f", discount)}%" %></span>
+        </div>
+        <% end %>
+      </dl>
+      <div class="price">
+        <ul>
+          <li class="now"><strong><%= sanitize "￥#{bargain.price}" %></strong></li>
+          <li class="before"><del>原价：<%= bargain.history_low %></del></li>
+        </ul>
+        <div class="price_down">
+          <span><%= "-#{sprintf("%.1f", discount)}%" %></span>
+        </div>
+        <div class="clear"></div>
+      </div>
+      <div class="gotosee">
+        <p><%= friendly_time bargain.created_at %></p>
+        <%= link_to "去看看", product_path(bargain.product), target: "_blank", class: "btn btn-warning" %>
+        <div class="clear"></div>
+      </div>
+    </div>
     <% end %>
-  </tbody>
-</table>
-<%= will_paginate @bargains, :renderer => BootstrapPagination::Rails %>
+  </div>
+</div>
+<div class="clear"></div>
+
+<%= will_paginate @bargains, :renderer => BootstrapPagination::Rails, class: "pagination pagination-large pagination-centered fenye" %>
+
 <% content_for :title do %>首页<% end %>
 <% content_for :meta_keywords do %>降价商品,什么降价了<% end %>
 <% content_for :meta_desc do %>就在刚才，京东商城、亚马逊中国、当当还有新蛋商城的多款电商商品降价了，快来看看捡个大便宜吧！<% end %>

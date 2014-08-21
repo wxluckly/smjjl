@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= yield(:title) %>_什么降价了</title>
+  <meta name="keywords" content="<%= content_for?(:meta_keywords) ? yield(:meta_keywords) : "什么降价了" %>" />
+  <meta name="description" content="<%= yield(:meta_desc) %>" />
+  <meta name="baidu-site-verification" content="ys1imE8AcP" />
+  <%= stylesheet_link_tag   "application", media: "all"%>
+  <%= stylesheet_link_tag   "index", media: "all"%>
+  <%= csrf_meta_tag %>
+  <%= yield :head %>
+</head>
+<body>
+  <div class="container">
+    <!--头部-->
+    <div class="top_bg">
+      <div class="top">
+        <%= link_to image_tag("logo_03.png"), "/", class: "logo" %>
+        <input class="searchgoods" type="text" placeholder="输入商品名称">
+        <a class="search" href="#" onclick="alert('敬请期待。。。')"><%= image_tag("search_03.png") %><span>搜索</span></a>
+        <p class="down"><a href="<%= ordered_bargains_path %>"><i class="fa fa-list moneydown"></i>降价排行</a></p>
+      </div>
+      <div class="clear"></div>
+    </div>
+
+    <!--菜单-->
+    <div class="list">
+      <ul>
+        <li><a href="/">首页</a></li>
+        <% Category.find_each do |category| %>
+        <li><%= link_to category.name, "/bargains_categories/#{category.id}" %></li>
+        <% end %>
+      </ul>
+      <div class="clear"></div>
+    </div>
+
+    <%= yield %>
+
+    <!--footer-->
+    <div class="footer">
+      <p class="left">©2014 什么降价了 smjjl.com</p>
+      <p class="right">鲁ICP备13020248号-1 | <%= link_to "Sitemap", sitemap_index_path %></p>
+      <div class="clear"></div>
+    </div>
+
+  </div>
+</body>
+</html>
