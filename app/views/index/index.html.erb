@@ -18,12 +18,12 @@
         </div>
         <% end %>
       </dl>
-      <div class="price">
+      <div class="price" style="position: relative;">
         <ul>
           <li class="now"><strong><%= sanitize "￥#{bargain.price}" %></strong></li>
           <li class="before"><del>原价：<%= bargain.history_low %></del></li>
         </ul>
-        <div class="price_down">
+        <div class="price_down"  style="position: absolute; right: 0px; top: 0px;">
           <span><%= "-#{sprintf("%.1f", discount)}%" %></span>
         </div>
         <div class="clear"></div>
