@@ -9,7 +9,7 @@ namespace :unicorn do
 
   desc "start unicorn"
   task :start do
-    p "unicorn worker starting"
+    p "unicorn starting"
     exec 'bundle exec unicorn_rails -D -c config/unicorn.rb -E production'
   end
 
