@@ -1,6 +1,6 @@
 source 'https://ruby.taobao.org'
 
-ruby '2.1'
+# ruby '2.1'
 
 # 基础包
 gem 'rails', "~> 4.0.0"
