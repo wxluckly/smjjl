@@ -10,7 +10,7 @@ class ProductList::Gome < ProductList
   # class methods .............................................................
   # public instance methods ...................................................
   def list_url
-    "http://www.gome.com.cn/category/#{url_key}.html"
+    url
   end
   
   def get_pagination(category = "id")

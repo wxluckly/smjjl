@@ -21,4 +21,4 @@ Site::Dangdang.create(name: "当当")
 ProductRoot::Dangdang.create(url: "http://category.dangdang.com")
 
 Site::Gome.create(name: "国美在线")
-ProductRoot::Gome.create(url: "http://www.gome.com.cn/allcategory/")
+ProductRoot::Gome.create(url: "http://list.gome.com.cn/")
