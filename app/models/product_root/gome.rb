@@ -21,7 +21,7 @@ class ProductRoot::Gome < ProductRoot
   # private instance methods ..................................................
   # private
   def get_key url
-    keys = url.scan(%r|cat\/([^.]+)\.|).first
+    keys = url.scan(%r|cat([^.]+)\.|).first
     keys.first
   rescue
     nil
