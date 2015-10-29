@@ -11,9 +11,11 @@ gem 'sinatra', '>= 1.3.0', :require => nil
 gem 'uglifier', '2.5.3'
 gem 'sass-rails', '4.0.3'
 gem 'therubyracer', '0.12.1'
+# gem 'rails_admin', '~> 0.7.0'
+gem 'ransack'
 
 # 资源模板引擎
-gem 'jquery-rails', '2.2.1'
+gem 'jquery-rails', '3.1.4'
 gem 'jquery-ui-rails', '5.0.0'
 gem 'bootstrap-sass', '~> 2.3'
 gem 'will_paginate-bootstrap', '~> 0.2.5'
@@ -34,7 +36,7 @@ gem 'default_value_for', "~> 3.0.0"
 gem 'friendly_id', '~> 5.0.2'
 gem 'settingslogic', '2.0.9'
 gem 'similar_text', '0.0.4'
-gem 'newrelic_rpm', '3.9.2.239'
+gem 'newrelic_rpm'
 
 group :development, :worker do
   gem 'pry', '0.10.1'

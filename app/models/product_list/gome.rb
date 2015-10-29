@@ -9,6 +9,10 @@ class ProductList::Gome < ProductList
   # additional config .........................................................
   # class methods .............................................................
   # public instance methods ...................................................
+  def list_url
+    "http://www.gome.com.cn/category/#{url_key}.html"
+  end
+  
   def get_pagination(category = "id")
     total_page = (Nokogiri::HTML(http_get("http://www.gome.com.cn/category/#{url_key}.html")).css(".num").text.split("/").last.to_i) rescue 1
     1.upto total_page do |page_num|

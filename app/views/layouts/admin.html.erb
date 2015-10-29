@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>后台管理</title>
+  <meta name="keywords" content="<%= content_for?(:meta_keywords) ? yield(:meta_keywords) : "什么降价了" %>" />
+  <meta name="description" content="<%= yield(:meta_desc) %>" />
+  <meta name="baidu-site-verification" content="ys1imE8AcP" />
+  <%= stylesheet_link_tag   "admin", media: "all"%>
+  <%= csrf_meta_tag %>
+  <%= yield :head %>
+</head>
+<body>
+  <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="brand" href="/admin">后台管理</a>
+        <div class="nav-collapse collapse">
+          <ul class="nav">
+            <li <% if current_page?(admin_product_lists_path) %>class="active"<% end %> ><%= link_to "抓取列表管理", admin_product_lists_path %></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <%= yield %>
+  </div>
+  <%= render "footer" %>
+  <%= javascript_include_tag  "admin" %>
+  <%= yield :script %>
+</body>
+</html>

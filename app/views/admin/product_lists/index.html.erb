@@ -1,0 +1,36 @@
+<%= form_tag(admin_product_lists_path, method: :get) do %>
+<table class="table table-bordered">
+  <tr>
+    <td>类型：<%= select_tag 'search[type_eq]', options_for_select(ProductList.types.label_value_map.to_a, params[:search].try(:[], :type_eq)), prompt: "全部" %></td>
+    <td>上线状态：<%= select_tag 'search[is_blocked_eq]', options_for_select([['已上线', false], ['已下线', true]], params[:search].try(:[], :is_blocked_eq)), prompt: "全部" %></td>
+    <td><button class="btn btn-primary" type="submit">搜索</button></td>
+  </tr>
+</table>
+<% end %>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>类型</th>
+      <th>URL</th>
+      <th>创建时间</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @product_lists.each do |product_list| %>
+    <tr>
+      <td><%= ProductList.types.value_label_map[product_list.type] %></td>
+      <td><%= link_to product_list.list_url, product_list.list_url, target: "blank" %></td>
+      <td><%= friendly_time product_list.created_at %></td>
+      <td>
+        <% if product_list.is_blocked? %>
+        <%= link_to '已下线', admin_product_list_unblock_path(product_list), class: 'btn', remote: true, method: 'PUT' %>
+        <% else %>
+        <%= link_to '已上线', admin_product_list_block_path(product_list), class: 'btn btn-success', remote: true, method: 'PUT' %>
+        <% end %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= will_paginate @product_lists, :renderer => BootstrapPagination::Rails %>

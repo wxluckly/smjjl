@@ -9,6 +9,10 @@ class ProductList::Amazon < ProductList
   # additional config .........................................................
   # class methods .............................................................
   # public instance methods ...................................................
+  def list_url
+    "http://www.amazon.cn/s?rh=n%3A#{url_key}"
+  end
+
   # 获取分页的初始页
   def get_pagination(category = "id")
     total_page = (Nokogiri::HTML(http_get("http://www.amazon.cn/s/ref=?rh=n%3A#{url_key}&page=1&sort=-launch-date")).css("#resultCount").text.gsub(",", "").scan(%r|共(\d+)|).first.first.to_i / 24 + 1) rescue 1

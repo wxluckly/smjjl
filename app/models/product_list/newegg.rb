@@ -9,6 +9,10 @@ class ProductList::Newegg < ProductList
   # additional config .........................................................
   # class methods .............................................................
   # public instance methods ...................................................
+  def list_url
+    url
+  end
+  
   # 获取分页的初始页
   def get_pagination(category = "id")
     total_page = Nokogiri::HTML(http_get("#{url}?sort=50&pageSize=96"), nil, "GBK").css(".innerb ins").text.scan(%r|/(\d+)|).first.first.to_i rescue 1

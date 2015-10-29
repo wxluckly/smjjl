@@ -9,6 +9,10 @@ class ProductList::Dangdang < ProductList
   # additional config .........................................................
   # class methods .............................................................
   # public instance methods ...................................................
+  def list_url
+    "http://category.dangdang.com/#{url_key}.html"
+  end
+
   # 获取分页的初始页
   def get_pagination(category = "id")
     total_page = Nokogiri::HTML(http_get("http://category.dangdang.com/#{url_key}.html"), nil, "GBK").css(".page_input span").first.text.scan(%r|\d+|).first.to_i rescue 1
