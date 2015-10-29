@@ -11,7 +11,7 @@ class ProductRoot::Jd < ProductRoot
   # public instance methods ...................................................
   def get_lists
     Nokogiri::HTML(http_get(url), nil, Site::Jd::ENCODING).css('.crumbs-nav-item').last.css('a').map{ |a| a.attr("href") }.each do |url|
-      ProductList::Jd.create(url: url)
+      ProductList::Jd.create(url: "http:#{url}")
     end
   end
 

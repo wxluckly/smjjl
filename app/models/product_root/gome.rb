@@ -23,5 +23,7 @@ class ProductRoot::Gome < ProductRoot
   def get_key url
     keys = url.scan(%r|category\/([^.]+)\.|).first
     keys.first
+  rescue
+    nil
   end
 end
