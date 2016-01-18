@@ -4,7 +4,7 @@ source 'https://ruby.taobao.org'
 
 # 基础包
 gem 'rails', "~> 4.0.0"
-gem 'mysql2', '0.3.16'
+gem 'mysql2', '0.3.20'
 gem 'protected_attributes', '1.0.8'
 gem 'yajl-ruby', '1.2.1'
 gem 'sinatra', '>= 1.3.0', :require => nil
@@ -13,6 +13,7 @@ gem 'sass-rails', '4.0.3'
 gem 'therubyracer', '0.12.1'
 # gem 'rails_admin', '~> 0.7.0'
 gem 'ransack'
+gem 'wechat', "~> 0.6.8"
 
 # 资源模板引擎
 gem 'jquery-rails', '3.1.4'
