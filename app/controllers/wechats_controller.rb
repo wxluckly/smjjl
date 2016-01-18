@@ -116,4 +116,15 @@ class WechatsController < ActionController::Base
 
   # Any not match above will fail to below
   on :fallback, respond: 'fallback message'
+
+  private
+  def verify_signature
+    p '=-'*20
+    signature = params[:signature] || params[:msg_signature]
+    p "signature:#{signature}"
+    cal_signature = Wechat::Signature.hexdigest("#{$config.wechat.pass}", params[:timestamp], params[:nonce], nil)
+    p "#{cal_signature}"
+
+    render text: 'Forbidden', status: 403 if signature != cal_signature
+  end
 end
