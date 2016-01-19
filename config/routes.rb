@@ -3,8 +3,10 @@ Smjjl::Application.routes.draw do
   mount Sidekiq::Web => '/sidekiq'
   root 'index#index'
 
+  get 'test', to: 'index#test'
   get "/bargains_categories/:category_id", to: 'bargains_categories#index'
 
+  resource :auth
   resource :wechat, only: [:show, :create]
   resources :products
   resources :sitemap, only: :index

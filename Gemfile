@@ -14,6 +14,7 @@ gem 'therubyracer', '0.12.1'
 # gem 'rails_admin', '~> 0.7.0'
 gem 'ransack'
 gem 'wechat', "~> 0.6.8"
+gem 'redis-objects'
 
 # 资源模板引擎
 gem 'jquery-rails', '3.1.4'
