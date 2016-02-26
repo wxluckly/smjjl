@@ -1,6 +1,9 @@
 require 'sidekiq/web'
 Smjjl::Application.routes.draw do
   mount Sidekiq::Web => '/sidekiq'
+  mount GrapeSwaggerRails::Engine => '/api_doc'
+  mount Wap::Api => '/'
+
   root 'index#index'
 
   get 'test', to: 'index#test'

@@ -27,6 +27,16 @@ gem 'lazy_high_charts', '1.5.4'
 gem 'sidekiq', '3.2.2'
 gem 'whenever', '0.9.2'
 
+# API
+gem 'grape'
+gem 'grape-entity'
+gem 'grape-swagger'
+gem 'grape-swagger-rails'
+gem 'rack-ssl-enforcer'
+gem 'kramdown'
+gem 'jbuilder'
+gem 'hashie-forbidden_attributes'
+
 # HTML解析
 gem 'typhoeus', '0.6.9'
 gem 'nokogiri', '1.6.3.1'
