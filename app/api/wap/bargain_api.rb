@@ -6,6 +6,7 @@ class Wap::BargainApi < Grape::API
       error_response(message: {error: '内容不存在'}, status: 404)
     end
 
+    # ...........................................................................
     desc '优惠内容，默认为20条' do
       failure [[401, '未授权']]
     end
@@ -21,6 +22,7 @@ class Wap::BargainApi < Grape::API
       end
     end
 
+    # ...........................................................................
     desc '取最新优惠内容' do
       failure [[401, '未授权']]
     end
@@ -30,5 +32,16 @@ class Wap::BargainApi < Grape::API
     get '/welcome_new' do
       present Bargain.where('created_at > ?', Time.parse(params[:created_at])).order("created_at desc, id desc").limit(100).includes(:product), with: Wap::Entities::Bargains
     end
+
+    # ...........................................................................
+    desc '最优惠内容' do
+      failure [[401, '未授权']]
+    end
+    params do
+    end
+    get '/rank' do
+      present Bargain.where("created_at < ?", 10.hours.ago).order("discount desc").limit(100), with: Wap::Entities::Bargains
+    end
+
   end
 end
