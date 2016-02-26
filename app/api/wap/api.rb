@@ -15,6 +15,7 @@ class Wap::Api < Grape::API
 
   namespace :wap_api, desc: ' ', swagger: { nested: false } do
     mount Wap::BargainApi
+    mount Wap::ProductApi
 
     add_swagger_documentation(
       mount_path: '/swagger',

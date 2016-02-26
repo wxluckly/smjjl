@@ -17,13 +17,20 @@ module Wap::Entities
 
   class Bargain < BaseEntity
     expose :id, documentation: {required: true, type: "Integer", desc: "ID"}, format_with: :null_int
+    expose :product_id, documentation: {required: true, type: "Integer", desc: "产品ID"}, format_with: :null_int
     expose :product_name, documentation: {required: true, type: "String", desc: "产品名"}, format_with: :null
     expose :product_img, documentation: {required: true, type: "String", desc: "产品图片"}, format_with: :null
     expose :created_at, documentation: {required: true, type: "Datetime", desc: "时间"}, as: :created_at, format_with: :null
   end
-
   class Bargains < BaseEntity
     present_collection true, :bargains
     expose :bargains, using: Bargain, documentation: {required: true, type: "Bargain", is_array: true, desc: "集合"}, format_with: :null
+  end
+
+  class Product < BaseEntity
+    expose :id, documentation: {required: true, type: "Integer", desc: "ID"}, format_with: :null_int
+    expose :name, documentation: {required: true, type: "String", desc: "产品名"}, format_with: :null
+    expose :image_url, documentation: {required: true, type: "String", desc: "产品图片"}, format_with: :null, as: :image_url
+    expose :created_at, documentation: {required: true, type: "Datetime", desc: "时间"}, as: :created_at, format_with: :null
   end
 end
