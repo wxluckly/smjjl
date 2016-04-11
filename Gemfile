@@ -49,6 +49,7 @@ gem 'friendly_id', '~> 5.0.2'
 gem 'settingslogic', '2.0.9'
 gem 'similar_text', '0.0.4'
 gem 'newrelic_rpm'
+gem 'annotate'
 
 group :development, :worker do
   gem 'pry', '0.10.1'
