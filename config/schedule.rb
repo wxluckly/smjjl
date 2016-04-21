@@ -8,7 +8,7 @@ every :day, :at => '1:00am', :roles => [:master] do
 end
 
 # 更新内容
-every :day, :at => '5:00am', :roles => [:master] do
+every :day, :at => '2:00am', :roles => [:master] do
   rake "daemon:update_content"
 end
 
