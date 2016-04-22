@@ -1,6 +1,6 @@
 env :PATH, ENV['PATH']
 set :output, "log/cron_log.log"
-set :job_template, "zsh -l -c ':job'"
+set :job_template, "bash -l -c ':job'"
 
 # 抓取id
 every :day, :at => '1:00am', :roles => [:master] do
