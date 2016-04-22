@@ -19,7 +19,7 @@ class Product < ActiveRecord::Base
 
   # callbacks .................................................................
   before_save :clean_name
-  after_save :record_bargain, if: "low_price_changed?"
+  after_save :record_bargain
 
   # scopes ....................................................................
   # scope :empty, -> { where("name is null or name = ''") }
@@ -65,13 +65,23 @@ class Product < ActiveRecord::Base
     end
   end
 
-  # 记录超值产品，只有降价幅度达到5%以上的时候，才进行记录
+  # 记录超值产品，
   def record_bargain
-    discount = (low_price_was.to_f - low_price) / low_price_was.to_f
-    return if discount < 0.01
-    bargain = bargains.create(price: low_price, history_low: low_price_was, discount: discount)
-    Category.classify(category).each do |category_id|
-      BargainsCategory.create(bargain_id: bargain.id, category_id: category_id)
+    return if last_price.to_f > last_price_was.to_f
+    discount = (last_price_was.to_f - last_price.to_f) / last_price_was.to_f
+    history_discount = (low_price_was.to_f - low_price.to_f) / low_price_was.to_f
+    if history_discount > 0.01
+      # 当比历史低价低1%的时候，进行记录
+      bargain = bargains.create(price: low_price, history_low: low_price_was, discount: discount)
+      Category.classify(category).each do |category_id|
+        BargainsCategory.create(bargain_id: bargain.id, category_id: category_id)
+      end
+    elsif discount > 0.2
+      # 当比之前价格低20%的时候，进行记录
+      bargain = bargains.create(price: low_price, history_low: low_price_was, discount: discount)
+      Category.classify(category).each do |category_id|
+        BargainsCategory.create(bargain_id: bargain.id, category_id: category_id)
+      end
     end
   end
 
