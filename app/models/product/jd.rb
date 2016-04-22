@@ -28,11 +28,11 @@ class Product::Jd < Product
   end
 
   def link
-    url
+    "http:#{url}"
   end
 
   def purchase_link
-    yiqifa link
+    link
   end
 
   def comment_link
