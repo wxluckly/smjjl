@@ -68,7 +68,7 @@ class Product < ActiveRecord::Base
   # 记录超值产品，只有降价幅度达到5%以上的时候，才进行记录
   def record_bargain
     discount = (low_price_was.to_f - low_price) / low_price_was.to_f
-    return if discount < 0.05
+    return if discount < 0.01
     bargain = bargains.create(price: low_price, history_low: low_price_was, discount: discount)
     Category.classify(category).each do |category_id|
       BargainsCategory.create(bargain_id: bargain.id, category_id: category_id)
