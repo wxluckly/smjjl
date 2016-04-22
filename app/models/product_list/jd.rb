@@ -50,6 +50,8 @@ class ProductList::Jd < ProductList
         product.update_columns(url_key: nil, url: nil, is_discontinued: true)
       end
     end
+    # 由于此方法太占用资源，因此拖慢其速度，减少cpu占用
+    sleep 1
   end
 
   # protected instance methods ................................................
