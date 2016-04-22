@@ -8,12 +8,12 @@ every :day, :at => '1:00am', :roles => [:master] do
 end
 
 # 更新内容
-every :day, :at => '2:00am', :roles => [:master] do
+every :day, :at => '3:00am', :roles => [:master] do
   rake "daemon:update_content"
 end
 
 # 抓取价格
-every '0 5,8,11,14,17,20 * * *', :roles => [:master] do
+every '0 0,6,8,10,12,14,16,18,20,22 * * *', :roles => [:master] do
   rake "daemon:update_price"
 end
 
