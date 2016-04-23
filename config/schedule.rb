@@ -22,7 +22,7 @@ every '0 * * * *', :roles => [:master] do
   command "cd /www/smjjl && > log/production.log"
 end
 
-# 每小时零10分重启worker服务
-every '10 * * * *', :roles => [:worker] do
+# 每小时零55分重启worker服务
+every '55 * * * *', :roles => [:worker] do
   rake "sidekiq:restart"
 end
