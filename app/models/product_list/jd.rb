@@ -51,7 +51,7 @@ class ProductList::Jd < ProductList
       end
     end
     # 由于此方法太占用资源，因此拖慢其速度，减少cpu占用
-    sleep 1
+    sleep 2
   end
 
   # protected instance methods ................................................
