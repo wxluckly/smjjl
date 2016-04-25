@@ -13,7 +13,7 @@ every :day, :at => '3:00am', :roles => [:master] do
 end
 
 # 抓取价格
-every '0 0,6,8,10,12,14,16,18,20,22 * * *', :roles => [:master] do
+every '0 0,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23 * * *', :roles => [:master] do
   rake "daemon:update_price"
 end
 
