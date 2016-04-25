@@ -16,6 +16,7 @@ class Product::Jd < Product
     self.image_url = "http:#{page.css('#spec-n1 img').attr('src').text}" rescue nil
     self.has_content = true
     self.save
+    sleep 5
   end
 
   # 从接口获取价格(目前只有京东有这个方法，待废弃)

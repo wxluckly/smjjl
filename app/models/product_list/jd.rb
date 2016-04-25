@@ -26,6 +26,7 @@ class ProductList::Jd < ProductList
     Nokogiri::HTML(http_get(page_url), nil, Site::Jd::ENCODING).css("#plist .p-name a").map{ |a| a.attr("href") }.each do |puduct_url|
       Product::Jd.create(url: puduct_url, url_key: (puduct_url.scan(/\d+/).first rescue nil) )
     end
+    sleep 2
   end
 
   # 从列表中更新价格及其他信息
