@@ -138,7 +138,15 @@
       <p class="down"><a>登录</a><a href="/ordered_bargains">注册</a></p>
     </div>
   </div>
-  <div class="daohang"><div class="daohang-wd"><a class="select">什么降价了</a><a>什么在限时购秒杀一元</a><a>全网爆料给喜欢的人</a><a>我只要历史最低</a><a>新品手机库存在线预警</a></div></div>
+<!--   <div class="daohang">
+    <div class="daohang-wd">
+      <a class="select">什么降价了</a>
+      <a>什么在限时购秒杀一元</a>
+      <a>全网爆料给喜欢的人</a>
+      <a>我只要历史最低</a>
+      <a>新品手机库存在线预警</a>
+    </div>
+  </div> -->
   <div class="productlist">
     <div class="flsx"><a>全部推送</a><a class="select">家电</a><a>电脑</a><a>手机</a><a>数码</a><a>母婴</a><a>家居</a><a>厨具</a><a>汽车</a><a>玩具</a></div>
     <div class="flsx flsx2"><a>全部折扣</a><a class="select">一折</a><a>二折</a><a>三折</a><a>四折</a><a>五折</a><a>六折</a><a>七折</a><a>八折</a></div>
@@ -146,14 +154,14 @@
     <div class="title"><b class="time">时间</b><b class="protit">商品信息（商品信息自动刷新无需手动刷新）&nbsp;&nbsp;<i>当前有100条更新&nbsp;&nbsp;(60S)</i></b><b class="lishijia">历史价</b><b class="priceing">现价</b><b class="zhekou">折扣</b></div>
     <ul class="product">
       <% @bargains.each do |bargain| %>
-      <% discount = bargain.price.to_f / bargain.history_low.to_i * 10 %>
+      <% discount = 10 - bargain.discount.to_f * 10 %>
       <li class="<%= zhe_class discount %> clearfix">
 <!--         <div class="jiagexiangxi">
           <i></i>
           <span class="red">PC端:199.22</span><span>手机端:169.00</span><span>QQ:189.99</span><span>微信:189.00</span>
         </div> -->
         <b class="time"><%= bargain.created_at.strftime("%H:%M:%S") %><%= image_tag 'jd.png' %></b>
-        <a>
+        <a href='<%= bargain.product.purchase_link %>' target="_blank">
           <b class="protit">
             <%= image_tag(bargain.product.image_url, class: "img-polaroid fixed") %>
             <%= bargain.product.name.to_s %>

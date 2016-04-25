@@ -29,7 +29,7 @@ class Product::Jd < Product
   end
 
   def link
-    "http:#{url}"
+    url
   end
 
   def purchase_link
