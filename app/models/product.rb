@@ -70,13 +70,14 @@ class Product < ActiveRecord::Base
     return if last_price.to_f > last_price_was.to_f
     discount = (last_price_was.to_f - last_price.to_f) / last_price_was.to_f
     history_discount = (low_price_was.to_f - low_price.to_f) / low_price_was.to_f
-    if history_discount > 0.01
-      # 当比历史低价低1%的时候，进行记录
-      bargain = bargains.create(price: last_price, history_low: last_price_was, discount: discount)
-      Category.classify(category).each do |category_id|
-        BargainsCategory.create(bargain_id: bargain.id, category_id: category_id)
-      end
-    elsif discount > 0.2
+    # if history_discount > 0.01
+    #   # 当比历史低价低1%的时候，进行记录
+    #   bargain = bargains.create(price: last_price, history_low: last_price_was, discount: discount)
+    #   Category.classify(category).each do |category_id|
+    #     BargainsCategory.create(bargain_id: bargain.id, category_id: category_id)
+    #   end
+    # elsif
+    if discount > 0.2
       # 当比之前价格低20%的时候，进行记录
       bargain = bargains.create(price: last_price, history_low: last_price_was, discount: discount)
       Category.classify(category).each do |category_id|

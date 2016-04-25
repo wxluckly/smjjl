@@ -148,10 +148,25 @@
     </div>
   </div> -->
   <div class="productlist">
-    <div class="flsx"><a>全部推送</a><a class="select">家电</a><a>电脑</a><a>手机</a><a>数码</a><a>母婴</a><a>家居</a><a>厨具</a><a>汽车</a><a>玩具</a></div>
-    <div class="flsx flsx2"><a>全部折扣</a><a class="select">一折</a><a>二折</a><a>三折</a><a>四折</a><a>五折</a><a>六折</a><a>七折</a><a>八折</a></div>
-
-    <div class="title"><b class="time">时间</b><b class="protit">商品信息（商品信息自动刷新无需手动刷新）&nbsp;&nbsp;<i>当前有100条更新&nbsp;&nbsp;(60S)</i></b><b class="lishijia">历史价</b><b class="priceing">现价</b><b class="zhekou">折扣</b></div>
+    <!-- <div class="flsx"><a>全部推送</a><a class="select">家电</a><a>电脑</a><a>手机</a><a>数码</a><a>母婴</a><a>家居</a><a>厨具</a><a>汽车</a><a>玩具</a></div> -->
+    <div class="flsx flsx2">
+      <a class="<%= 'select' if params[:discount].blank? %>" href="<%= root_path(request.params.except(:controller, :action, :page).merge(discount: nil)) %>">全部折扣</a>
+      <a class="<%= 'select' if params[:discount] == '1' %>" href="<%= root_path(request.params.except(:controller, :action, :page).merge(discount: 1)) %>">一折</a>
+      <a class="<%= 'select' if params[:discount] == '2' %>" href="<%= root_path(request.params.except(:controller, :action, :page).merge(discount: 2)) %>">二折</a>
+      <a class="<%= 'select' if params[:discount] == '3' %>" href="<%= root_path(request.params.except(:controller, :action, :page).merge(discount: 3)) %>">三折</a>
+      <a class="<%= 'select' if params[:discount] == '4' %>" href="<%= root_path(request.params.except(:controller, :action, :page).merge(discount: 4)) %>">四折</a>
+      <a class="<%= 'select' if params[:discount] == '5' %>" href="<%= root_path(request.params.except(:controller, :action, :page).merge(discount: 5)) %>">五折</a>
+      <a class="<%= 'select' if params[:discount] == '6' %>" href="<%= root_path(request.params.except(:controller, :action, :page).merge(discount: 6)) %>">六折</a>
+      <a class="<%= 'select' if params[:discount] == '7' %>" href="<%= root_path(request.params.except(:controller, :action, :page).merge(discount: 7)) %>">七折</a>
+      <a class="<%= 'select' if params[:discount] == '8' %>" href="<%= root_path(request.params.except(:controller, :action, :page).merge(discount: 8)) %>">八折</a>
+    </div>
+    <div class="title">
+      <b class="time">时间</b>
+      <b class="protit">商品信息<!-- （商品信息自动刷新无需手动刷新）&nbsp;&nbsp;<i>当前有100条更新&nbsp;&nbsp;(60S) --></i></b>
+      <b class="lishijia">历史价</b>
+      <b class="priceing">现价</b>
+      <b class="zhekou">折扣</b>
+    </div>
     <ul class="product">
       <% @bargains.each do |bargain| %>
       <% discount = 10 - bargain.discount.to_f * 10 %>
@@ -173,6 +188,7 @@
       </li>
       <% end %>
     </ul>
+    <%= will_paginate @bargains %>
   </div>
 </body>
 </html>
