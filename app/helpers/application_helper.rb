@@ -22,6 +22,7 @@ module ApplicationHelper
 
   def zhe_class discount
     case discount.to_i
+    when 0 then 'yizhe'
     when 1 then 'yizhe'
     when 2 then 'erzhe'
     when 3 then 'sanzhe'
