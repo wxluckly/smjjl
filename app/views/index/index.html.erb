@@ -1,60 +1,170 @@
-<div class="content">
-  <div class="content_main" id="container">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>列表</title>
+  <style>
+    html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video, input{padding:0;margin:0;font: inherit; font-size:14px;}
+    body, button, select, textarea, input{font-family:"Hiragino Sans GB","Microsoft Yahei","微软雅黑",arial,"Helvetica Neue",Helvetica,STHeiTi,sans-serif; color:#666;}
+    li{ list-style:none;}
+    table{ border-collapse:collapse;}
+    a{ text-decoration:none;outline:none;blr:expression(this.onFocus=this.blur()); color:#000; cursor:pointer;}
+    /* 去掉 IE 10+ 点击链接时的灰色背去掉点击时的焦点框，同时保证使用键盘可以显示焦点框  */
+    a:active {    background-color: transparent;}
+    a:active,a:hover {    outline: 0 none;}
+    /**
+     * 统一 Chrome 和 Safari 的焦点框样式
+     * Chrome 中 thin 关键字放大页面后焦点框不会放大 http://jsbin.com/ehakom/1
+     * Firefox 中 box-shadow 会导致焦点框位置偏移，需用「outline-offset」修正
+     * 
+     */
+     a:focus {
+      outline: 1px dotted;
+    }
+    /* 去掉iphone默认按钮样式 */
+    input[type=”button”], input[type=”submit”], input[type=”reset”] {
 
-    <% @bargains.each do |bargain| %>
-    <% discount = 100 - (bargain.price.to_f / bargain.history_low.to_f * 100 rescue bargain.discount.to_f)
-    class_name = case
-    when discount > 50 then "zhangf"
-    when discount > 25 then "zhangfu"
-    end
-    %>
-    <div class="unified item">
-      <dl>
-        <dt><%= link_to image_tag(bargain.product.image_url, class: "img-polaroid fixed"), product_path(bargain.product), target: "_blank" %></dt>
-        <dd><%= link_to bargain.product.name.to_s, product_path(bargain.product), target: "_blank" %></dd> 
-        <% if class_name %>
-        <div class="<%= class_name %>">
-          <span>降幅超过<%= "#{sprintf("%.1f", discount)}%" %></span>
-        </div>
-        <% end %>
-      </dl>
-      <div class="price" style="position: relative; height: 50px">
-        <ul style="position: absolute; left: 0px; top: 0px; z-index: 10;">
-          <li class="now"><strong><%= sanitize "￥#{bargain.price}" %></strong></li>
-          <li class="before"><del>原价：<%= bargain.history_low %></del></li>
-        </ul>
-        <div class="price_down" style="position: absolute; right: 0px; top: 0px;">
-          <span><%= "-#{sprintf("%.1f", discount)}%" %></span>
-        </div>
-        <div class="clear"></div>
-      </div>
-      <div class="gotosee">
-        <p><%= friendly_time bargain.created_at %></p>
-        <%= link_to "去看看", bargain.product.purchase_link, target: "_blank", class: "btn btn-warning" %>
-        <div class="clear"></div>
-      </div>
+      -webkit-appearance: none;
+
+    }
+    /**
+    * 闭合浮动*/
+
+    .clearfix:before,
+    .clearfix:after {
+      content: "";
+      display: table;
+    }
+
+    .clearfix:after {
+      clear: both;
+    }
+
+    .clearfix {
+      *zoom: 1; /* IE6-7 触发 hasLayout */
+    }
+
+    a img, img{ border:none; vertical-align:middle;}
+    .green{ color:#0c8c2d;}
+    .red{ color:#ff0000;}
+    .blue{ color:#2f87e4}
+    body{ background:#f5f5f5;}
+    .top_bg { width: 100%; background-color: #f9f9f9; border-bottom: 1px solid #efefef;}
+    .top { padding-top: 20px; padding-bottom: 20px;width: 1200px;margin: 0 auto;}
+    .logo {float: left;}
+    .top .searchgoods {
+      width: 206px;
+      display: inline-block;
+      height: 20px;
+      padding: 4px 6px;
+      margin-bottom: 10px;
+      font-size: 14px;
+      line-height: 20px;
+      color: #555555;
+      -webkit-border-radius: 4px;
+      -moz-border-radius: 4px;
+      border-radius: 4px;
+      vertical-align: middle;
+      margin-left: 70px;
+      height: 26px;
+      position: absolute;    background-color: white;
+      border: 1px solid #cccccc;
+      -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+      -moz-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+      box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+      -webkit-transition: border linear 0.2s, box-shadow linear 0.2s;
+      -moz-transition: border linear 0.2s, box-shadow linear 0.2s;
+      -o-transition: border linear 0.2s, box-shadow linear 0.2s;
+      transition: border linear 0.2s, box-shadow linear 0.2s;
+    }
+
+    .top .search {outline: none; position: relative;left: 285px;}
+    .search span { position: relative; left: -55px; color: white; text-decoration: none;}
+    .down {display: inline-block;float: right;line-height: 36px; font-size: 14px; color: #eb6d20;}
+    .down a{ margin: 0 8px; color:#999;}
+
+
+
+    .daohang{ width:100%; background:#fff; border-bottom:1px solid #ccc; line-height:3em; }
+    .daohang-wd{ overflow:hidden; width:1200px; margin:0 auto;}
+    .daohang-wd a{ float:left; width:20%; text-align:center; font-size:16px;}
+    .daohang-wd .select{ border-bottom:3px solid #F63; margin-bottom:-1px; color:#C30;}
+
+    .flsx{ background:#ff5a00;color:#fff; line-height:3em; margin: 15px 0;}
+    .flsx a{ color:#fff; padding:11px 15px;}
+    .flsx a.select{ background:#bf4300;}
+
+    .flsx2 { background:#F93;}
+    .flsx2 a{ padding:11px 40px; }
+
+    .productlist{ width:1200px; margin:0px auto 30px;}
+    .title{ background:#333; border:1px solid #ddd; font-size:14px; line-height:50px; overflow:hidden; color:#fff;}
+    .title b, .product b{ float:left; text-indent:5px; font-weight:normal;}
+    .time{ width:110px;}
+    .pic{ width:50px;}
+    .protit{ width:810px; overflow:hidden; white-space:nowrap;}
+    .protit i{ font-size:12px; color:#F93;}
+    b.priceing{width:100px;font-weight:bolder; text-align:center;}
+    .zhekou{width:77px;}
+    .lishijia{width:100px; text-align:right;}
+    .product li{ line-height:3.6em; border-bottom:1px solid #ddd; background:#fff; position:relative;}
+    .time img{ width:25px; height:25px; margin:0 0 0 5px; }
+    li .protit img{ width:42px; height:42px;}
+    .jiagexiangxi{ position:absolute; z-index:1; top:50px; left:650px; background:#7ED4B8; color:#000; padding: 0 10px; line-height:3em; display:none;}
+    .jiagexiangxi span{ margin:0 5px; font-size:14px; font-weight:bolder;}
+    .jiagexiangxi i{ background:url(<%= image_url 'icooe21.png' %>) no-repeat; width:20px;height:10px; position:absolute; z-index:2; left:50%; margin: 0 0 0 -10px; top:-10px; display:block;}
+    .product li:hover { background:#ddd;}
+    .product li:hover .jiagexiangxi{ display:block;}
+
+    .yizhe .zhekou{ background:#880303; color:#fff;}
+    .yizhe .priceing{ color:red;}
+    .erzhe .zhekou{ background:#C00;}
+    .erzhe .priceing{ color:#C00;}
+    .sanzhe .zhekou{ background:#C00;}
+    .sanzhe .priceing{ color:#C00;}
+    .sizhe .zhekou{ background:#fb602a;}
+    .wuzhe .zhekou{ background:#fb602a;}
+    .liuzhe .zhekou{ background:#cacc00;}
+    .qizhe .zhekou{ background:#cacc00;}
+  </style>
+</head>
+
+<body>
+  <div class="top_bg">
+    <div class="top clearfix">
+      <a class="logo" href="/"><%= image_tag 'logo.png' %></a>
+      <input class="searchgoods" type="text" placeholder="输入商品名称">
+      <a class="search" href="#" onclick="alert('敬请期待。。。')"><%= image_tag 'search.png' %><span>搜索</span></a>
+      <p class="down"><a>登录</a><a href="/ordered_bargains">注册</a></p>
     </div>
-    <% end %>
   </div>
-</div>
-<% content_for :script do %>
-<script type="text/javascript">
-  $(function(){
-    var $container = $('#container');
-    $container.imagesLoaded(function(){
-      $container.masonry({
-        itemSelector : '.item',
-        columnWidth : 200
-      });
+  <div class="daohang"><div class="daohang-wd"><a class="select">什么降价了</a><a>什么在限时购秒杀一元</a><a>全网爆料给喜欢的人</a><a>我只要历史最低</a><a>新品手机库存在线预警</a></div></div>
+  <div class="productlist">
+    <div class="flsx"><a>全部推送</a><a class="select">家电</a><a>电脑</a><a>手机</a><a>数码</a><a>母婴</a><a>家居</a><a>厨具</a><a>汽车</a><a>玩具</a></div>
+    <div class="flsx flsx2"><a>全部折扣</a><a class="select">一折</a><a>二折</a><a>三折</a><a>四折</a><a>五折</a><a>六折</a><a>七折</a><a>八折</a></div>
 
-    });
-  });
-</script>
-<% end %>
-
-
-<%= will_paginate @bargains, :renderer => BootstrapPagination::Rails, class: "pagination pagination-large pagination-centered fenye" %>
-
-<% content_for :title do %>首页<% end %>
-<% content_for :meta_keywords do %>降价商品,什么降价了<% end %>
-<% content_for :meta_desc do %>就在刚才，京东商城、亚马逊中国、当当还有新蛋商城的多款电商商品降价了，快来看看捡个大便宜吧！<% end %>
+    <div class="title"><b class="time">时间</b><b class="protit">商品信息（商品信息自动刷新无需手动刷新）&nbsp;&nbsp;<i>当前有100条更新&nbsp;&nbsp;(60S)</i></b><b class="lishijia">历史价</b><b class="priceing">现价</b><b class="zhekou">折扣</b></div>
+    <ul class="product">
+      <% @bargains.each do |bargain| %>
+      <% discount = bargain.price.to_f / bargain.history_low.to_i * 10 %>
+      <li class="<%= zhe_class discount %> clearfix">
+<!--         <div class="jiagexiangxi">
+          <i></i>
+          <span class="red">PC端:199.22</span><span>手机端:169.00</span><span>QQ:189.99</span><span>微信:189.00</span>
+        </div> -->
+        <b class="time"><%= bargain.created_at.strftime("%H:%M:%S") %><%= image_tag 'jd.png' %></b>
+        <a>
+          <b class="protit">
+            <%= image_tag(bargain.product.image_url, class: "img-polaroid fixed") %>
+            <%= bargain.product.name.to_s %>
+          </b>
+          <b class="lishijia"><%= bargain.history_low %></b>
+          <b class="priceing"><%= bargain.price %></b>
+          <b class="zhekou"><%= sprintf("%.1f", discount) %>折</b>
+        </a>
+      </li>
+      <% end %>
+    </ul>
+  </div>
+</body>
+</html>

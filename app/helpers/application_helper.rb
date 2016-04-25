@@ -19,4 +19,16 @@ module ApplicationHelper
   def show_info info
     info.encode("utf-8").gsub("center", "").html_safe rescue "暂无内容"
   end
+
+  def zhe_class discount
+    case discount.to_i
+    when 1 then 'yizhe'
+    when 2 then 'erzhe'
+    when 3 then 'sanzhe'
+    when 4 then 'sizhe'
+    when 5 then 'wuzhe'
+    when 6 then 'liuzhe'
+    when 7 then 'qizhe'
+    end
+  end
 end
