@@ -51,7 +51,7 @@ class ProductList::Jd < ProductList
         product.update_columns(url_key: nil, url: nil, is_discontinued: true)
       end
     end
-    sleep 2
+    sleep 3
   end
 
   # protected instance methods ................................................
