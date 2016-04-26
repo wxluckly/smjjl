@@ -77,8 +77,8 @@ class Product < ActiveRecord::Base
     #     BargainsCategory.create(bargain_id: bargain.id, category_id: category_id)
     #   end
     # elsif
-    if discount > 0.2
-      # 当比之前价格低20%的时候，进行记录
+    if discount > 0.1
+      # 当比之前价格低10%的时候，进行记录
       bargain = bargains.create(price: last_price, history_low: last_price_was, discount: discount)
       Category.classify(category).each do |category_id|
         BargainsCategory.create(bargain_id: bargain.id, category_id: category_id)
