@@ -6,6 +6,8 @@ Smjjl::Application.routes.draw do
 
   root 'index#index'
 
+  devise_for :users, controllers: { sessions: "users/sessions", registrations: "users/registrations", passwords: "users/passwords" }
+
   get 'test', to: 'index#test'
   get "/bargains_categories/:category_id", to: 'bargains_categories#index'
 

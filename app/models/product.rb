@@ -4,7 +4,7 @@ class Product < ActiveRecord::Base
   include Patcher
 
   # security (i.e. attr_accessible) ...........................................
-  attr_accessible :url, :url_key, :price_key, :name, :low_price, :category, :image_url, :is_discontinued, :type
+  # attr_accessible :url, :url_key, :price_key, :name, :low_price, :category, :image_url, :is_discontinued, :type
 
   # relationships .............................................................
   has_many :prices

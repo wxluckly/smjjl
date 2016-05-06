@@ -1,36 +1,27 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <title><%= yield(:title) %>_什么降价了</title>
-  <meta name="keywords" content="<%= content_for?(:meta_keywords) ? yield(:meta_keywords) : "什么降价了" %>" />
-  <meta name="description" content="<%= yield(:meta_desc) %>" />
-  <meta name="baidu-site-verification" content="ys1imE8AcP" />
-  <%= stylesheet_link_tag   "application", media: "all"%>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>什么降价了</title>
+  <%= stylesheet_link_tag "v3/smjjl.css", media: "all"%>
   <%= csrf_meta_tag %>
-  <%= yield :head %>
 </head>
 <body>
-  <%= render "header" %>
-  <div class="container">
-    <%= yield %>
+  <div class="top_bg">
+    <div class="top clearfix">
+      <a class="logo" href="/"><%= image_tag 'logo.png' %></a>
+      <input class="searchgoods" type="text" placeholder="输入商品名称">
+      <a class="search" href="#" onclick="alert('敬请期待。。。')"><%= image_tag 'search.png' %><span>搜索</span></a>
+      <% if current_user %>
+      <p class="down"><a href="<%= destroy_user_session_path %>" data-method='delete' >退出登录</a></p>
+      <% else %>
+      <p class="down"><a href="/users/sign_in">登录</a><a href="/users/sign_up">注册</a></p>
+      <% end %>
+    </div>
   </div>
-  <%= render "footer" %>
+  <%= yield %>
   <%= javascript_include_tag  "application" %>
   <%= yield :script %>
-  <% if Rails.env.production? %>
-  <script type="text/javascript">
-    // 百度统计代码
-    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F2c69ea66172ae9234653b96ffebb8099' type='text/javascript'%3E%3C/script%3E"));
-
-    //google统计代码
-    // (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    //   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    //   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    // })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-    // ga('create', 'UA-47470731-1', 'smjjl.com');
-    // ga('send', 'pageview');
-  </script>
-  <% end %>
+  <%= render 'analytics' %>
 </body>
 </html>

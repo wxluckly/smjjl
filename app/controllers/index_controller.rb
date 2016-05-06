@@ -7,7 +7,6 @@ class IndexController < ApplicationController
     else
       @bargains = Bargain.order("created_at desc").includes(:product).paginate(page: params[:page], per_page: 50, total_entries: 500)
     end
-    render layout: false
   end
 
   def test

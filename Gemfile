@@ -3,9 +3,9 @@ source 'https://ruby.taobao.org'
 # ruby '2.1'
 
 # 基础包
-gem 'rails', "~> 4.0.0"
+gem 'rails', "4.1.4"
 gem 'mysql2', '0.3.20'
-gem 'protected_attributes', '1.0.8'
+# gem 'protected_attributes', '1.0.8'
 gem 'yajl-ruby', '1.2.1'
 gem 'sinatra', '>= 1.3.0', :require => nil
 gem 'uglifier', '2.5.3'
@@ -42,6 +42,7 @@ gem 'typhoeus', '0.6.9'
 gem 'nokogiri', '1.6.3.1'
 
 # 辅助工具
+gem 'devise', '3.2.4'
 gem 'quiet_assets', '1.0.3'  # 禁用assets log
 gem 'will_paginate', '3.0.7'
 gem 'default_value_for', "~> 3.0.0"
