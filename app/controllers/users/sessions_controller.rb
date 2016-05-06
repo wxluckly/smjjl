@@ -8,10 +8,8 @@ class Users::SessionsController < Devise::SessionsController
 
   # POST /resource/sign_in
   def create
-    # user = User.find_by(email: params[:user][:email])
-    # user = User.find_by(mobile: params[:user][:mobile]) unless user
-    # user = User.find_by(logname: params[:user][:logname]) unless user
-    user = User.find_by(logname: params[:user][:email])
+    user = User.find_by(email: params[:user][:logname])
+    user = User.find_by(username: params[:user][:logname]) unless user
     if user && user.valid_password?(params[:user][:password])
       sign_in_and_redirect user, event: :authentication, notice: ""
     else

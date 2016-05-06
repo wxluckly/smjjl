@@ -1,65 +1,38 @@
 <div class="loginbg"><%= image_tag 'v3/loginbg.jpg' %>
   <div class="account-wrap">
-    <form name="form-login" id="form-login" action="/member/login" method="post">
-      <div class="account-title login-title"></div>
-      <div class="account-input">
-        <i class="fa fa-user"></i>
-        <input type="text" name="loginCode" value="" placeholder="请输入用户名/已验证手机">
-      </div>
-      <div class="account-input">
-        <i class="fa fa-lock"></i>
-        <input type="password" name="password" value="" placeholder="请输入登录密码">
-      </div>
-      <div class="account-bar">
-        <div class="float-left"><label><input type="checkbox" name="auto" value="1" class="checkbox"> 两周内免登录</label></div>
-        <div class="float-right"><a href="/member/forgot" class="forget color">忘记密码</a></div>
-      </div>
-      <!-- <div class="msg" style="display:block;">用户名不存在</div> -->
-      <div class="account-btn">
-        <input type="hidden" name="path" value="">
-        <input value="登录" class="input-sub" type="submit">
-      </div>
-      <div class="account-bar text-right grey">
-        还没有账号？<a href="/users/sign_up" class="register">免费注册</a>
-      </div>
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    <div class="account-title login-title"></div>
+    <div class="account-input">
+      <i class="fa fa-user"></i>
+      <%= f.text_field :logname, autofocus: true, placeholder: '请输入用户名/邮箱' %>
+    </div>
+    <div class="account-input">
+      <i class="fa fa-lock"></i>
+      <%= f.password_field :password, autocomplete: "off", placeholder: '请输入登录密码' %>
+    </div>
+    <div class="account-bar">
+      <div class="float-left"><label><%= f.check_box :remember_me, class: 'checkbox' %> 两周内免登录</label></div>
+      <!-- <div class="float-right"><a href="/member/forgot" class="forget color">忘记密码</a></div> -->
+    </div>
+    <% if flash[:notice] %>
+    <div class="msg" style="display:block;"><%= flash[:notice] %></div>
+    <% end %>
+    <div class="account-btn">
+      <input type="hidden" name="path" value="">
+      <input value="登录" class="input-sub" type="submit">
+    </div>
+    <div class="account-bar text-right grey">
+      还没有账号？<a href="/users/sign_up" class="register">免费注册</a>
+    </div>
 <!--       <div class="quick-login">
-        <div class="float-right">
-          <a href="doQuickLogin/QQ" class="qq-login"></a>
-          <a href="doQuickLogin/Weibo" class="sina-login"></a>
-          <a href="doQuickLogin/Weixin" class="wx-login"></a>
-        </div>
-        <div class="float-left">第三方帐号快速登陆</div>
-      </div> -->
-    </form>
+      <div class="float-right">
+        <a href="doQuickLogin/QQ" class="qq-login"></a>
+        <a href="doQuickLogin/Weibo" class="sina-login"></a>
+        <a href="doQuickLogin/Weixin" class="wx-login"></a>
+      </div>
+      <div class="float-left">第三方帐号快速登陆</div>
+    </div> -->
+    <% end %>
     <div class="account-bottom"></div>
   </div>
 </div>
-
-
-
-<h2>Log in</h2>
-
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-<div class="field">
-  <%= f.label :email %><br />
-  <%= f.email_field :email, autofocus: true %>
-</div>
-
-<div class="field">
-  <%= f.label :password %><br />
-  <%= f.password_field :password, autocomplete: "off" %>
-</div>
-
-<% if devise_mapping.rememberable? -%>
-<div class="field">
-  <%= f.check_box :remember_me %>
-  <%= f.label :remember_me %>
-</div>
-<% end -%>
-
-<div class="actions">
-  <%= f.submit "Log in" %>
-</div>
-<% end %>
-
-<%= render "users/shared/links" %>
