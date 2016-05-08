@@ -13,14 +13,14 @@
       <input class="searchgoods" type="text" placeholder="输入商品名称">
       <a class="search" href="#" onclick="alert('敬请期待。。。')"><%= image_tag 'search.png' %><span>搜索</span></a>
       <% if current_user %>
-      <p class="down"><a href="<%= destroy_user_session_path %>" data-method='delete' >退出登录</a></p>
+      <p class="down"><a href="/users/ucenter"><%= current_user.username %></a><a href="<%= destroy_user_session_path %>" data-method='delete' >退出</a></p>
       <% else %>
       <p class="down"><a href="/users/sign_in">登录</a><a href="/users/sign_up">注册</a></p>
       <% end %>
     </div>
   </div>
   <%= yield %>
-  <%= flash[:notice] %>
+  <div style='display: none;'><%= flash[:notice] %></div>
   <%= javascript_include_tag  "application" %>
   <%= yield :script %>
   <%= render 'analytics' %>

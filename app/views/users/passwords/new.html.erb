@@ -1,16 +1,16 @@
-<h2>Forgot your password?</h2>
-
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-  <%= devise_error_messages! %>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
+<div class="zhuceym clearfix">
+  <div class="float-left">
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+    <ul>
+      <li><%= devise_error_messages! %></li>
+      <li>
+        <p class="title">邮箱</p>
+        <p><%= f.email_field :email, autofocus: true, placeholder: '请输入邮箱地址' %><b><i class="fatanhao"></i>请使用您注册填写的邮箱</b></p>
+      </li>
+      <li><%= f.submit "立即找回", class: 'button' %></li>
+    </ul>
+    <% end %>
   </div>
-
-  <div class="actions">
-    <%= f.submit "Send me reset password instructions" %>
+  <div class="float-right">
   </div>
-<% end %>
-
-<%= render "users/shared/links" %>
+</div>

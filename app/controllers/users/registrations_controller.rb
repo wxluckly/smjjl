@@ -9,7 +9,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
-    # binding.pry
+    # 增加邀请者
+    if user = User.find_by(invite_code: params[:user][:invite_code])
+      params[:user][:invited_by] = user.id
+      devise_parameter_sanitizer.for(:sign_up) << :invited_by
+    end
     super
   end
 
@@ -41,7 +45,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # You can put the params you want to permit in the empty array.
   def configure_sign_up_params
-    devise_parameter_sanitizer.for(:sign_up) << [:username]
+    devise_parameter_sanitizer.for(:sign_up) << :username
   end
 
   # You can put the params you want to permit in the empty array.

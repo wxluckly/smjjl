@@ -9,7 +9,11 @@ class User < ActiveRecord::Base
   validates :username, uniqueness: true
 
   # callbacks .................................................................
+  after_commit :set_invite_code
+
   # scopes ....................................................................
+  has_many :invitees, -> { order(id: :desc) }, class_name: 'User', foreign_key: :invited_by
+
   # additional config .........................................................
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -19,4 +23,10 @@ class User < ActiveRecord::Base
   # public instance methods ...................................................
   # protected instance methods ................................................
   # private instance methods ..................................................
+  private
+  def set_invite_code
+    return if invite_code.present?
+    update_column(:invite_code, "#{id}#{('A'..'Z').to_a.sample(4).join}")
+  end
+
 end

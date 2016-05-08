@@ -1,0 +1,46 @@
+<div class="usercenter">
+  <div class="float-left">
+    <p>用户中心</p>
+    <a class="select">邀请得会员</a>
+    <!-- <a>修改密码</a> -->
+  </div>
+  <div class="float-right">
+    <div><%= image_tag 'v3/yaoqinghaoyou_01.png' %></div>
+    <div class="yqhytitle">直接邀请</div>
+    <div class="yqljfz clearfix"><input id="copy-input1" value="http://www.smjjl.com/users/sign_up?ic=<%= current_user.invite_code %>" class="wenbenkuang" /><div class="copylink"><a href="javascript:void(0)" id='copy-button1' data-clipboard-target="copy-input1">复制链接</a></div><div>复制完链接，你可以通过QQ、微信、Email等发送给您的小伙伴。</div></div>
+<!--  <div class="yqhytitle">随手分享</div>
+<div class="shfxan">
+  <a class="xinlangweibo"></a><a class="tengxunqq"></a><a class="tengxunweibo"></a><a class="txweixin"><b></b></a>
+</div>-->
+<!--  <div class="yqhytitle">微信邀请<span>（关注并绑定微信更可获得额外奖励）</span></div>
+  <div class="wxyqewm"><img src="images/qr_06.jpg">扫一扫，加关注。
+    绑定后在微站点击邀请好友进行邀请</div>-->
+    <div class="yqhytitle">邀请好友规则</div>
+    <ul class="yhhygz">
+      <li>1、只有注册用户才有资格邀请；</li>
+      <li>2、用户可通过微信、微博、qq空间等形式邀请好友；</li>
+      <li>3、被邀请人完成注册邀请成功；</li>
+      <li>4、内测期间邀请注册必须要加QQ群287679594才有资格申请奖励。</li>
+      <li>5、活动中如果发现作弊行为，将取消奖励。</li>
+    </ul>
+    <div class="yqhytitle">邀请好友记录<span>一天更新一次数据</span></div>
+    <table class="yhhyjl">
+      <tr><th>好友昵称</th><th>状态</th></tr>
+      <% current_user.invitees.each do |invitee| %>
+      <tr><td><%= invitee.username %></td><td>注册</td></tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+<% content_for :script do %>
+<script type="text/javascript">
+  $(function(){
+    var client1 = new ZeroClipboard( document.getElementById("copy-button1") );
+    client1.on( "ready", function( readyEvent ) {
+      client1.on( "aftercopy", function( event ) {
+        alert("复制成功");
+      } );
+    } );
+  })
+</script>
+<% end %>

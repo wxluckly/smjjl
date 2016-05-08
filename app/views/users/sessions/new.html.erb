@@ -12,7 +12,7 @@
     </div>
     <div class="account-bar">
       <div class="float-left"><label><%= f.check_box :remember_me, class: 'checkbox' %> 两周内免登录</label></div>
-      <!-- <div class="float-right"><a href="/member/forgot" class="forget color">忘记密码</a></div> -->
+      <div class="float-right"><a href="/users/password/new" class="forget color">忘记密码</a></div>
     </div>
     <% if flash[:notice] %>
     <div class="msg" style="display:block;"><%= flash[:notice] %></div>

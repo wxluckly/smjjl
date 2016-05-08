@@ -17,6 +17,11 @@ Smjjl::Application.routes.draw do
   resources :sitemap, only: :index
   resources :ordered_bargains, only: :index
 
+  namespace :users do
+    get 'ucenter', to: 'invites#index'
+    resources :invites
+  end
+
   namespace :ajax do
     get "get_prices"
     get "get_info"

@@ -16,6 +16,7 @@
 //= require lib/jquery.masonry.min
 //= require lib/cloud-zoom.1.0.2.min
 //= require lib/jquery.Jcrop.min
+//= require lib/ZeroClipboard.2.2.0
 //= require bootstrap
 //= require highcharts/highstock
 //= require highcharts/highcharts-more

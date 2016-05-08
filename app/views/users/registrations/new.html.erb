@@ -3,6 +3,7 @@
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: {novalidate: 'novalidate'}) do |f| %>
     <%= devise_error_messages! %>
     <ul>
+      <%= f.hidden_field :invite_code, value: params[:ic] %>
       <li><p class="title">用户名</p><p><%= f.text_field :username, autofocus: true, placeholder: '您的账户名和登录名' %><b><i class="fatanhao"></i>支持中文、字母、数字、“-”、“_”的组合，1-20个字符</b></p>
       </li>
       <li><p class="title">邮箱</p><p><%= f.email_field :email, placeholder: '请输入邮箱地址' %><b><i class="fatanhao"></i>建议使用通用邮箱</b></p>
