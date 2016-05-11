@@ -32,6 +32,7 @@
     <% @bargains.each do |bargain| %>
     <% discount = 10 - bargain.discount.to_f * 10 %>
     <li class="<%= zhe_class discount %> clearfix">
+      <% if bargain.product %>
 <!--         <div class="jiagexiangxi">
         <i></i>
         <span class="red">PC端:199.22</span><span>手机端:169.00</span><span>QQ:189.99</span><span>微信:189.00</span>
@@ -46,6 +47,9 @@
         <b class="priceing"><%= bargain.price %></b>
         <b class="zhekou"><%= sprintf("%.1f", discount) %>折</b>
       </a>
+      <% else %>
+      已删除
+      <% end %>
     </li>
     <% end %>
   </ul>
