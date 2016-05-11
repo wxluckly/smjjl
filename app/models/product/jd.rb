@@ -19,15 +19,6 @@ class Product::Jd < Product
     sleep 5
   end
 
-  # 从接口获取价格(目前只有京东有这个方法，待废弃)
-  def get_price
-    p "已经不推荐使用此方法"
-    page = Nokogiri::HTML(http_get("http://p.3.cn/prices/mgets?skuIds=J_#{self.url_key}"))
-    if value = (Yajl::Parser.new.parse(page.text).first["p"] rescue nil)
-      record_price value
-    end
-  end
-
   def link
     "http:#{url}"
   end
@@ -42,6 +33,10 @@ class Product::Jd < Product
 
   def info
     Nokogiri::HTML.parse(http_open(url)).css("#product-detail-1").to_html.gsub("data-lazyload", "src")
+  end
+
+  def ziying?
+    url_key.to_i < 10000000000
   end
 
   # protected instance methods ................................................

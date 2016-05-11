@@ -22,7 +22,7 @@ class ProductList::Jd < ProductList
   end
 
   def get_product_ids(page_num)
-    page_url = "#{url}?page=#{page_num}"
+    page_url = "#{url}?delivery=1&page=#{page_num}"
     Nokogiri::HTML(http_get(page_url), nil, Site::Jd::ENCODING).css("#plist .p-name a").map{ |a| a.attr("href") }.each do |puduct_url|
       Product::Jd.create(url: puduct_url, url_key: (puduct_url.scan(/\d+/).first rescue nil) )
     end
@@ -31,7 +31,7 @@ class ProductList::Jd < ProductList
 
   # 从列表中更新价格及其他信息
   def get_list_prices(page_num)
-    page_url = "#{url}?page=#{page_num}"
+    page_url = "#{url}?delivery=1&page=#{page_num}"
     page = Nokogiri::HTML(http_get(page_url), nil, Site::Jd::ENCODING)
     key_str = page.css("#plist li .p-name a").map{|a| a.attr("href").scan(/\d+/)}.join(",J_")
     value_page = Nokogiri::HTML(http_get("http://p.3.cn/prices/mgets?skuIds=J_#{key_str}&pduid=#{Time.now.to_i}"))
