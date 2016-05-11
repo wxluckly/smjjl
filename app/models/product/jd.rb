@@ -36,7 +36,7 @@ class Product::Jd < Product
   end
 
   def ziying?
-    url_key.to_i < 10000000000
+    url_key.to_i < 1000000000
   end
 
   # protected instance methods ................................................
