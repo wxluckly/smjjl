@@ -16,7 +16,7 @@ class Product::Jd < Product
     self.image_url = "http:#{page.css('#spec-n1 img').attr('src').text}" rescue nil
     self.has_content = true
     self.save
-    sleep 5
+    sleep 2
   end
 
   def link
