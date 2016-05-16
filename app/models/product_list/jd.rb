@@ -36,6 +36,7 @@ class ProductList::Jd < ProductList
     page_url = "#{url}?delivery=1&page=#{page_num}"
     page = Nokogiri::HTML(http_get(page_url), nil, Site::Jd::ENCODING)
     key_str = page.css("#plist li .p-name a").map{|a| a.attr("href").scan(/\d+/)}.join(",J_")
+    return if key_str.blank?
     value_page = Nokogiri::HTML(http_get("http://p.3.cn/prices/mgets?skuIds=J_#{key_str}&pduid=#{Time.now.to_i}"))
     value_hash = Yajl::Parser.new.parse(value_page.text).inject({}){|hash, v| hash[v["id"]] = v["p"]; hash}
     page.css("#plist li").each do |li|
