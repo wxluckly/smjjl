@@ -22,7 +22,7 @@ class Wap::Api < Grape::API
 
       format: :json,
       hide_format: true,
-      markdown: GrapeSwagger::Markdown::KramdownAdapter,
+      markdown: GrapeSwagger::Markdown::KramdownAdapter.new,
 
       api_version: '1.0',
       hide_documentation_path: true,
