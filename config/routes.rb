@@ -30,7 +30,12 @@ Smjjl::Application.routes.draw do
   namespace :admin do
     root 'welcome#index'
     resources :product_lists do
-      put :block, :unblock
+      member do
+        put :block, :unblock
+      end
+      collection do
+        post :set_is_prior
+      end
     end
   end
 end

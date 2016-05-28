@@ -13,7 +13,8 @@
       <th>类型</th>
       <th>URL</th>
       <th>创建时间</th>
-      <th>操作</th>
+      <th>上下线</th>
+      <th>优先</th>
     </tr>
   </thead>
   <tbody>
@@ -24,13 +25,26 @@
       <td><%= friendly_time product_list.created_at %></td>
       <td>
         <% if product_list.is_blocked? %>
-        <%= link_to '已下线', admin_product_list_unblock_path(product_list), class: 'btn', remote: true, method: 'PUT' %>
+        <%= link_to '已下线', unblock_admin_product_list_path(product_list), class: 'btn', remote: true, method: 'PUT' %>
         <% else %>
-        <%= link_to '已上线', admin_product_list_block_path(product_list), class: 'btn btn-success', remote: true, method: 'PUT' %>
+        <%= link_to '已上线', block_admin_product_list_path(product_list), class: 'btn btn-success', remote: true, method: 'PUT' %>
         <% end %>
       </td>
+      <td><label class="checkbox inline"><%= check_box_tag "prior_check_box", product_list.id, product_list.is_prior %></label></td>
     </tr>
     <% end %>
   </tbody>
 </table>
 <%= will_paginate @product_lists, :renderer => BootstrapPagination::Rails %>
+<% content_for :script do %>
+<script>
+  $(function(){
+    $("input[id='prior_check_box']").on("change", function(){
+      _this = $(this)
+      $.post("<%= set_is_prior_admin_product_lists_path %>", {id: _this.attr("value"), is_prior: _this.prop("checked")}, function(data){
+
+      })
+    })
+  })
+</script>
+<% end %>

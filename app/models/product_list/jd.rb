@@ -53,7 +53,9 @@ class ProductList::Jd < ProductList
         product.record_price value_hash["J_#{product.url_key}"]
       else
         # 如果名称发生巨大变化，则证明原商品已被替换，进行下架处理
-        product.update_columns(url_key: nil, url: nil, is_discontinued: true)
+        # product.update_columns(url_key: nil, url: nil, is_discontinued: true)
+        # 如果名称发生巨大变化，则证明原商品已被替换，直接删除
+        product.destroy
       end
     end
   end
