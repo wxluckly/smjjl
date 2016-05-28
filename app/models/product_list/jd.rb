@@ -9,12 +9,14 @@ class ProductList::Jd < ProductList
   # additional config .........................................................
   # class methods .............................................................
   # public instance methods ...................................................
+  # 处理后的url，根据原有的url进行调整，作为能够跳转的地址
   def list_url
-    url
+    key = url.match(/\d+-\d+-\d+/)[0]
+    "http://list.jd.com/list.html?cat=#{key.split('-').join(',')}"
   end
 
   def get_pagination(category = "id")
-    page_url = "#{url}?delivery=1"
+    page_url = "#{list_url}?delivery=1"
     total_page = Nokogiri::HTML(http_get(page_url), nil, Site::Jd::ENCODING).css(".page a")[-3].text.to_i rescue 1
     1.upto total_page do |page_num|
       GetIdWorker.perform_async(id, page_num) if category == "id"
@@ -24,7 +26,7 @@ class ProductList::Jd < ProductList
   end
 
   def get_product_ids(page_num)
-    page_url = "#{url}?delivery=1&page=#{page_num}"
+    page_url = "#{list_url}?delivery=1&page=#{page_num}"
     Nokogiri::HTML(http_get(page_url), nil, Site::Jd::ENCODING).css("#plist .p-name a").map{ |a| a.attr("href") }.each do |puduct_url|
       Product::Jd.create(url: puduct_url, url_key: (puduct_url.scan(/\d+/).first rescue nil) )
     end
@@ -33,7 +35,7 @@ class ProductList::Jd < ProductList
 
   # 从列表中更新价格及其他信息
   def get_list_prices(page_num)
-    page_url = "#{url}?delivery=1&page=#{page_num}"
+    page_url = "#{list_url}?delivery=1&page=#{page_num}"
     page = Nokogiri::HTML(http_get(page_url), nil, Site::Jd::ENCODING)
     key_str = page.css("#plist li .p-name a").map{|a| a.attr("href").scan(/\d+/)}.join(",J_")
     return if key_str.blank?
