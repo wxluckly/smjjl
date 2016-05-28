@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>账户</title>
+  <meta name="keywords" content="<%= content_for?(:meta_keywords) ? yield(:meta_keywords) : "什么降价了" %>" />
+  <meta name="description" content="<%= yield(:meta_desc) %>" />
+  <meta name="baidu-site-verification" content="ys1imE8AcP" />
+  <%= stylesheet_link_tag   "admin", media: "all"%>
+  <%= csrf_meta_tag %>
+  <%= yield :head %>
+</head>
+<body>
+  <div class="container">
+    <%= yield %>
+  </div>
+  <%= javascript_include_tag  "admin" %>
+  <%= yield :script %>
+</body>
+</html>

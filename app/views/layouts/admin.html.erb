@@ -23,6 +23,14 @@
           <ul class="nav">
             <li <% if current_page?(admin_product_lists_path) %>class="active"<% end %> ><%= link_to "抓取列表管理", admin_product_lists_path %></li>
           </ul>
+          <ul class="nav pull-right">
+            <% if current_staffer and staffer_signed_in? %>
+            <%= link_to '退出', destroy_staffer_session_path, method: :delete, class: "btn" %>
+            <% else %>
+            <%= link_to '登录', new_staffer_session_path, class: "btn" %>
+            <%= link_to '注册', new_staffer_registration_path, class: "btn" %>
+            <% end %>
+          </ul>
         </div>
       </div>
     </div>
@@ -30,7 +38,6 @@
   <div class="container">
     <%= yield %>
   </div>
-  <%= render "footer" %>
   <%= javascript_include_tag  "admin" %>
   <%= yield :script %>
 </body>
