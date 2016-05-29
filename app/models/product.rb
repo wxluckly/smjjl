@@ -23,7 +23,7 @@ class Product < ActiveRecord::Base
 
   # scopes ....................................................................
   # scope :empty, -> { where("name is null or name = ''") }
-  scope :empty, -> { where("image_url null or image_url = ''") }
+  scope :empty, -> { where("image_url is null or image_url = ''") }
 
   # additional config .........................................................
   serialize :price_history
