@@ -41,5 +41,10 @@ module Smjjl
       request_specs: false
       g.fixture_replacement :factory_girl, dir: "spec/factories"
     end
+
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.raise_delivery_errors = true
+    config.action_mailer.perform_deliveries = true
+    config.action_mailer.smtp_settings = Setting::Config.smtp.symbolize_keys
   end
 end

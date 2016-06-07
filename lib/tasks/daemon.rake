@@ -21,11 +21,13 @@ namespace :daemon do
     rs = Sidekiq::RetrySet.new
     if rs.size > 0
       rs.clear
+      MailerSystem.notify.deliver
     end
 
     update_list_price = Sidekiq::Queue.new("update_list_price")
     if update_list_price.size > 0
       update_list_price.clear
+      MailerSystem.notify.deliver
     end
   end
 
