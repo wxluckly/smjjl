@@ -29,6 +29,11 @@ every '0 * * * *', :roles => [:master] do
   command "cd /www/smjjl && > log/production.log"
 end
 
+# 每3分钟检查队列
+every '*/3 * * * *', :roles => [:master] do
+  rake "daemon:check_jobs"
+end
+
 # ------------------------ worker ------------------------
 
 # 每小时零55分重启worker服务
