@@ -29,6 +29,26 @@ module Patcher
       return nil
     end
 
+    # 模拟人访问
+    def http_post(url, body)
+      3.times do
+        begin
+          return Typhoeus.post(url, body: body, nosignal: true, followlocation: true, headers: {"User-Agent" => UserAgents.rand()}).body
+        rescue Timeout::Error
+          next
+        rescue Net::HTTPNotFound
+          next
+        rescue Net::HTTPServiceUnavailable
+          next
+        rescue Exception => e
+          Rails.logger.info e.message
+          return nil
+        end
+      end
+      Rails.logger.error "#{Time.now.to_s(:db)} #{url} failure!"
+      return nil
+    end
+
     # 前置解码访问
     def http_open(url)
       3.times do

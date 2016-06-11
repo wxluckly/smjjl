@@ -27,7 +27,6 @@ namespace :daemon do
     update_list_price = Sidekiq::Queue.new("update_list_price")
     if update_list_price.size > 0
       update_list_price.clear
-      MailerSystem.crawler_notify.deliver
     end
   end
 
@@ -37,5 +36,13 @@ namespace :daemon do
       MailerSystem.crawler_notify.deliver
     end
   end
+
+  desc "更换Ucloud的IP地址"
+  task :change_eips => :environment do
+    include Ucloud
+    change_eip
+  end
+
+
 
 end

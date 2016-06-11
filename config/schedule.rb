@@ -34,9 +34,14 @@ every '*/3 * * * *', :roles => [:master] do
   rake "daemon:check_jobs"
 end
 
+# 更换ip
+every '58 * * * *', :roles => [:worker] do
+  rake "daemon:change_eips"
+end
+
 # ------------------------ worker ------------------------
 
-# 每小时零55分重启worker服务
-every '55 * * * *', :roles => [:worker] do
+# 重启worker服务
+every '59 * * * *', :roles => [:worker] do
   rake "sidekiq:restart"
 end
