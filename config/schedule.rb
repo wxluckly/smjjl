@@ -35,7 +35,7 @@ every '*/3 * * * *', :roles => [:master] do
 end
 
 # 更换ip
-every '58 * * * *', :roles => [:worker] do
+every '58 * * * *', :roles => [:master] do
   rake "daemon:change_eips"
 end
 
