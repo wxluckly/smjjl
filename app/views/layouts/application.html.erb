@@ -10,8 +10,10 @@
   <div class="top_bg">
     <div class="top clearfix">
       <a class="logo" href="/"><%= image_tag 'logo.png' %></a>
-      <input class="searchgoods" type="text" placeholder="输入商品名称">
-      <a class="search" href="#" onclick="alert('敬请期待。。。')"><%= image_tag 'search.png' %><span>搜索</span></a>
+      <%= form_tag("/", id: 'search_form', method: 'get') do %>
+      <%= text_field_tag 'search[product_name_cont]', params[:search].try(:[], :product_name_cont), class: 'searchgoods', placeholder: '输入商品名称' %>
+      <a class="search" href="javascript:void(0);" onclick="$('#search_form').submit();"><%= image_tag 'search.png' %><span>搜索</span></a>
+      <% end %>
       <% if current_user %>
       <p class="down"><a href="/users/ucenter"><%= current_user.username %></a><a href="<%= destroy_user_session_path %>" data-method='delete' >退出</a></p>
       <% else %>
