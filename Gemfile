@@ -41,6 +41,8 @@ gem 'hashie-forbidden_attributes'
 gem 'typhoeus', '0.6.9'
 gem 'nokogiri', '1.6.3.1'
 gem 'useragents'
+gem 'mechanize', '2.7.4'
+gem 'watir-webdriver'
 
 # 辅助工具
 gem 'devise', '3.2.4'
