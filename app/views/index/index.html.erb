@@ -9,7 +9,12 @@
   </div>
 </div> -->
 <div class="productlist">
-  <!-- <div class="flsx"><a>全部推送</a><a class="select">家电</a><a>电脑</a><a>手机</a><a>数码</a><a>母婴</a><a>家居</a><a>厨具</a><a>汽车</a><a>玩具</a></div> -->
+  <div class="flsx" style="display: none;">
+    <a class="<%= 'select' if params[:category].blank? %>" href="<%= root_path(request.params.except(:controller, :action, :page).merge(category: nil)) %>">全部推送</a>
+    <% Category.find_each do |category| %>
+    <a class="<%= 'select' if params[:category] == category.id.to_s %>" href="<%= root_path(request.params.except(:controller, :action, :page).merge(category: category.id)) %>"><%= category.name %></a>
+    <% end %>
+  </div>
   <div class="flsx flsx2">
     <a class="<%= 'select' if params[:discount].blank? %>" href="<%= root_path(request.params.except(:controller, :action, :page).merge(discount: nil)) %>">全部折扣</a>
     <a class="<%= 'select' if params[:discount] == '1' %>" href="<%= root_path(request.params.except(:controller, :action, :page).merge(discount: 1)) %>">一折</a>
