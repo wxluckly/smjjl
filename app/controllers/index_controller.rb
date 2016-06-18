@@ -8,7 +8,7 @@ class IndexController < ApplicationController
       @bargains = @bargains.order("created_at desc").includes(:product).paginate(page: params[:page], per_page: 50, total_entries: 50)
     elsif params[:discount].present? || params[:category].present?
       if params[:category].present?
-        bargains_categories = BargainsCategory.join(:bargain).where(category_id: params[:category]).includes([bargain: :product])
+        bargains_categories = BargainsCategory.joins(:bargain).where(category_id: params[:category]).includes([bargain: :product])
         @bargains = bargains_categories.where("bargains.discount >= '#{1 - params[:discount].to_f / 10 }'").order("created_at desc").includes(:product).paginate(page: params[:page], per_page: 50, total_entries: 500)
       else
         @bargains = Bargain.where("discount >= '#{1 - params[:discount].to_f / 10 }'").order("created_at desc").includes(:product).paginate(page: params[:page], per_page: 50, total_entries: 500)
