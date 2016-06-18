@@ -39,7 +39,7 @@ gem 'hashie-forbidden_attributes'
 
 # HTML解析
 gem 'typhoeus', '0.6.9'
-gem 'nokogiri', '1.6.3.1'
+gem 'nokogiri', '1.6.8'
 gem 'useragents'
 
 # 辅助工具
