@@ -6,6 +6,7 @@ class Bargain < ActiveRecord::Base
 
   # relationships .............................................................
   belongs_to :product
+  has_many :bargains_categories
 
   # validations ...............................................................
   validates :created_at, uniqueness: { scope: :product_id }

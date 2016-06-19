@@ -2,20 +2,13 @@ class IndexController < ApplicationController
   before_action :wx_auth!, only: [:test]
 
   def index
-    if (params[:search] || {})[:product_name_cont].present?
-      @bargains = Bargain.search(params[:search]).result
-      @bargains = @bargains.where("discount >= '#{1 - params[:discount].to_f / 10 }'") if params[:discount].present?
-      @bargains = @bargains.order("created_at desc").includes(:product).paginate(page: params[:page], per_page: 50, total_entries: 50)
-    elsif params[:discount].present? || params[:category].present?
-      if params[:category].present?
-        bargains_categories = BargainsCategory.joins(:bargain).where(category_id: params[:category]).includes([bargain: :product])
-        @bargains = bargains_categories.where("bargains.discount >= '#{1 - params[:discount].to_f / 10 }'").order("created_at desc").includes(:product).paginate(page: params[:page], per_page: 50, total_entries: 500)
-      else
-        @bargains = Bargain.where("discount >= '#{1 - params[:discount].to_f / 10 }'").order("created_at desc").includes(:product).paginate(page: params[:page], per_page: 50, total_entries: 500)
-      end
-    else
-      @bargains = Bargain.order("created_at desc").includes(:product).paginate(page: params[:page], per_page: 50, total_entries: 500)
-    end
+    @bargains = Bargain
+    @bargains = Bargain.search(params[:search]).result if (params[:search] || {})[:product_name_cont].present?
+    @bargains = @bargains.where("discount >= '#{1 - params[:discount].to_f / 10 }'") if params[:discount].present?
+    @bargains = @bargains.where("category_ids LIKE ?", ",#{params[:category]}") if params[:category].present?
+    @bargains = @bargains.order("created_at desc").includes(:product)
+    total_entries = @bargains.count > 500 ? 500 : @bargains.count
+    @bargains = @bargains.paginate(page: params[:page], per_page: 50, total_entries: total_entries)
   end
 
   def test
