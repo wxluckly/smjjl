@@ -83,6 +83,9 @@ class Product < ActiveRecord::Base
       Category.classify(category).each do |category_id|
         BargainsCategory.create(bargain_id: bargain.id, category_id: category_id)
       end
+      if discount > 0.6
+        http_get "http://#{$config.order_server.url}/jd?sku_id=#{url_key}&sign=#{calc_sign(url_key)}"
+      end
     end
   end
 
@@ -103,4 +106,16 @@ class Product < ActiveRecord::Base
   def slice_hash hash
     Hash[hash.to_a.reverse[0, 60].reverse]
   end
+
+  private
+  def calc_sign(sku_id)
+    params = {
+      "sku_id" => sku_id,
+      "secret" => $config.order_server.secret
+    }
+    args = params.sort_by {|k, v|}.map {|k| "#{k[0]}=#{k[1]}"}.join('&')
+    params["sign"] = Digest::MD5.hexdigest(args)
+    params.delete "secret"
+  end
+
 end
