@@ -114,8 +114,7 @@ class Product < ActiveRecord::Base
       "secret" => $config.order_server.secret
     }
     args = params.sort_by {|k, v|}.map {|k| "#{k[0]}=#{k[1]}"}.join('&')
-    params["sign"] = Digest::MD5.hexdigest(args)
-    params.delete "secret"
+    Digest::MD5.hexdigest(args)
   end
 
 end
