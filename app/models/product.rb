@@ -114,7 +114,7 @@ class Product < ActiveRecord::Base
     history_discount = (m_low_price_was.to_f - m_low_price.to_f) / m_low_price_was.to_f
     if discount > 0.1
       # 当比之前价格低10%的时候，进行记录
-      bargain = bargains.create(price: last_price, history_low: last_price_was, discount: discount, product_name: clean_name)
+      bargain = bargains.create(price: m_last_price, history_low: last_price_was, discount: discount, product_name: clean_name)
       bargain.m!
       Category.classify(category).each do |category_id|
         BargainsCategory.create(bargain_id: bargain.id, category_id: category_id)
