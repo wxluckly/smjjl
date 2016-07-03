@@ -20,6 +20,7 @@ class Product < ActiveRecord::Base
   # callbacks .................................................................
   before_save :clean_name
   after_save :record_bargain
+  after_save :record_m_bargain
 
   # scopes ....................................................................
   # scope :empty, -> { where("name is null or name = ''") }
@@ -27,6 +28,7 @@ class Product < ActiveRecord::Base
 
   # additional config .........................................................
   serialize :price_history
+  serialize :m_price_history
 
   # class methods .............................................................
   # public instance methods ...................................................
@@ -44,6 +46,22 @@ class Product < ActiveRecord::Base
     end
     # 记录新的历史最低
     self.low_price = value_f if value_f < low_price.to_f
+    self.save
+  end
+
+  def record_m_price value
+    value_f = value.to_f
+    return if value_f <= 0
+    # 回填初始的价格
+    self.m_low_price = value_f if m_low_price.blank?
+    # 记录价格历史
+    self.m_price_history = slice_hash (m_price_history || {}).merge({Date.today.strftime('%m-%d') => value_f.to_s})
+    # 如果和上次价格记录不同，则记录新价格
+    if m_last_price.blank? || value_f != m_last_price.to_f
+      self.m_last_price = value_f
+    end
+    # 记录新的历史最低
+    self.m_low_price = value_f if value_f < m_low_price.to_f
     self.save
   end
 
@@ -83,8 +101,23 @@ class Product < ActiveRecord::Base
       Category.classify(category).each do |category_id|
         BargainsCategory.create(bargain_id: bargain.id, category_id: category_id)
       end
-      if discount > 0.6
+      if discount >= 0.6
         http_get "http://#{$config.order_server.url}/jd?sku_id=#{url_key}&sign=#{calc_sign(url_key)}"
+      end
+    end
+  end
+
+  # 记录M站超值产品
+  def record_m_bargain
+    return if m_last_price.to_f > m_last_price_was.to_f
+    discount = (m_last_price_was.to_f - m_last_price.to_f) / m_last_price_was.to_f
+    history_discount = (m_low_price_was.to_f - m_low_price.to_f) / m_low_price_was.to_f
+    if discount > 0.1
+      # 当比之前价格低10%的时候，进行记录
+      bargain = bargains.create(price: last_price, history_low: last_price_was, discount: discount, product_name: clean_name)
+      bargain.m!
+      Category.classify(category).each do |category_id|
+        BargainsCategory.create(bargain_id: bargain.id, category_id: category_id)
       end
     end
   end

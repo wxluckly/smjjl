@@ -16,12 +16,15 @@ class ProductList::Jd < ProductList
   end
 
   def get_pagination(category = "id")
-    page_url = "#{list_url}&delivery=1"
+    page_url = "#{list_url}&delivery=1&stock=1"
     total_page = Nokogiri::HTML(http_get(page_url), nil, Site::Jd::ENCODING).css(".page a")[-3].text.to_i rescue 1
     1.upto total_page do |page_num|
       GetIdWorker.perform_async(id, page_num) if category == "id"
       UpdateListPriceWorker.perform_async(id, page_num) if category == "price"
     end
+    1.upto (total_page * 5) do |page_num|
+      UpdateMListPriceWorker.perform_async(id, page_num)
+    end if category == "price"
     return total_page
   end
 
@@ -35,7 +38,7 @@ class ProductList::Jd < ProductList
 
   # 从列表中更新价格及其他信息
   def get_list_prices(page_num)
-    page_url = "#{list_url}&delivery=1&page=#{page_num}"
+    page_url = "#{list_url}&delivery=1&stock=1&page=#{page_num}"
     page = Nokogiri::HTML(http_get(page_url), nil, Site::Jd::ENCODING)
     key_str = page.css("#plist li .p-name a").map{|a| a.attr("href").scan(/\d+/)}.join(",J_")
     return if key_str.blank?
@@ -57,6 +60,19 @@ class ProductList::Jd < ProductList
         # 如果名称发生巨大变化，则证明原商品已被替换，直接删除
         product.destroy
       end
+    end
+  end
+
+  # 从m站列表中更新价格
+  def get_m_list_prices(page_num)
+    page_url = "http://so.m.jd.com/ware/searchList.action?_format_=json&stock=1&sort=&self=1&page=#{page_num}&categoryId=#{url.match(/\d+-\d+-\d+/)[0].split('-').last}"
+    page = Nokogiri::HTML(http_get(page_url), nil, Site::Jd::ENCODING)
+    value_hash = Yajl::Parser.new.parse(page.text)
+    value_hash2 = Yajl::Parser.new.parse(value_hash['value'])
+    value_hash2['wareList'].each do |obj|
+      product = Product::Jd.where(url_key: obj['wareId']).first rescue nil
+      next if product.blank?
+      product.record_m_price obj['jdPrice']
     end
   end
 

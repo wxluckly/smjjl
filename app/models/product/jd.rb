@@ -23,8 +23,16 @@ class Product::Jd < Product
     "http:#{url}"
   end
 
+  def m_link
+    url.gsub('//item.jd.com/', 'http://item.m.jd.com/product/')
+  end
+
   def purchase_link
     "http://p.yiqifa.com/n?k=2mLErntOWZLErI6H2mLErn2s6ZLO1NWlWnBH6EDmrI6HkQLErJPE696w6njFrnj7RKMsCZL-&t=#{link}"
+  end
+
+  def m_purchase_link
+    "http://p.yiqifa.com/n?k=2mLErntOWZLErI6H2mLErn2s6ZLO1NWlWnBH6EDmrI6HkQLErJPE696w6njFrnj7RKMsCZL-&t=#{m_link}"
   end
 
   def comment_link
