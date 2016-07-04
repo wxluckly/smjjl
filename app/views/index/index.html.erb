@@ -46,7 +46,7 @@
       <a href='<%= bargain.m? ? bargain.product.m_purchase_link : bargain.product.purchase_link %>' target="_blank">
         <b class="protit">
           <%= image_tag(bargain.product.image_url, class: "img-polaroid fixed") %>
-          <%= bargain.product.name.to_s %>
+          <% if bargain.m? %><strong>{移动端}</strong><% end %><%= bargain.product.name.to_s %>
         </b>
         <b class="lishijia"><%= bargain.history_low %></b>
         <b class="priceing"><%= bargain.price %></b>
