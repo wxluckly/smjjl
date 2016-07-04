@@ -24,7 +24,7 @@ class Product::Jd < Product
   end
 
   def m_link
-    url.gsub('//item.jd.com/', 'http://item.m.jd.com/product/')
+    (url || "").gsub('//item.jd.com/', 'http://item.m.jd.com/product/')
   end
 
   def purchase_link
