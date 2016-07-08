@@ -38,7 +38,7 @@ class Product < ActiveRecord::Base
     # 回填初始的价格
     self.low_price = value_f if low_price.blank?
     # 记录价格历史
-    # self.price_history = slice_hash (price_history || {}).merge({Date.today.strftime('%m-%d') => value_f.to_s})
+    self.price_history = slice_hash (price_history || {}).merge({Date.today.strftime('%m-%d') => value_f.to_s})
     # 如果和上次价格记录不同，则记录新价格
     if last_price.blank? || value_f != last_price.to_f
       prices.create(value: value)
@@ -55,7 +55,7 @@ class Product < ActiveRecord::Base
     # 回填初始的价格
     self.m_low_price = value_f if m_low_price.blank?
     # 记录价格历史
-    # self.m_price_history = slice_hash (m_price_history || {}).merge({Date.today.strftime('%m-%d') => value_f.to_s})
+    self.m_price_history = slice_hash (m_price_history || {}).merge({Date.today.strftime('%m-%d') => value_f.to_s})
     # 如果和上次价格记录不同，则记录新价格
     if m_last_price.blank? || value_f != m_last_price.to_f
       self.m_last_price = value_f
