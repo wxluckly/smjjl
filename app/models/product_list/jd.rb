@@ -48,7 +48,7 @@ class ProductList::Jd < ProductList
       product = Product::Jd.where(url_key: li.css(".p-name a").attr("href").text.scan(/\d+/)).first rescue nil
       next if product.blank?
       name = li.css(".p-name").text.strip rescue nil
-      if product.name.blank? || (name && product.name.similar(name) > 85)
+      if product.name.blank? || product.name == name
         product.name = name
         product.count = li.css(".evaluate").text.scan(%r|\d+|).first rescue nil
         product.score = li.css(".reputation").text.scan(%r|\d+|).first rescue nil
