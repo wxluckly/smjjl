@@ -42,16 +42,13 @@
         <i></i>
         <span class="red">PC端:199.22</span><span>手机端:169.00</span><span>QQ:189.99</span><span>微信:189.00</span>
       </div> -->
-      <b class="time"><%= bargain.created_at.strftime("%H:%M:%S") %><%= image_tag 'jd.png' %></b>
-      <a href='<%= bargain.m? ? bargain.product.m_purchase_link : bargain.product.purchase_link %>' target="_blank">
-        <b class="protit">
-          <%= image_tag(bargain.product.image_url, class: "img-polaroid fixed") %>
-          <% if bargain.m? %><strong>{移动端}</strong><% end %><%= bargain.product.name.to_s %>
-        </b>
-        <b class="lishijia"><%= bargain.history_low %></b>
-        <b class="priceing"><%= bargain.price %></b>
-        <b class="zhekou"><%= sprintf("%.1f", discount) %>折</b>
-      </a>
+      <% if bargain.m? %>
+      <%= render partial: 'm_cell', locals: {bargain: bargain, discount: discount} %>
+      <% elsif bargain.wx? %>
+      <%= render partial: 'wx_cell', locals: {bargain: bargain, discount: discount} %>
+      <% else %>
+      <%= render partial: 'pc_cell', locals: {bargain: bargain, discount: discount} %>
+      <% end %>
       <% else %>
       已删除
       <% end %>

@@ -24,7 +24,11 @@ class Product::Jd < Product
   end
 
   def m_link
-    (url || "").gsub('//item.jd.com/', 'http://item.m.jd.com/product/')
+    "http://item.m.jd.com/product/#{url_key}.html"
+  end
+
+  def wx_link
+    "http://wq.jd.com/item/view?sku=#{url_key}"
   end
 
   def purchase_link
@@ -33,6 +37,10 @@ class Product::Jd < Product
 
   def m_purchase_link
     "http://p.yiqifa.com/n?k=2mLErntOWZLErI6H2mLErn2s6ZLO1NWlWnBH6EDmrI6HkQLErJPE696w6njFrnj7RKMsCZL-&t=#{m_link}"
+  end
+
+  def wx_purchase_link
+    "http://p.yiqifa.com/n?k=2mLErntOWZLErI6H2mLErn2s6ZLO1NWlWnBH6EDmrI6HkQLErJPE696w6njFrnj7RKMsCZL-&t=#{wx_link}"
   end
 
   def comment_link

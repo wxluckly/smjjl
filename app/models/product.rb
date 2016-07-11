@@ -21,6 +21,7 @@ class Product < ActiveRecord::Base
   before_save :clean_name
   after_save :record_bargain
   after_save :record_m_bargain
+  after_save :record_wx_bargain
 
   # scopes ....................................................................
   # scope :empty, -> { where("name is null or name = ''") }
@@ -62,6 +63,22 @@ class Product < ActiveRecord::Base
     end
     # 记录新的历史最低
     self.m_low_price = value_f if value_f < m_low_price.to_f
+    self.save
+  end
+
+  def record_wx_price value
+    value_f = value.to_f
+    return if value_f <= 0
+    # 回填初始的价格
+    self.wx_low_price = value_f if wx_low_price.blank?
+    # 记录价格历史
+    self.wx_price_history = slice_hash (wx_price_history || {}).merge({Date.today.strftime('%m-%d') => value_f.to_s})
+    # 如果和上次价格记录不同，则记录新价格
+    if wx_last_price.blank? || value_f != wx_last_price.to_f
+      self.wx_last_price = value_f
+    end
+    # 记录新的历史最低
+    self.wx_low_price = value_f if value_f < wx_low_price.to_f
     self.save
   end
 
@@ -116,6 +133,21 @@ class Product < ActiveRecord::Base
       # 当比之前价格低10%的时候，进行记录
       bargain = bargains.create(price: m_last_price, history_low: m_last_price_was, discount: discount, product_name: clean_name)
       bargain.m!
+      Category.classify(category).each do |category_id|
+        BargainsCategory.create(bargain_id: bargain.id, category_id: category_id)
+      end
+    end
+  end
+
+  # 记录微信站超值产品
+  def record_wx_bargain
+    return if wx_last_price.to_f > wx_last_price_was.to_f
+    discount = (wx_last_price_was.to_f - wx_last_price.to_f) / wx_last_price_was.to_f
+    history_discount = (wx_low_price_was.to_f - wx_low_price.to_f) / wx_low_price_was.to_f
+    if discount > 0.1
+      # 当比之前价格低10%的时候，进行记录
+      bargain = bargains.create(price: wx_last_price, history_low: wx_last_price_was, discount: discount, product_name: clean_name)
+      bargain.wx!
       Category.classify(category).each do |category_id|
         BargainsCategory.create(bargain_id: bargain.id, category_id: category_id)
       end

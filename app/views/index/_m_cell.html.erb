@@ -1,0 +1,10 @@
+<b class="time"><%= bargain.created_at.strftime("%H:%M:%S") %><%= image_tag 'jd.png' %></b>
+<a href='<%= bargain.product.m_purchase_link %>' target="_blank">
+  <b class="protit">
+    <%= image_tag(bargain.product.image_url, class: "img-polaroid fixed") %>
+    <strong>{移动端}</strong><%= bargain.product.name.to_s %>
+  </b>
+  <b class="lishijia"><%= bargain.history_low %></b>
+  <b class="priceing"><%= bargain.price %></b>
+  <b class="zhekou"><%= sprintf("%.1f", discount) %>折</b>
+</a>
