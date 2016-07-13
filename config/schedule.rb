@@ -10,7 +10,12 @@ every :day, :at => '2:00am', :roles => [:master] do
 end
 
 # 更新内容
-every :day, :at => '4:00am', :roles => [:master] do
+every :day, :at => '3:00am', :roles => [:master] do
+  rake "daemon:update_info"
+end
+
+# 更新内容
+every :day, :at => '5:00am', :roles => [:master] do
   rake "daemon:update_content"
 end
 

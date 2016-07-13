@@ -16,6 +16,11 @@ namespace :daemon do
     ProductList.unblocked.priored.select(:id).each{ |l| GetPaginationWorker.perform_async(l.id, "price") }
   end
 
+  desc "更新列表产品信息"
+  task :update_info => :environment do
+    ProductList.unblocked.priored.select(:id).each{ |l| GetPaginationWorker.perform_async(l.id, "info") }
+  end
+
   desc "清理失败的任务"
   task :clear_jobs => :environment do
     rs = Sidekiq::RetrySet.new

@@ -31,6 +31,8 @@ class ProductList::Jd < ProductList
       1.upto (total_page * 5) do |page_num|
         UpdateMListPriceWorker.perform_async(id, page_num)
       end
+    elsif category == "info"
+      UpdateListInfoWorker.perform_async(id, page_num)
     end
     return total_page
   end
@@ -41,6 +43,30 @@ class ProductList::Jd < ProductList
       Product::Jd.create(url: puduct_url, url_key: (puduct_url.scan(/\d+/).first rescue nil) )
     end
     sleep 5
+  end
+
+  # 从列表中更新产品信息
+  def get_list_infos(page_num)
+    page_url = "#{list_url}&delivery=1&stock=1&page=#{page_num}"
+    page = Nokogiri::HTML(http_get(page_url), nil, Site::Jd::ENCODING)
+    key_str = page.css("#plist li .p-name a").map{|a| a.attr("href").scan(/\d+/)}.join(",J_")
+    return if key_str.blank?
+    page.css("#plist li").each do |li|
+      product = Product::Jd.where(url_key: li.css(".p-name a").attr("href").text.scan(/\d+/)).first rescue nil
+      next if product.blank?
+      name = li.css(".p-name").text.strip rescue nil
+      if product.name.blank? || (name && product.name.similar(name) > 85)
+        product.name = name
+        product.count = li.css(".evaluate").text.scan(%r|\d+|).first rescue nil
+        product.score = li.css(".reputation").text.scan(%r|\d+|).first rescue nil
+        product.save
+      else
+        # 如果名称发生巨大变化，则证明原商品已被替换，进行下架处理
+        # product.update_columns(url_key: nil, url: nil, is_discontinued: true)
+        # 如果名称发生巨大变化，则证明原商品已被替换，直接删除
+        product.destroy
+      end
+    end
   end
 
   # 从列表中更新价格及其他信息
