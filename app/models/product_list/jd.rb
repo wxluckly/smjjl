@@ -24,7 +24,7 @@ class ProductList::Jd < ProductList
       end
     elsif category == "price"
       1.upto total_page do |page_num|
-        UpdateListPriceWorker.perform_async(id, page_num)
+        # UpdateListPriceWorker.perform_async(id, page_num)
         UpdateWxListPriceWorker.perform_async(id, page_num)
       end
 
@@ -93,8 +93,11 @@ class ProductList::Jd < ProductList
     value_hash = Yajl::Parser.new.parse(page.text)
     value_hash.each do |obj|
       if product = Product::Jd.find_by(url_key: obj["id"])
-        # product.record_price obj['pcp'] || obj['p']
-        product.record_wx_price obj['p']
+        if obj['pcp'].present? && obj['p'].to_i > obj['pcp'].to_i
+          product.record_price obj['pcp']
+        else
+          product.record_wx_price obj['p']
+        end
       end
     end
   end
