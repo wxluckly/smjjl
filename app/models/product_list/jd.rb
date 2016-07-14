@@ -119,10 +119,14 @@ class ProductList::Jd < ProductList
     value_hash = Yajl::Parser.new.parse(page.text)
     value_hash.each do |obj|
       if product = Product::Jd.find_by(url_key: obj["id"])
-        if obj['pcp'].present? && obj['p'].to_i > obj['pcp'].to_i
-          product.record_price obj['pcp']
+        if obj['pcp'].present?
+          if obj['p'].to_i > obj['pcp'].to_i
+            product.record_price obj['pcp']
+          else
+            product.record_wx_price obj['p']
+          end
         else
-          product.record_wx_price obj['p']
+          product.record_price obj['p']
         end
       end
     end
