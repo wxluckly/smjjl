@@ -12,8 +12,9 @@ class Product::Jd < Product
   # 获取商品详情
   def get_content
     page = Nokogiri::HTML(http_get(link), nil, 'gbk')
-    self.category = page.css(".breadcrumb a").map{ |a| a.text }[0, 3].join(",")
-    self.image_url = "http:#{page.css('#spec-n1 img').attr('src').text}" rescue nil
+    self.category = page.css(".crumb a").map{ |a| a.text }[0, 3].join(",")
+    self.image_url = "http:#{page.css('#spec-img').attr('data-origin').text}" rescue nil
+    self.name = page.css('.sku-name').text rescue nil
     self.has_content = true
     self.save
   end

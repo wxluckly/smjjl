@@ -122,6 +122,7 @@ class Product < ActiveRecord::Base
       if discount >= 0.6
         http_get "http://#{$config.order_server.url}/jd?sku_id=#{url_key}&sign=#{calc_sign(url_key)}"
       end
+      UpdateContentWorker.perform_async(id)
     end
   end
 
@@ -137,6 +138,7 @@ class Product < ActiveRecord::Base
       Category.classify(category).each do |category_id|
         BargainsCategory.create(bargain_id: bargain.id, category_id: category_id)
       end
+      UpdateContentWorker.perform_async(id)
     end
   end
 
@@ -152,6 +154,7 @@ class Product < ActiveRecord::Base
       Category.classify(category).each do |category_id|
         BargainsCategory.create(bargain_id: bargain.id, category_id: category_id)
       end
+      UpdateContentWorker.perform_async(id)
     end
   end
 
