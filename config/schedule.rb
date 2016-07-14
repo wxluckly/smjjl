@@ -4,6 +4,11 @@ set :job_template, "bash -l -c ':job'"
 
 # ------------------------ master ------------------------
 
+# 清理旧的优惠信息
+every :day, :at => '1:00am', :roles => [:master] do
+  rake "daemon:clear_bargains"
+end
+
 # 抓取id
 every :day, :at => '2:00am', :roles => [:master] do
   rake "daemon:get_id"
