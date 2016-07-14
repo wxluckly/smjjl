@@ -1,4 +1,4 @@
-<b class="time"><%= bargain.created_at.strftime("%H:%M:%S") %><%= image_tag 'jd.png' %></b>
+<b class="time"><%= bargain.created_at.strftime("%H:%M:%S") %><%= link_to image_tag('jd.png'), product_path(bargain.product), target: '_blank' %></b>
 <a href='<%= bargain.product.m_purchase_link %>' target="_blank">
   <b class="protit">
     <%= image_tag(bargain.product.image_url, class: "img-polaroid fixed") %>
