@@ -36,7 +36,7 @@
   <ul class="product">
     <% @bargains.each do |bargain| %>
     <% discount = 10 - bargain.discount.to_f * 10 %>
-    <li class="<%= zhe_class discount %> clearfix">
+    <li class="<%= zhe_class discount %> clearfix" data-url="<%= product_path(bargain.product) %>">
       <% if bargain.product %>
 <!--         <div class="jiagexiangxi">
         <i></i>
