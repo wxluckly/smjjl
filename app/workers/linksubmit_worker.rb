@@ -1,6 +1,6 @@
 class LinksubmitWorker
   include Sidekiq::Worker
-  sidekiq_options :queue => :lintsubmit
+  sidekiq_options :queue => :linksubmit
 
   def perform(product_id)
     product = Product.find(product_id)
