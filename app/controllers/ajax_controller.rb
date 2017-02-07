@@ -12,6 +12,7 @@ class AjaxController < ApplicationController
     end
   end
 
+
   def get_info
     @product = Product.find(params[:id].to_i)
   end
