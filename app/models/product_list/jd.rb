@@ -32,7 +32,14 @@ class ProductList::Jd < ProductList
         UpdateMListPriceWorker.perform_async(id, page_num)
       end
     elsif category == "info"
-      UpdateListInfoWorker.perform_async(id, page_num)
+      # UpdateListInfoWorker.perform_async(id, page_num)
+      1.upto total_page do |page_num|
+        UpdateListInfoWorker.perform_async(id, page_num)
+      end
+    elsif category == "subtitle"
+      1.upto total_page do |page_num|
+        UpdateSubtitleWorker.perform_async(id, page_num)
+      end
     end
     return total_page
   end
@@ -43,6 +50,24 @@ class ProductList::Jd < ProductList
       Product::Jd.create(url: puduct_url, url_key: (puduct_url.scan(/\d+/).first rescue nil) )
     end
     sleep 5
+  end
+
+  # 从列表信息中获取 商品副标题
+  def get_subtitle(page_num)
+    page_url = "#{list_url}&delivery=1&stock=1&page=#{page_num}"
+    page = Nokogiri::HTML(http_get(page_url), nil, Site::Jd::ENCODING)
+    key_str = page.css("#plist li .p-name a").map{|a| a.attr("href").scan(/\d+/)}.join(",AD_")
+    value_words = Nokogiri::HTML(http_get("http://ad.3.cn/ads/mgets?&callback=jQuery1329870&my=list_adWords&skuids=AD_#{key_str}&pduid=#{Time.now.to_i}"))
+    text = value_words.css("p").text.scan(/\[.*\]/)
+    subtitle_hash = Yajl::Parser.new.parse(text.first).inject({}){|hash, v| hash[v["id"]] = v["ad"]; hash}
+    page.css("#plist li").each do |li|
+      product = Product::Jd.where(url_key: li.css(".p-name a").attr("href").text.scan(/\d+/)).first rescue nil
+      if product.present?
+        product.subtitle = subtitle_hash["AD_#{product.url_key}"]
+        product.save
+      end
+    end
+
   end
 
   # 从列表中更新产品信息

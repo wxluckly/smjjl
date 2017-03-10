@@ -9,6 +9,7 @@ class Product < ActiveRecord::Base
   # relationships .............................................................
   has_many :prices
   has_many :bargains
+  has_many :seckill_products
   has_one :product_info
   belongs_to :product_info
 
@@ -98,6 +99,16 @@ class Product < ActiveRecord::Base
     if self.name.present?
       self.name = self.name.gsub("\n", "").gsub("\r", "").strip
       self.name = self.name[0, 255]
+    end
+  end
+
+
+  # 记录秒杀商品
+  def record_seckill
+    words =["秒杀","抢购","APP秒杀","限量"]
+    str_words = words.join("|")
+    if /#{str_words}/.match(subtitle).present?
+      seckill_products.create(price: last_price, history_low: last_price_was, product_name: clean_name, subtitle: subtitle)
     end
   end
 

@@ -1,0 +1,25 @@
+<div class="daohang"><div class="daohang-wd"><a>什么降价了</a><a class="select">秒杀早知道</a><a>全网爆料</a><a>历史最低</a><a>九块九</a></div></div>
+<div class="productlist">
+ <div class="search-ms">
+   <p><input class="searchgoods" type="text" placeholder="输入关键词"><a class="search" href="#"><img alt="Search 03" src="images/search.png" ><span>搜索</span></a></p>
+   <p>例如：秒杀、一元、整点抢购、限时...</p>
+ </div>
+ <div class="flsx"><a>全部</a><a class="select">家电</a><a>电脑</a><a>手机</a><a>数码</a><a>母婴</a><a>家居</a><a>厨具</a><a>汽车</a><a>玩具</a></div>
+
+ <ul class="product">
+   <% @seckill_products.each do |seckill_product|%>
+   <% product = seckill_product.product %>
+
+   <li class=" yizhe clearfix"><p class="mssearch"><a><%= seckill_product.subtitle %></a></p><b class="time"><%= seckill_product.created_at.strftime("%H:%M:%S") %><%= image_tag "jd.png" %></b><a href='<%= seckill_product.product.purchase_link %>' target="_blank"><b class="protit"><%= image_tag(seckill_product.product.image_url) %><%= seckill_product.product_name %></b><b class="lishijia"><%= seckill_product.history_low %></b><b class="priceing"><%= seckill_product.price %></b><b class="zhekou">1.5折</b></a>
+   </li>
+   <% end %>
+ </ul>
+
+
+ <%= will_paginate @seckill_products %>
+
+</div>
+<div class="footer">
+  <p class="yqlj">友情链接：<a class="" href="http://www.movtt.com/" target="_blank" >电影兔兔</a></p>
+  <div class="icpnum">备案号<br />鲁ICP备14000922号-1</div>
+</div>

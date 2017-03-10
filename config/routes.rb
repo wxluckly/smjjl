@@ -15,6 +15,7 @@ Smjjl::Application.routes.draw do
   resource :auth
   resource :wechat, only: [:show, :create]
   resources :products
+  resources :seckill_products
   resources :sitemap, only: :index
   resources :ordered_bargains, only: :index
 

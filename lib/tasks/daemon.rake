@@ -11,6 +11,13 @@ namespace :daemon do
     Product.empty.select(:id).find_each{|p| UpdateContentWorker.perform_async(p.id) }
   end
 
+
+  
+  desc "更新产品副标题"
+  task :update_subtitle => :environment do
+    ProductList.unblocked.priored.select(:id).each{|l| UpdateSubtitleWorker.perform_async(l.id) }
+  end
+
   desc "更新产品价格"
   task :update_price => :environment do
     ProductList.unblocked.priored.select(:id).each{ |l| GetPaginationWorker.perform_async(l.id, "price") }

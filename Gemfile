@@ -56,6 +56,7 @@ gem 'annotate'
 
 group :development, :worker do
   gem 'pry', '0.10.1'
+  gem 'pry-nav'
   gem "better_errors", '2.0.0'
   gem "binding_of_caller", '0.7.2'
 end
