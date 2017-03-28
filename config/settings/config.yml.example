@@ -1,8 +1,34 @@
 defaults: &defaults
-  redis: redis://localhost:6379
+  redis: redis://127.0.0.1:6379/1
+  wechat:
+    appid: wx0cfff14aa0da2a23
+    secret: xxxxx
+    token: joeywang
+    access_token: Rails.root.join('tmp/access_token')
+    back_domain: smjjl.com
+  smtp:
+    address: smtp.163.com
+    user_name: thinkgrand_poster@163.com
+    password: xxxx
+    port: 25
+    authentication: :plain
+    enable_starttls_auto: true
+    domain: '163.com'
+  ucloud:
+    public_key: M6sjGK0ucMIvJ3cxBUo3ZeZNJBQgsYFnsE1S4EjOf8l39D0bgfvqhw==
+    private_key: 2616ca50d0705582f5f39554245d093f83e3718b
+  order_server:
+    url: jd.psql.info
+    secret: jd_secret_1088
 
 development:
   <<: *defaults
 
+test:
+  <<: *defaults
+
 production:
   <<: *defaults
+
+worker:
+  redis: redis://:xxx@115.28.37.253:6379
