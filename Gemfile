@@ -84,4 +84,5 @@ end
 
 group :production do
   gem 'unicorn', '4.8.3'
+  gem 'puma', '3.6.0'
 end
