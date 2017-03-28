@@ -33,7 +33,7 @@ gem 'grape-entity'
 gem 'grape-swagger'
 gem 'grape-swagger-rails'
 gem 'rack-ssl-enforcer'
-gem 'kramdown'
+gem 'kramdown', '1.11.1'
 gem 'jbuilder'
 gem 'hashie-forbidden_attributes'
 
@@ -64,6 +64,14 @@ end
 group :development, :test do
   gem "rspec-rails", "~> 2.14.0"
   gem "factory_girl_rails", "~> 4.2.1"
+end
+
+group :development do
+  gem 'capistrano', '3.4.0'
+  gem 'capistrano-bundler', '>= 1.1.0'
+  gem 'capistrano-rails'
+  gem 'capistrano-rvm', '0.1.2'
+  gem 'capistrano-rails-console', '~> 1.0.2'
 end
 
 group :test do
