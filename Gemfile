@@ -12,9 +12,9 @@ gem 'uglifier', '2.5.3'
 gem 'sass-rails', '4.0.3'
 gem 'therubyracer', '0.12.1'
 # gem 'rails_admin', '~> 0.7.0'
-gem 'ransack'
+gem 'ransack', '1.7.0'
 gem 'wechat', "~> 0.6.8"
-gem 'redis-objects'
+gem 'redis-objects', '1.2.1'
 
 # 资源模板引擎
 gem 'jquery-rails', '3.1.4'
@@ -28,19 +28,19 @@ gem 'sidekiq', '3.2.2'
 gem 'whenever', '0.9.2'
 
 # API
-gem 'grape'
-gem 'grape-entity'
-gem 'grape-swagger'
-gem 'grape-swagger-rails'
-gem 'rack-ssl-enforcer'
+gem 'grape', '0.16.2'
+gem 'grape-entity', '0.5.1'
+gem 'grape-swagger', '0.21.0'
+gem 'grape-swagger-rails', '0.2.1'
+gem 'rack-ssl-enforcer', '0.2.9'
 gem 'kramdown', '1.11.1'
-gem 'jbuilder'
-gem 'hashie-forbidden_attributes'
+gem 'jbuilder', '2.5.0'
+gem 'hashie-forbidden_attributes', '0.1.1'
 
 # HTML解析
 gem 'typhoeus', '0.6.9'
 gem 'nokogiri', '1.6.8'
-gem 'useragents'
+gem 'useragents', '0.1.4'
 
 # 辅助工具
 gem 'devise', '3.2.4'
@@ -51,8 +51,8 @@ gem 'friendly_id', '~> 5.0.2'
 gem 'settingslogic', '2.0.9'
 gem 'similar_text', '0.0.4'
 # gem 'newrelic_rpm'
-gem 'oneapm_rpm'
-gem 'annotate'
+gem 'oneapm_rpm', '1.3.7'
+gem 'annotate', '2.7.1'
 
 group :development, :worker do
   gem 'pry', '0.10.1'
