@@ -122,7 +122,7 @@ port        ENV.fetch("PORT") { 3003 }
 #
 # The default is "0".
 #
-workers({production: 1}[(ENV['RAILS_ENV'] || ENV['RACK_ENV'] || 'production').to_sym])
+# workers({production: 1}[(ENV['RAILS_ENV'] || ENV['RACK_ENV'] || 'production').to_sym])
 
 # Code to run immediately before the master starts workers.
 #
